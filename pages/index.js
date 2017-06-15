@@ -1,31 +1,14 @@
 import React from "react";
-import 'isomorphic-fetch'
+import fetch from 'isomorphic-unfetch';
 import Link from "next/link";
 import { slugDate } from "../utils/utils-general.js";
 import Nav from "../components/nav";
 import FeedPost from "../components/feed_post";
 import Head from "next/head";
 import Router from "next/router";
+import feed_posts from "../static/feed_posts.json";
 
 export default class extends React.Component {
-	static async getInitialProps({ req }) {
-		let domain;
-		req
-			? (domain = `http://${req.headers.host}`)
-			: (domain = window.location.origin);
-		if (req) {
-			console.log('there is a req');
-			console.log(domain);
-			console.log(req.headers);
-		}
-		return fetch(`${domain}/static/feed_posts.json`)
-			.then(function(res) {
-			    return res.json();
-			}).then(function(json) {
-			    return { feed_posts: json };
-			});
-	}
-
 	constructor() {
 		super();
 		this.state = {
@@ -142,7 +125,7 @@ export default class extends React.Component {
 	}
 
 	render() {
-		const { feed_posts, url } = this.props;
+		const { url } = this.props;
 		const query = url.query;
 
 		let display_posts = feed_posts.slice(0);
