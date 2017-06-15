@@ -1,5 +1,5 @@
 import React from "react";
-import fetch from "isomorphic-unfetch";
+import 'isomorphic-fetch'
 import Link from "next/link";
 import { slugDate } from "../utils/utils-general.js";
 import Nav from "../components/nav";
