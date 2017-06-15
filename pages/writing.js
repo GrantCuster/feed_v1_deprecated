@@ -9,8 +9,9 @@ export default class extends React.Component {
 	static async getInitialProps({ req, query }) {
 		let domain;
 		console.log(req.headers);
+		const baseUrl = req ? `${req.protocol}://${req.get('Host')}` : '';
 		req
-			? (domain = `http://${req.headers.host}`)
+			? (domain = baseUrl)
 			: (domain = window.location.origin);
 		const res = await fetch(`${domain}/api/list_writings`);
 		const files = await res.json();
