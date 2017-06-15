@@ -15,7 +15,7 @@ const bodyParser = require("body-parser");
 const dev = process.env.NODE_ENV !== "production";
 const app = next({ dev });
 const handle = app.getRequestHandler();
-const port = process.env.NODE_ENV === "production" ? 80 : 3000;
+const port = process.env.NODE_ENV === "production" ? 8080 : 3000;
 
 let secret;
 if (process.env.NOW) {
