@@ -34,6 +34,10 @@ var _document2 = _interopRequireDefault(_document);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+var _jsxFileName = "/Users/grantcuster/Sites/feed-holder/feed/pages/_document.js?entry";
+// ./pages/_document.js
+
+
 var MyDocument = function (_Document) {
   (0, _inherits3.default)(MyDocument, _Document);
 
@@ -46,11 +50,47 @@ var MyDocument = function (_Document) {
   (0, _createClass3.default)(MyDocument, [{
     key: "render",
     value: function render() {
-      return _react2.default.createElement("html", { lang: "en" }, _react2.default.createElement(_document.Head, null, _react2.default.createElement("meta", { name: "viewport", content: "width=device-width" }), _react2.default.createElement("link", { rel: "stylesheet", type: "text/css", href: "/static/basscss.min.css" }), _react2.default.createElement("link", { rel: "stylesheet", type: "text/css", href: "/static/global.css" })), _react2.default.createElement("body", null, _react2.default.createElement(_document.Main, null), _react2.default.createElement(_document.NextScript, null)));
+      return _react2.default.createElement("html", { lang: "en", __source: {
+          fileName: _jsxFileName,
+          lineNumber: 7
+        }
+      }, _react2.default.createElement(_document.Head, {
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 8
+        }
+      }, _react2.default.createElement("meta", { name: "viewport", content: "width=device-width", __source: {
+          fileName: _jsxFileName,
+          lineNumber: 9
+        }
+      }), _react2.default.createElement("link", { rel: "stylesheet", type: "text/css", href: "/static/basscss.min.css", __source: {
+          fileName: _jsxFileName,
+          lineNumber: 10
+        }
+      }), _react2.default.createElement("link", { rel: "stylesheet", type: "text/css", href: "/static/global.css", __source: {
+          fileName: _jsxFileName,
+          lineNumber: 11
+        }
+      })), _react2.default.createElement("body", {
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 13
+        }
+      }, _react2.default.createElement(_document.Main, {
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 14
+        }
+      }), _react2.default.createElement(_document.NextScript, {
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 15
+        }
+      })));
     }
   }]);
 
   return MyDocument;
 }(_document2.default);
-// ./pages/_document.js
+
 exports.default = MyDocument;

@@ -13,9 +13,17 @@ export default class extends React.Component {
 		req
 			? (domain = `http://${req.headers.host}`)
 			: (domain = window.location.origin);
-		const res = await fetch(`${domain}/static/feed_posts.json`);
-		const json = await res.json();
-		return { feed_posts: json };
+		if (req) {
+			console.log('there is a req');
+			console.log(domain);
+			console.log(req.headers);
+		}
+		return fetch(`${domain}/static/feed_posts.json`)
+			.then(function(res) {
+			    return res.json();
+			}).then(function(json) {
+			    return { feed_posts: json };
+			});
 	}
 
 	constructor() {

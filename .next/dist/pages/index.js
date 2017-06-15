@@ -72,6 +72,9 @@ var _index2 = _interopRequireDefault(_index);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+var _jsxFileName = "/Users/grantcuster/Sites/feed-holder/feed/pages/index.js?entry";
+
+
 var _class = function (_React$Component) {
 	(0, _inherits3.default)(_class, _React$Component);
 
@@ -80,7 +83,7 @@ var _class = function (_React$Component) {
 		value: function () {
 			var _ref2 = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee(_ref) {
 				var req = _ref.req;
-				var domain, res, json;
+				var domain;
 				return _regenerator2.default.wrap(function _callee$(_context) {
 					while (1) {
 						switch (_context.prev = _context.next) {
@@ -88,19 +91,18 @@ var _class = function (_React$Component) {
 								domain = void 0;
 
 								req ? domain = "http://" + req.headers.host : domain = window.location.origin;
-								_context.next = 4;
-								return (0, _isomorphicUnfetch2.default)(domain + "/static/feed_posts.json");
+								if (req) {
+									console.log('there is a req');
+									console.log(domain);
+									console.log(req.headers);
+								}
+								return _context.abrupt("return", (0, _isomorphicUnfetch2.default)(domain + "/static/feed_posts.json").then(function (res) {
+									return res.json();
+								}).then(function (json) {
+									return { feed_posts: json };
+								}));
 
 							case 4:
-								res = _context.sent;
-								_context.next = 7;
-								return res.json();
-
-							case 7:
-								json = _context.sent;
-								return _context.abrupt("return", { feed_posts: json });
-
-							case 9:
 							case "end":
 								return _context.stop();
 						}
@@ -227,9 +229,22 @@ var _class = function (_React$Component) {
 			for (var i = 0; i < use_pages; i++) {
 				temp_page_array.push(posts.slice(i * per_page, (i + 1) * per_page));
 			}
-			var pages_obj = _react2.default.createElement("div", null, temp_page_array.map(function (posts, i) {
-				return _react2.default.createElement("div", { key: "page_" + i, className: "posts-page", "data-page-num": i }, posts.map(function (post) {
-					return _react2.default.createElement(_feed_post2.default, { key: post.posted, post: post, layout: "post" });
+			var pages_obj = _react2.default.createElement("div", {
+				__source: {
+					fileName: _jsxFileName,
+					lineNumber: 129
+				}
+			}, temp_page_array.map(function (posts, i) {
+				return _react2.default.createElement("div", { key: "page_" + i, className: "posts-page", "data-page-num": i, __source: {
+						fileName: _jsxFileName,
+						lineNumber: 132
+					}
+				}, posts.map(function (post) {
+					return _react2.default.createElement(_feed_post2.default, { key: post.posted, post: post, layout: "post", __source: {
+							fileName: _jsxFileName,
+							lineNumber: 134
+						}
+					});
 				}));
 			}));
 			return pages_obj;
@@ -250,10 +265,99 @@ var _class = function (_React$Component) {
 				});
 			}
 
-			return _react2.default.createElement("div", null, _react2.default.createElement(_head2.default, null, _react2.default.createElement("title", null, "Grant Custer \u2192 Feed")), _react2.default.createElement(_nav2.default, { url: url }), _react2.default.createElement("div", { className: "center mb3" }, _react2.default.createElement("h1", null, _react2.default.createElement(_link2.default, { href: "/" }, _react2.default.createElement("a", { className: "no-underline" }, "Feed")))), _react2.default.createElement("div", { className: "flex justify-between px2 mb4" }, _react2.default.createElement("div", null, query.filter && query.filter === "work" ? _react2.default.createElement(_link2.default, { href: "/" }, _react2.default.createElement("a", null, "Show Inspiration")) : query.filter && query.filter === "inspiration" ? "↓ Filter: Inspiration" : _react2.default.createElement(_link2.default, {
+			return _react2.default.createElement("div", {
+				__source: {
+					fileName: _jsxFileName,
+					lineNumber: 157
+				}
+			}, _react2.default.createElement(_head2.default, {
+				__source: {
+					fileName: _jsxFileName,
+					lineNumber: 158
+				}
+			}, _react2.default.createElement("title", {
+				__source: {
+					fileName: _jsxFileName,
+					lineNumber: 159
+				}
+			}, "Grant Custer \u2192 Feed")), _react2.default.createElement(_nav2.default, { url: url, __source: {
+					fileName: _jsxFileName,
+					lineNumber: 162
+				}
+			}), _react2.default.createElement("div", { className: "center mb3", __source: {
+					fileName: _jsxFileName,
+					lineNumber: 163
+				}
+			}, _react2.default.createElement("h1", {
+				__source: {
+					fileName: _jsxFileName,
+					lineNumber: 164
+				}
+			}, _react2.default.createElement(_link2.default, { href: "/", __source: {
+					fileName: _jsxFileName,
+					lineNumber: 165
+				}
+			}, _react2.default.createElement("a", { className: "no-underline", __source: {
+					fileName: _jsxFileName,
+					lineNumber: 166
+				}
+			}, "Feed")))), _react2.default.createElement("div", { className: "flex justify-between px2 mb4", __source: {
+					fileName: _jsxFileName,
+					lineNumber: 170
+				}
+			}, _react2.default.createElement("div", {
+				__source: {
+					fileName: _jsxFileName,
+					lineNumber: 171
+				}
+			}, query.filter && query.filter === "work" ? _react2.default.createElement(_link2.default, { href: "/", __source: {
+					fileName: _jsxFileName,
+					lineNumber: 173
+				}
+			}, _react2.default.createElement("a", {
+				__source: {
+					fileName: _jsxFileName,
+					lineNumber: 173
+				}
+			}, "Show Inspiration")) : query.filter && query.filter === "inspiration" ? "↓ Filter: Inspiration" : _react2.default.createElement(_link2.default, {
 				href: "/?filter=inspiration",
-				title: "Show inspiration only"
-			}, _react2.default.createElement("a", { className: "no-underline hover-underline" }, "\u2193 Inspiration"))), _react2.default.createElement("div", null, query.filter && query.filter === "inspiration" ? _react2.default.createElement(_link2.default, { href: "/" }, _react2.default.createElement("a", null, "Show Work")) : query.filter && query.filter === "work" ? "Filter: Work ↓" : _react2.default.createElement(_link2.default, { href: "/?filter=work", title: "Show work only" }, _react2.default.createElement("a", { className: "no-underline hover-underline" }, "Work \u2193")))), _react2.default.createElement("div", null, this.displayPosts(display_posts)));
+				title: "Show inspiration only",
+				__source: {
+					fileName: _jsxFileName,
+					lineNumber: 176
+				}
+			}, _react2.default.createElement("a", { className: "no-underline hover-underline", __source: {
+					fileName: _jsxFileName,
+					lineNumber: 180
+				}
+			}, "\u2193 Inspiration"))), _react2.default.createElement("div", {
+				__source: {
+					fileName: _jsxFileName,
+					lineNumber: 185
+				}
+			}, query.filter && query.filter === "inspiration" ? _react2.default.createElement(_link2.default, { href: "/", __source: {
+					fileName: _jsxFileName,
+					lineNumber: 187
+				}
+			}, _react2.default.createElement("a", {
+				__source: {
+					fileName: _jsxFileName,
+					lineNumber: 187
+				}
+			}, "Show Work")) : query.filter && query.filter === "work" ? "Filter: Work ↓" : _react2.default.createElement(_link2.default, { href: "/?filter=work", title: "Show work only", __source: {
+					fileName: _jsxFileName,
+					lineNumber: 190
+				}
+			}, _react2.default.createElement("a", { className: "no-underline hover-underline", __source: {
+					fileName: _jsxFileName,
+					lineNumber: 191
+				}
+			}, "Work \u2193")))), _react2.default.createElement("div", {
+				__source: {
+					fileName: _jsxFileName,
+					lineNumber: 197
+				}
+			}, this.displayPosts(display_posts)));
 		}
 	}]);
 
