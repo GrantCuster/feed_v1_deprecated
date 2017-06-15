@@ -15,7 +15,7 @@ const bodyParser = require("body-parser");
 const dev = process.env.NODE_ENV !== "production";
 const app = next({ dev });
 const handle = app.getRequestHandler();
-app.set('port', process.env.PORT || 3000);
+const port = process.env.NODE_ENV === "production" ? 8080 : 3000;
 
 let secret;
 if (process.env.NOW) {
@@ -255,8 +255,8 @@ app.prepare().then(() => {
     return handle(req, res);
   });
 
-  server.listen(app.get('port'), function () {
+  server.listen(port, function () {
     if (err) throw err;
-    console.log('Ready on port ' + app.get('port'));
+    console.log('Ready on port ' + port);
   });
 });
