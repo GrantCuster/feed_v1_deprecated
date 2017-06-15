@@ -8,6 +8,7 @@ import Link from "next/link";
 export default class extends React.Component {
 	static async getInitialProps({ req, query }) {
 		let domain;
+		console.log(req.headers);
 		req
 			? (domain = `http://${req.headers.host}`)
 			: (domain = window.location.origin);
