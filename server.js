@@ -255,7 +255,7 @@ app.prepare().then(() => {
     return handle(req, res);
   });
 
-  server.listen(port, function () {
+  server.listen(port, (err) => {
     if (err) throw err;
     console.log('Ready on port ' + port);
   });
