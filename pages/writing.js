@@ -10,10 +10,11 @@ export default class extends React.Component {
 		let domain;
 		console.log(req.headers);
 		const baseUrl = req ? `${req.protocol}://${req.get('Host')}` : '';
+		console.log(baseUrl);
 		req
 			? (domain = baseUrl)
 			: (domain = window.location.origin);
-		const res = await fetch(`http://0.0.0.0/api/list_writings`);
+		const res = await fetch(`${domain}/api/list_writings`);
 		const files = await res.json();
 		return { files };
 	}
