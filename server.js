@@ -224,20 +224,11 @@ app.prepare().then(() => {
   );
 
   server.get("/admin", (req, res) => {
-    app.render(
+    return app.render(
       req,
       res,
       "/admin",
       Object.assign({}, { user: req.user }, req.query)
-    );
-  });
-
-  server.get("/admin_texst", (req, res) => {
-    app.render(
-      req,
-      res,
-      "/admin",
-      Object.assign({}, req.query)
     );
   });
 
