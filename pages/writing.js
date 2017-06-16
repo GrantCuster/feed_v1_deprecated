@@ -6,15 +6,11 @@ import Head from 'next/head';
 import Link from "next/link";
 
 export default class extends React.Component {
-	static async getInitialProps({ req, query }) {
-		let domain;
-		console.log(req.headers);
-		const baseUrl = req ? `${req.protocol}://${req.get('Host')}` : '';
-		console.log(baseUrl);
-		req
-			? (domain = baseUrl)
-			: (domain = window.location.origin);
-		const res = await fetch(`${domain}/api/list_writings`);
+	static async getInitialProps(props) {
+		const { req, query } = props;
+		let baseUrl = req ? `${req.protocol}://${req.get('Host')}` : '';
+		if (req && req.get('Host').indexOf(":") === -1) baseUrl = baseUrl + ":8080";
+		const res = await fetch(`${baseUrl}/api/list_writings`);
 		const files = await res.json();
 		return { files };
 	}
