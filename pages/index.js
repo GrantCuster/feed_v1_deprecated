@@ -6,9 +6,17 @@ import Nav from "../components/nav";
 import FeedPost from "../components/feed_post";
 import Head from "next/head";
 import Router from "next/router";
-import feed_posts from "../static/feed_posts.json";
+import {makeBaseUrl} from "../utils/utils-general";
 
 export default class extends React.Component {
+	static async getInitialProps({ req, query }) {
+		const baseUrl = makeBaseUrl(req);
+		const res = await fetch(`${baseUrl}/api/feed_posts`);
+		const feed_posts = await res.json();
+		console.log(feed_posts);
+		return { feed_posts };
+	}
+
 	constructor() {
 		super();
 		this.state = {
@@ -125,7 +133,7 @@ export default class extends React.Component {
 	}
 
 	render() {
-		const { url } = this.props;
+		const { url, feed_posts } = this.props;
 		const query = url.query;
 
 		let display_posts = feed_posts.slice(0);

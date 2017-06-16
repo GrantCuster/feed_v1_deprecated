@@ -154,6 +154,12 @@ app.prepare().then(() => {
     return res.json(files);
   });
 
+  server.get("/api/feed_posts", (req, res) => {
+    const data = fs.readFileSync("./static/feed_posts.json", "utf8");
+    const posts = JSON.parse(data);
+    return res.json(posts);
+  });
+
   server.get("/api/writing/:file_slug", (req, res) => {
     const filename = req.params.file_slug;
     const file = fs.readFileSync(`./static/writing/${filename}`, "utf8");
