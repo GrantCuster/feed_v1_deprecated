@@ -12,6 +12,12 @@ const cookieParser = require("cookie-parser");
 const cookieSession = require("cookie-session");
 const bodyParser = require("body-parser");
 
+const slugDate = (date_string) => {
+  const date = new Date(date_string);
+  const slug_date = date.toISOString().replace(/-/g,'').replace(/:/g,'').replace(/\./g,'');
+  return slug_date;
+}
+
 const dev = process.env.NODE_ENV !== "production";
 const app = next({ dev });
 const handle = app.getRequestHandler();
@@ -43,21 +49,20 @@ const capitalizeFirstLetter = string => {
 };
 
 const postTweet = post => {
-  console.log("post tweet");
   const domain = "http://feed.grantcuster.com";
+  const date_slug = slugDate(post.posted);
   var status =
     "Feed → " +
     capitalizeFirstLetter(post.type) +
     " ↓ " +
     domain +
     "/posts/" +
-    post.posted;
+    (date_slug);
   if (post.src && post.src.length > 0) {
     status += " from " + post.src;
   }
   var path_name = "." + post.img;
   var img_data = fs.readFileSync(path_name);
-
   Twitter.post("media/upload", { media: img_data }, function(
     error,
     media,
