@@ -1,5 +1,12 @@
 [
   {
+    "type": "inspiration",
+    "text": "Super interesting post on animating ice flows. I am more and more interested in shaders.",
+    "src": "http://dwtkns.com/posts/2017-06-13-flowing-ice.html",
+    "posted": 1497577221364,
+    "img": "/static/images/feed/Screen Shot 2017-06-15 at 8.44.54 PM-1497577219969.png"
+  },
+  {
     "type": "work",
     "posted": "Tue Jun 13 2017 23:25:53 GMT+0000 (UTC)",
     "img": "/static/images/feed/Screen Shot 2017-06-13 at 7.25.02 PM-1497396352816.png",
