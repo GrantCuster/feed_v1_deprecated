@@ -144,7 +144,6 @@ app.prepare().then(() => {
   server.use(passport.session());
 
   server.get("/api/list_writings", (req, res) => {
-    console.log('get writing list on server');
     const file_list = fs.readdirSync("./static/writing/");
     const files = file_list.map(filename => {
       const file = fs.readFileSync(`./static/writing/${filename}`, "utf8");
@@ -224,13 +223,21 @@ app.prepare().then(() => {
     }
   );
 
-  // ensure.ensureLoggedIn()
   server.get("/admin", (req, res) => {
     app.render(
       req,
       res,
       "/admin",
       Object.assign({}, { user: req.user }, req.query)
+    );
+  });
+
+  server.get("/admin_texst", (req, res) => {
+    app.render(
+      req,
+      res,
+      "/admin",
+      Object.assign({}, req.query)
     );
   });
 

@@ -1,6 +1,7 @@
 import React from "react";
 import Nav from "../components/nav";
 import axios from "axios";
+import Head from 'next/head';
 
 export default class extends React.Component {
 	constructor() {
@@ -58,7 +59,6 @@ export default class extends React.Component {
 
 	handlePost(e) {
 		let formData = new FormData();
-		console.log(this.state.tweet);
 		const post_object = {
 			type: this.state.category,
 			text: this.checkText(this.state.alt),
@@ -90,6 +90,10 @@ export default class extends React.Component {
 		const { url } = this.props;
 		return (
 			<div>
+				<Head>
+					<title>Grant Custer → Admin</title>
+				</Head>
+
 				<Nav url={url} />
 				<div className="center mb3">
 					<h1>New Post</h1>
