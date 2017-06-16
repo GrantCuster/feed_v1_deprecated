@@ -13,7 +13,6 @@ export default class extends React.Component {
 		const baseUrl = makeBaseUrl(req);
 		const res = await fetch(`${baseUrl}/api/feed_posts`);
 		const feed_posts = await res.json();
-		console.log(feed_posts);
 		return { feed_posts };
 	}
 
