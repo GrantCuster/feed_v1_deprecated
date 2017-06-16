@@ -5,25 +5,17 @@ import { slugDate } from '../utils/utils-general';
 import Nav from "../components/nav";
 import FeedPost from '../components/feed_post';
 import Head from 'next/head';
+import feed_posts from "../static/feed_posts.json";
 
 export default class extends React.Component {
-	static async getInitialProps({ req, query }) {
-		console.log(query);
-		let domain;
-		req
-			? (domain = `http://${req.headers.host}`)
-			: (domain = window.location.origin);
-		const res = await fetch(`${domain}/static/feed_posts.json`);
-		const feed_posts = await res.json();
+	render() {
+		const { url, layout } = this.props;
+		const query = url.query;
 		const date_slug = query.date_slug;
 		const post_dates = feed_posts.map(p => slugDate(p.posted));
 		const post_index = post_dates.indexOf(date_slug);
 		const post = feed_posts[post_index];
-		return { post };
-	}
 
-	render() {
-		const { url, post, layout } = this.props;
 		return (
 			<div>
 				<Head>

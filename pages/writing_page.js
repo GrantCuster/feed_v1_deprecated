@@ -2,14 +2,12 @@ import React from "react";
 import fetch from "isomorphic-unfetch";
 import Nav from "../components/nav";
 import Remarkable from "remarkable";
+import {makeBaseUrl} from "../utils/utils-general";
 
 export default class extends React.Component {
 	static async getInitialProps({ req, query }) {
-		let domain;
-		req
-			? (domain = `http://${req.headers.host}`)
-			: (domain = window.location.origin);
-		const res = await fetch(`${domain}/api/writing/${query.file_slug}.md`);
+		const baseUrl = makeBaseUrl(req);
+		const res = await fetch(`${baseUrl}/api/writing/${query.file_slug}.md`);
 		const file = await res.json();
 		return { file };
 	}

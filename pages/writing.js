@@ -4,12 +4,11 @@ import Nav from "../components/nav";
 import Remarkable from "remarkable";
 import Head from 'next/head';
 import Link from "next/link";
+import {makeBaseUrl} from "../utils/utils-general";
 
 export default class extends React.Component {
-	static async getInitialProps(props) {
-		const { req, query } = props;
-		let baseUrl = req ? `${req.protocol}://${req.get('Host')}` : '';
-		if (req && req.get('Host').indexOf(":") === -1) baseUrl = baseUrl + ":8080";
+	static async getInitialProps({ req, query }) {
+		const baseUrl = makeBaseUrl(req);
 		const res = await fetch(`${baseUrl}/api/list_writings`);
 		const files = await res.json();
 		return { files };
