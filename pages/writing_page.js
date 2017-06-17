@@ -2,6 +2,7 @@ import React from "react";
 import fetch from "isomorphic-unfetch";
 import Nav from "../components/nav";
 import Remarkable from "remarkable";
+import Head from 'next/head';
 import Link from "next/link";
 import {makeBaseUrl} from "../utils/utils-general";
 
@@ -20,6 +21,10 @@ export default class extends React.Component {
 
 		return (
 			<div>
+				<Head>
+					<title>Grant Custer → {file.meta.title}</title>
+				</Head>
+
 				<Nav url={url} />
 				<div className="center mb3">
 					<h1>{file.meta.title}</h1>
