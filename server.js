@@ -11,6 +11,7 @@ const TwitterPackage = require("twitter");
 const cookieParser = require("cookie-parser");
 const cookieSession = require("cookie-session");
 const bodyParser = require("body-parser");
+const keys = require("../local_keys");
 
 const slugDate = (date_string) => {
   const date = new Date(date_string);
@@ -18,35 +19,24 @@ const slugDate = (date_string) => {
   return slug_date;
 }
 
+const capitalizeFirstLetter = string => {
+  return string.charAt(0).toUpperCase() + string.slice(1);
+};
+
 const dev = process.env.NODE_ENV !== "production";
 const app = next({ dev });
 const handle = app.getRequestHandler();
 const port = process.env.NODE_ENV === "production" ? 8080 : 3000;
 
-let secret;
-if (process.env.NOW) {
-  secret = {
-    consumer_key: process.env.consumerKey,
-    consumer_secret: process.env.consumerSecret,
-    access_token_key: process.env.token,
-    access_token_secret: process.env.secret,
-    session_secret: process.env.sessionSecret
-  };
-} else {
-  const keys = require("../local_keys");
-  secret = {
-    consumer_key: keys.consumerKey,
-    consumer_secret: keys.consumerSecret,
-    access_token_key: keys.token,
-    access_token_secret: keys.secret,
-    session_secret: keys.sessionSecret
-  };
-}
-const Twitter = new TwitterPackage(secret);
-
-const capitalizeFirstLetter = string => {
-  return string.charAt(0).toUpperCase() + string.slice(1);
+const secret = {
+  consumer_key: keys.consumerKey,
+  consumer_secret: keys.consumerSecret,
+  access_token_key: keys.token,
+  access_token_secret: keys.secret,
+  session_secret: keys.sessionSecret
 };
+
+const Twitter = new TwitterPackage(secret);
 
 const postTweet = post => {
   const domain = "http://feed.grantcuster.com";
@@ -56,7 +46,7 @@ const postTweet = post => {
     capitalizeFirstLetter(post.type) +
     " ↓ " +
     domain +
-    "/posts/" +
+    "/post/" +
     (date_slug);
   if (post.src && post.src.length > 0) {
     status += " from " + post.src;
@@ -91,7 +81,7 @@ passport.use(
     {
       consumerKey: secret.consumer_key,
       consumerSecret: secret.consumer_secret,
-      callbackURL: "http://localhost:3000/auth/twitter/callback"
+      callbackURL: "/auth/twitter/callback"
     },
     function(token, tokenSecret, profile, cb) {
       if (profile.username !== "GrantCuster") {
@@ -174,8 +164,8 @@ app.prepare().then(() => {
     return res.json(file_obj);
   });
 
-  // ensure.ensureLoggedIn()
-  server.post("/api/private/post", [upload.single("image")], (req, res) => {
+  server.post("/api/private/post", [upload.single("image"), ensure.ensureLoggedIn()
+], (req, res) => {
     const makePost = post_object => {
       fs.readFile("./static/feed_posts.json", (err, data) => {
         if (err) throw err;
@@ -234,7 +224,7 @@ app.prepare().then(() => {
     }
   );
 
-  server.get("/admin", (req, res) => {
+  server.get("/admin", ensure.ensureLoggedIn(), (req, res) => {
     return app.render(
       req,
       res,
