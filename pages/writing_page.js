@@ -16,7 +16,7 @@ export default class extends React.Component {
 
 	render() {
 		const { url, file } = this.props;
-		const share_image_base_url = "http://feed.grantcuster.com/images/writing"
+		const share_image_base_url = "http://feed.grantcuster.com"
 		const md = new Remarkable();
 
 		return (
