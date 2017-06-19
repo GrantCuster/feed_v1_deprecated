@@ -1,13 +1,22 @@
 ---
 title: "Why this looks like this"
 date: "Sat June 17 2017 12:20:00 GMT-0400 (EDT)"
+preview_image: "/static/images/writing/8.png"
 ---
 
 This is the second version of this blog. I added more sections (like this one), but the meat of it is the [feed]('/') which looks pretty much like it did in the first version.
 
 ## Inspiration
 
-The main idea behind the feed was that I wanted a lightweight way to post things in process. I was inspired by people (especially indie game developers) who post lots of screenshots and GIFs of their work. I was also inspired by Mark Forscher's [workinonittt](https://workinonittt.tumblr.com/) blog, especially the posts that are screenshots of the work inside the applications, and David Rudnick's ["Incoming:" tweets](https://twitter.com/David_Rudnick/status/869240454713286656).
+![A screenshot of Mark Forscher's workinonittt blog showing a design he's working on.](/static/images/writing/1.png)
+
+*Mark Forscher's [workinonittt blog](https://workinonittt.tumblr.com/)*
+
+![A screenshot of an tweet title Incoming by David Rudnick and showing a typeface he's working on.](/static/images/writing/2.png)
+
+*David Rudnick's ["Incoming" tweets](https://twitter.com/David_Rudnick/status/869240454713286656)*
+
+The main idea behind the feed was that I wanted a lightweight way to post things in process. I was inspired by people (especially indie game developers) who post lots of screenshots and GIFs of their work. I was also inspired by Mark Forscher's [workinonittt](https://workinonittt.tumblr.com/) blog, especially the posts that are screenshots of the work inside the applications, and David Rudnick's ["Incoming:" tweets](https://twitter.com/David_Rudnick/status/869240454713286656). The spare styling was partly inspired by Brent Jackson's [site](http://jxnblk.com/) and is coded using his CSS toolkit [Basscss](http://basscss.com/).
 
 ## Not a tumblr
 
@@ -21,9 +30,17 @@ So I started from scratch and worked out from the absolute minimum of what I wan
 
 ### Categories, tags?
 
+![A screenshot of my old blog, showing a couple of posts with lots of tags.](/static/images/writing/3.png)
+
+*My old [tumblr blog](http://grantcuster.tumblr.com/) where I had a comprehensive tagging strategy*
+
 I had to decide about categories and tags. On my previous [tumblr blog](http://grantcuster.tumblr.com/) I'd tried to set-up and stick to this tagging system, that would let you see across broad categories like "projects" and narrower slices like "web projects" and "fast forward labs projects". The idea was that the real interesting design challenge for the blog was an information design challenge, and that I'd work within the constraints of the tagging system. It was... an interesting experiment. I think the main problem was it just increased the friction every time I went to post, so I posted less, and eventually lost all momentum and stopped.
 
 ### Just post
+
+![A screenshot of the post upload form.](/static/images/writing/4.png)
+
+*The current upload form for a post. Some day soon it will get a little more styling*
 
 With past experience in mind, I decided the top priority for the blog was to make something I would regularly post to. Any cool categorization stuff could wait until I made sure I was going to use it. So I settled on only two categories: **Inspiration** and **Work**, and no tags. 
 
@@ -38,6 +55,10 @@ I knew I wanted something pretty minimal for the actual look of the blog. Since 
 
 ### The grain
 
+![A screenshot of brutalist websites.](/static/images/writing/5.png)
+
+*The [brutalist websites](http://brutalistwebsites.com/) gallery*
+
 I was (and continue to be) fascinated by tryng to come up with web design metaphors that work off of some of the most basic web functionality. It feels satisfying to me in the same way that seeing a building where the joints are exposed does: this feeling that it's staying true to its form and not trying to hide or obscure how it's functioning. Frank Chimero talks about it in [The Web's Grain](https://www.frankchimero.com/writing/the-webs-grain/). I think you can also see it in [Brutalist Websites](http://brutalistwebsites.com/). I was also thinking about Ben Pierrat's original [This.cm design](http://feed.grantcuster.com/post/20160403T234211000Z), which tiled preview images to the length of the article title, a lot while trying to figure the blog out.
 
 ### Real is a feeling
@@ -48,11 +69,19 @@ I think it's good to interrogate all of that, but there's also a point at which 
 
 ### To the left, to the right
 
+![A screenshot of the feed section of the blog.](/static/images/writing/8.png)
+
+*The final design of the [feed](/)*
+
 The move I decided on was aligning all the inspiration posts to the left, and all the work posts to the right. I like that probably everyone can imagine how you could make the design in a Word document, highlighting and clicking the paragraph align button for each entry. I set some limits on how wide and tall any one image could be, but I liked that, depending on their dimensions, they reached different distances in towards the center of the page. Doing web design, you have to figure out how to put a lot of things in standard-size boxes, it's nice to let the image kind of run wild.
 
 The other kind of echo metaphor I think that I get out of the left and right alignment is the idea of a dialog. The place you're most likely to see this split alignment is in text message conversations, and I like the idea that I am getting these messages from my inspirations and then responding back. It's kind of a heavy conceptual metaphor so I don't emphasize it with the styling, really (like I think putting the posts in outlined text messages would be a step too far).
 
 ### A couple more points
+
+![A screenshot of a post shared to Twitter.](/static/images/writing/6.png)
+
+*Posts to [my twitter](https://twitter.com/grantcuster) contain the full image*
 
 I mentioned earlier that a priority was being able to post to twitter and automatically attach the full image. This turned out to be super important to motivating me to keep posting. I don't think many people visit this blog itself, but they do (sometimes) respond to the Twitter posts, that sense that somebody is seeing this stuff makes me more likely to keep going. It's kind of a nice split, here on the blog I get to present everything exactly the way on want to present it. Then it also gets to go venture into the (slightly) wider world on twitter.
 

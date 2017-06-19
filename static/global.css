@@ -54,3 +54,7 @@ h2 {
 	line-height: 1.25;
 	margin: 1rem 0;
 }
+
+.image-max img {
+	max-width: 100%;
+}
