@@ -30,15 +30,18 @@ export default class extends React.Component {
 				</div>
 				{files.map(f => {
 					return (
-						<div className="measure-max mx-auto px2 mb4" key={f.meta.filename}>
+						<div className="measure-max image-max mx-auto px2 mb4" key={f.meta.filename}>
 							<div className="sans-serif">
 								{new Date(f.meta.date).toLocaleString()}
 							</div>
 							<div className="">
 								<h2><Link href={`/writing_page?file_slug=${f.meta.filename.slice(0,-3)}`} as={`/writing/${f.meta.filename.slice(0,-3)}`}><a>{f.meta.title}</a></Link></h2>
 							</div>
+							{f.meta.preview_image ? (
+								<img className="mb2 mt1" style={{maxHeight: "10rem"}} src={f.meta.preview_image} />
+							) : null}
 							<div className="mb2">
-								{f.content.replace(/\n\n/g, " ¶ ").replace(" ¶ ", "").split(" ").splice(0,60).join(" ")}
+								{f.content.replace(/\n\n/g, " ¶ ").replace(" ¶ ", "").split(" ").splice(0,40).join(" ")}
 								{"..."}
 							</div>
 							<div>
