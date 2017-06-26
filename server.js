@@ -140,6 +140,7 @@ app.prepare().then(() => {
 
   server.get("/api/list_writings", (req, res) => {
     const file_list = fs.readdirSync("./static/writing/");
+    file_list.reverse();
     const files = file_list.map(filename => {
       const file = fs.readFileSync(`./static/writing/${filename}`, "utf8");
       const contents = file.split("---");

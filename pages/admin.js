@@ -12,7 +12,7 @@ export default class extends React.Component {
 			alt: "",
 			from: "",
 			download_url: "",
-			tweet: false
+			tweet: true
 		};
 	}
 
