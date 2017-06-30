@@ -1,5 +1,5 @@
 ---
-title: "Starting to think about using machine learning for insight into human decisions"
+title: "Think a bit about using machine learning for insight into human decisions"
 date: "Fri, 30 Jun 2017 01:32:01 GMT"
 ---
 
