@@ -36,13 +36,14 @@ export default class extends React.Component {
 		];
 
 		let display_posts = feed_posts.slice(0);
-		display_posts = display_posts.filter(p => p.type === "work");
+		let filter_type = "work";
+		if (query.show && query.show === "inspiration") filter_type = "inspiration";
+		display_posts = display_posts.filter(p => p.type === filter_type);
 
 		const months_array = [];
 		const date = new Date(Date.now());
 		const current_month = date.getMonth();
 		const current_year = date.getYear();
-		console.log(current_month);
 
 		function getMonthAndYear(post) {
 			const date = new Date(post.posted);
@@ -79,19 +80,28 @@ export default class extends React.Component {
 			}
 		}
 
-		console.log(posts_month_grouped);
-
 		return (
 			<div>
 				<Head>
-					<title>Grant Custer → Feed</title>
+					<title>Grant Custer → Feed Archive</title>
 				</Head>
 
 				<Nav url={url} />
 				<div className="px2 center mb3">
-					<h1>Feed Archive</h1>
+					<h1>Feed Archive View</h1>
 				</div>
 				<div className="mb3">
+					<div className="mb3 px2">
+						Showing all
+						{" "} 
+							{query.show && query.show === "inspiration" ? (
+								<span><Link href="/feed_archive"><a className="faded-link">work</a></Link>{" "}<span className="bold">inspiration</span></span>
+							) : (
+								<span><span className="bold">work</span>{" "}<Link href="/feed_archive?show=inspiration"><a className="faded-link">inspiration</a></Link></span>
+							)}
+						{" "}
+						feed posts grouped by month.
+					</div>
 					<div className="">
 						{posts_month_grouped.map(group => {
 							return (
@@ -109,25 +119,20 @@ export default class extends React.Component {
 									</div>
 									<div className="flex flex-wrap px1 mb2">
 										{group.posts.map(post => {
+											const date_slug = slugDate(post.posted);
 											return (
 												<div className="px1 pb2" style={{ maxWidth: "calc(20vw + 1rem)",lineHeight: "0" }}>
-													<img
-														src={post.img}
-														style={{ maxWidth: "20vw", maxHeight: "10rem" }}
-													/>
-													<div
-														style={{
-															lineHeight: 1.5,
-															fontSize: "0.75rem",
-															marginTop: "0.25rem",
-															whiteSpace: "nowrap",
-															overflow: "hidden",
-															textOverflow: "ellipsis",
-															maxWidth: "100%"
-														}}
+													<Link
+														href={`/feed_post_page?date_slug=${date_slug}`}
+														as={`/post/${date_slug}`}
 													>
-														{post.src}
-													</div>
+														<a style={{lineHeight: 0}}>
+															<img
+																src={post.img}
+																style={{ maxWidth: "20vw", maxHeight: "10rem" }}
+															/>
+														</a>
+													</Link>
 												</div>
 											);
 										})}

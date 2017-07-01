@@ -58,3 +58,7 @@ h2 {
 .image-max img {
 	max-width: 100%;
 }
+
+.faded-link {
+	color: #777;
+}

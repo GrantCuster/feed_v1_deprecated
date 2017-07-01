@@ -191,7 +191,6 @@ app.prepare().then(() => {
 
     const post_object = Object.assign({}, req.body);
     post_object.posted = Date.now();
-    console.log(post_object);
 
     if (req.file === undefined) {
       request.head(req.body.download_url, (err, res, body) => {
