@@ -81,10 +81,10 @@ export default class extends React.Component {
 		}
 
 		const meta = {};
-		const meta.title = "Grant Custer → Feed Archive";
-		const meta.description = "Showing all feed posts grouped by month.";
+		meta.title = "Grant Custer → Feed Archive";
+		meta.description = "Showing all feed posts grouped by month.";
 		const share_image_base_url = "http://feed.grantcuster.com";
-		const meta.share_image = share_image_base_url + "/static/images/other/feed_archive_meta.jpg";
+		meta.share_image = share_image_base_url + "/static/images/other/feed_archive_meta.jpg";
 
 
 		return (
