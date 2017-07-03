@@ -12,6 +12,7 @@ export default class extends React.Component {
 			alt: "",
 			from: "",
 			download_url: "",
+			via: "",
 			tweet: true
 		};
 	}
@@ -39,6 +40,10 @@ export default class extends React.Component {
 		this.setState({ from: e.target.value });
 	}
 
+	handleViaChange(e) {
+		this.setState({ via: e.target.value });
+	}
+
 	handleTweetChange(e) {
 		const target = e.target;
 		const value = target.type === "checkbox" ? target.checked : target.value;
@@ -63,6 +68,7 @@ export default class extends React.Component {
 			type: this.state.category,
 			text: this.checkText(this.state.alt),
 			src: this.checkText(this.state.from),
+			via: this.checkText(this.state.via),
 			tweet: this.state.tweet
 		};
 		Object.keys(post_object).forEach(key => {
@@ -166,6 +172,17 @@ export default class extends React.Component {
 								<input
 									type="text"
 									onChange={this.handleFromChange.bind(this)}
+								/>
+							</div>
+						</div>
+						<div>
+							<div>
+								Via
+							</div>
+							<div>
+								<input
+									type="text"
+									onChange={this.handleViaChange.bind(this)}
 								/>
 							</div>
 						</div>
