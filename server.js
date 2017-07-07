@@ -165,6 +165,19 @@ app.prepare().then(() => {
     return res.json(file_obj);
   });
 
+  server.get("/api/project_ideas", (req, res) => {
+    const file = fs.readFileSync(`./static/project_ideas.md`, "utf8");
+    return res.json(file);
+  })
+
+  server.post("/api/project_ideas", ensure.ensureLoggedIn(), (req, res) => {
+    const ideas_text = req.body.ideas_text;
+    fs.writeFile("./static/project_ideas.md", ideas_text, err => {
+      if (err) console.log(err);
+      return res.json(req.body);
+    });
+  })
+
   server.post("/api/private/post", [upload.single("image"), ensure.ensureLoggedIn()
 ], (req, res) => {
     const makePost = post_object => {
@@ -224,12 +237,30 @@ app.prepare().then(() => {
     }
   );
 
+  server.get("/admin/project_ideas", ensure.ensureLoggedIn(), (req, res) => {
+    return app.render(
+      req,
+      res,
+      "/project_ideas_admin",
+      Object.assign({}, { user: req.user }, req.query)
+    );
+  });
+
   server.get("/admin", ensure.ensureLoggedIn(), (req, res) => {
     return app.render(
       req,
       res,
       "/admin",
       Object.assign({}, { user: req.user }, req.query)
+    );
+  });
+
+  server.get("/project_ideas", (req, res) => {
+    return app.render(
+      req,
+      res,
+      "/project_ideas",
+      req.query
     );
   });
 
