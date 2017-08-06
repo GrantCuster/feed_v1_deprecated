@@ -5,6 +5,8 @@ import Head from 'next/head';
 
 const markdown_text = `
 Experimental projects at varying stages of completion.
+- The City and the City - An experiment in terrain generation and possibly game development.
+	- [v1](/cityand/v1) (8/5/2017) - Terrain generates and people move around.
 - [Project Ideas](/project_ideas) (7/6/2017) - A list of personal project ideas.
 - [Feed Archive View](/feed_archive) (7/1/2017) - An alternate view of the feed, where post thumbnails are grouped by month. It loads a lot of images at once so proceed with caution if you're paying for data.
 `

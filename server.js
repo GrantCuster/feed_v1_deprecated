@@ -12,6 +12,7 @@ const cookieParser = require("cookie-parser");
 const cookieSession = require("cookie-session");
 const bodyParser = require("body-parser");
 const keys = require("../local_keys");
+const path = require("path");
 
 const slugDate = (date_string) => {
   const date = new Date(date_string);
@@ -262,6 +263,19 @@ app.prepare().then(() => {
       "/project_ideas",
       req.query
     );
+  });
+
+  server.get("/evolving_button", (req, res) => {
+    return app.render(
+      req,
+      res,
+      "/evolving_button",
+      req.query
+    );
+  });
+
+  server.get("/cityand/v1", (req, res) => {
+    res.sendFile(path.join(__dirname + '/static/cityand_files/v1/index.html'));
   });
 
   server.get("/writing/:file_slug", (req, res) => {
