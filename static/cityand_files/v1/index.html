@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>The City and the City Exploration 1</title>
+		<style type="text/css">
+			* { box-sizing: border-box; }
+			body { margin: 0; font-family: sans-serif; background: #222; }
+		</style>
+	</head>
+	<body>
+		<div style="display: flex; flex-direction: column; min-height: 100vh;">
+			<div style="line-height: 1.5; padding: 1rem; color: #eee;">
+				<a href="/" style="color: #eee">Grant Custer</a> → <a href="/misc" style="color: #eee">Misc</a> → The City and the City Terrain v1
+			</div>
+			<div style="display: flex; flex-grow: 1; align-items: center; padding: 3rem 0; justify-content: center;">
+				<canvas id="canvas" width="640" height="480" style="display: block; background: #fff; box-shadow: 0 1px 3px rgba(0,0,0,0.3);" />
+			</div>
+			<div style="line-height: 1.5; padding: 1rem; color: #ddd;">
+				Terrain tiles generated, and people (the black boxes) moving and respecting canvas boundaries but not terrain boundaries. Possible next steps: - collision dectection for people; - make people respect terrain boundaries; - generate cross-hatch terrain pathways connecting regions.
+			</div>
+		</div>
+		<script src="/static/cityand_files/v1/game-v1.js"></script>
+	</body>
+</html>
