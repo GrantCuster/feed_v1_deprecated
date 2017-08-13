@@ -42,17 +42,36 @@ const Twitter = new TwitterPackage(secret);
 const postTweet = post => {
   const domain = "http://feed.grantcuster.com";
   const date_slug = slugDate(post.posted);
-  var status =
-    "Feed → " +
+  var preamble = "Feed → " +
     capitalizeFirstLetter(post.type) +
-    " ↓ " +
-    domain +
-    "/post/" +
-    (date_slug);
+    " ↓ ";
+  var link = domain + "/post/" + (date_slug);
+
+  var additional = "";
   if (post.src && post.src.length > 0) {
-    status += " from " + post.src;
+    additional += " from " + post.src;
+  }
+  if (post.via && post.via.length > 0) {
+    additional += " via " + post.via;
   }
   var path_name = "." + post.img;
+
+  var message_no_text = preamble + link + additional;
+
+  var count_no_text = preamble.length + 23 + additional.length ;
+  var characters_left = 140 - count_no_text;
+
+  var text = "";
+  if (post.text && post.text.length > 0) text = " " + post.text;
+  var text_length = text.length;
+
+  var message = "";
+  if (text_length > characters_left) {
+    text = text.substring(0, characters_left - 3).trim() + "...";
+  }
+
+  message = preamble + link + text + additional;
+
   var img_data = fs.readFileSync(path_name);
   Twitter.post("media/upload", { media: img_data }, function(
     error,
@@ -61,7 +80,7 @@ const postTweet = post => {
   ) {
     if (!error) {
       var the_tweet = {
-        status: status,
+        status: message,
         media_ids: media.media_id_string
       };
       Twitter.post("statuses/update", the_tweet, function(
