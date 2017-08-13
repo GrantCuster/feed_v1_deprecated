@@ -1,6 +1,14 @@
 [
   {
     "type": "work",
+    "text": "I got the people (dots) to step back and say excuse me. I think this was a good exercise in running into a bunch of the ways collision detection is not easy. I'll probably do some research on how other people handle it now.",
+    "src": "http://feed.grantcuster.com/cityand/v2",
+    "tweet": "true",
+    "posted": 1502651968641,
+    "img": "/static/images/feed/bump-1502651967731.gif"
+  },
+  {
+    "type": "work",
     "text": "This is not really how I expected this collision detection/avoidance to feel, but it does technically satisfy the conditions I programmed.",
     "tweet": "true",
     "posted": 1502559375211,

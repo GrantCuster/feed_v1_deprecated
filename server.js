@@ -42,24 +42,39 @@ const Twitter = new TwitterPackage(secret);
 const postTweet = post => {
   const domain = "http://feed.grantcuster.com";
   const date_slug = slugDate(post.posted);
+
   var preamble = "Feed → " +
     capitalizeFirstLetter(post.type) +
     " ↓ ";
+  var count = preamble.length;
+
   var link = domain + "/post/" + (date_slug);
+  count += 23;
 
   var additional = "";
   if (post.src && post.src.length > 0) {
-    additional += " from " + post.src;
+    var additional_pre = " from ";
+    additional += additional_pre + post.src;
+    count += additional_pre.length;
+    if (post.src.indexOf("http") > -1) {
+      count += 23;
+    } else {
+      count += post.src.length;
+    }
   }
   if (post.via && post.via.length > 0) {
-    additional += " via " + post.via;
+    var via_pre = " via ";
+    additional += via_pre + post.via;
+    count += via_pre.length;
+    if (post.via.indexOf("http") > -1) {
+      count += 23;
+    } else {
+      count += post.via.length;
+    }
   }
   var path_name = "." + post.img;
 
-  var message_no_text = preamble + link + additional;
-
-  var count_no_text = preamble.length + 23 + additional.length ;
-  var characters_left = 140 - count_no_text;
+  var characters_left = 140 - count;
 
   var text = "";
   if (post.text && post.text.length > 0) text = " " + post.text;
