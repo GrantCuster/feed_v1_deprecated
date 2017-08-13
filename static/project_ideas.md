@@ -1,6 +1,5 @@
 ### feed.grantcuster.com
-- Add caption text (as much as will fit) to tweets
-- Add ability to retweet via tweet as inspiration feed post
+- Add ability to add quotes as text
 - Add updated date to project ideas file
 - Set-up project ideas back-up system
 - Look at pre-processing markdown solution
@@ -16,4 +15,5 @@
 - Death metal logo generator
 
 ### complete
+- ~~Add caption text (as much as will fit) to tweets~~
 - ~~Make project ideas page and editor~~
