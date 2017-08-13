@@ -278,6 +278,10 @@ app.prepare().then(() => {
     res.sendFile(path.join(__dirname + '/static/cityand_files/v1/index.html'));
   });
 
+  server.get("/cityand/v2", (req, res) => {
+    res.sendFile(path.join(__dirname + '/static/cityand_files/v2/index.html'));
+  });
+
   server.get("/writing/:file_slug", (req, res) => {
     return app.render(
       req,

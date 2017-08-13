@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>The City and the City Exploration 2</title>
+		<style type="text/css">
+			body { margin: 0; font-family: sans-serif; background: #222; }
+		</style>
+	</head>
+	<body>
+		<div style="display: flex; flex-direction: column; min-height: 100vh;">
+			<div style="line-height: 1.5; padding: 1rem; color: #eee;">
+				<a href="/" style="color: #eee">Grant Custer</a> → <a href="/misc" style="color: #eee">Misc</a> → The City and the City v2: Crossing Paths
+			</div>
+			<div style="display: flex; flex-grow: 1; align-items: center; padding: 0; justify-content: center;">
+				<div>
+					<div id="status" style="padding: 1.5rem 0; height: 4.5rem; line-height: 1.5; text-align: center; color: #fff; width: 300px;">
+					</div>
+					<canvas id="canvas" width="300" height="300" style="display: block; background: #fff; box-shadow: 0 1px 3px rgba(0,0,0,0.3);"></canvas>
+					<div id="dialog" style="padding: 1.5rem 0; text-align: center; color: #fff; width: 300px; line-height: 1.5; height: 4.5rem;"></div>
+				</div>
+			</div>
+			<div style="line-height: 1.5; padding: 1rem; color: #ddd;">
+				An experiment in collision detection and prevention for people walking paths. The code looks at who is going to collide on the next step and has one of them step back. I'm going to keep thinking and probably read up on better ways to do this.
+			</div>
+		</div>
+		<script src="/static/cityand_files/v2/game-v2.js"></script>
+	</body>
+</html>
