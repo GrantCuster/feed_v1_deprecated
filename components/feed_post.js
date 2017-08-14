@@ -18,17 +18,47 @@ export default ({ post, layout }) => {
 						</Link>
 					: new Date(post.posted).toLocaleString()}
 			</div>
-			<img
-				style={{
-					maxHeight: layout === "post" ? "calc(80vh)" : "none",
-					maxWidth: layout === "post" ? "calc(100vw - 1rem)" : "100%"
-				}}
-				src={`${post.img}`}
-			/>
-			{post.text ? <div className={"flex mt2 " + (post.type === "work" ? "justify-end" : "")}><div className="px2 measure-max" style={{color: "#888"}}>{post.text}</div></div> : null}
+			{post.img
+				? <img
+						style={{
+							maxHeight: layout === "post" ? "calc(80vh)" : "none",
+							maxWidth: layout === "post" ? "calc(100vw - 1rem)" : "100%"
+						}}
+						src={`${post.img}`}
+					/>
+				: <div
+						className="flex"
+						style={{
+							justifyContent: post.type === "work" ? "flex-end" : "flex-start"
+						}}
+					>
+						<div
+							className="px2 mb2"
+							style={{
+								fontSize: "2rem",
+								maxWidth: layout === "post" ? "calc(100vw - 1rem)" : "100%"
+							}}
+						>
+							“{post.quote}”
+						</div>
+					</div>}
+			{post.text
+				? <div
+						className={
+							"flex mt2 " + (post.type === "work" ? "justify-end" : "")
+						}
+					>
+						<div className="px2 measure-max" style={{ color: "#888" }}>
+							{post.text}
+						</div>
+					</div>
+				: null}
 			{post.src
 				? <div className="mt2 px2">
-						<a href={post.src}>{post.src}</a>{post.via ? (<span> via <a href={post.via}>{post.via}</a></span>) : null}
+						<a href={post.src}>{post.src}</a>
+						{post.via
+							? <span> via <a href={post.via}>{post.via}</a></span>
+							: null}
 					</div>
 				: null}
 		</div>

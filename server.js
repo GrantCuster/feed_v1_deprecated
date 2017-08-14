@@ -76,39 +76,65 @@ const postTweet = post => {
 
   var characters_left = 140 - count;
 
+  var quote = "";
+  if (!post.img && post.quote) {
+    if (quote.length > characters_left) {
+      quote = " " + quote.substring(0, characters_left - 5).trim() + "”...";
+    } else {
+      quote =  " “" + post.quote + "”";
+    }
+    count += quote.length;
+    characters_left = 140 - count;
+  }
+
   var text = "";
   if (post.text && post.text.length > 0) text = " " + post.text;
   var text_length = text.length;
 
   var message = "";
   if (text_length > characters_left) {
-    text = text.substring(0, characters_left - 3).trim() + "...";
+    text = " " + text.substring(0, characters_left - 3).trim() + "...";
   }
 
-  message = preamble + link + text + additional;
+  message = preamble + link + quote + text + additional;
 
-  var img_data = fs.readFileSync(path_name);
-  Twitter.post("media/upload", { media: img_data }, function(
-    error,
-    media,
-    response
-  ) {
-    if (!error) {
-      var the_tweet = {
-        status: message,
-        media_ids: media.media_id_string
-      };
-      Twitter.post("statuses/update", the_tweet, function(
-        error,
-        tweet,
-        response
-      ) {
-        if (!error) {
-          console.log(tweet);
-        }
-      });
-    }
-  });
+  if (post.img) {
+    var img_data = fs.readFileSync(path_name);
+    Twitter.post("media/upload", { media: img_data }, function(
+      error,
+      media,
+      response
+    ) {
+      if (!error) {
+        var the_tweet = {
+          status: message,
+          media_ids: media.media_id_string
+        };
+        Twitter.post("statuses/update", the_tweet, function(
+          error,
+          tweet,
+          response
+        ) {
+          if (!error) {
+            console.log(tweet);
+          }
+        });
+      }
+    });
+  } else {
+    var the_tweet = {
+      status: message
+    };
+    Twitter.post("statuses/update", the_tweet, function(
+      error,
+      tweet,
+      response
+    ) {
+      if (!error) {
+        console.log(tweet);
+      }
+    });
+  }
 };
 
 passport.use(
@@ -240,7 +266,9 @@ app.prepare().then(() => {
     const post_object = Object.assign({}, req.body);
     post_object.posted = Date.now();
 
-    if (req.file === undefined) {
+    console.log(post_object);
+
+    if (req.file === undefined && req.body.quote === undefined) {
       request.head(req.body.download_url, (err, res, body) => {
         const filename = downloadName(req.body.download_url);
         post_object.img = "/static/images/feed/" + filename;
@@ -248,12 +276,16 @@ app.prepare().then(() => {
           .pipe(fs.createWriteStream("./static/images/feed/" + filename))
           .on("close", () => {
             delete post_object.download_url;
-            makePost(post_object);
+            // makePost(post_object);
           });
       });
+    } else if (req.body.quote) {
+      console.log('there is a quote');
+      delete post_object.download_url;
+      makePost(post_object);
     } else {
       post_object.img = "/" + req.file.path;
-      makePost(post_object);
+      // makePost(post_object);
     }
     return res.json({ test: "test" });
   });

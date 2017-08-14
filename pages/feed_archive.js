@@ -84,22 +84,22 @@ export default class extends React.Component {
 		meta.title = "Grant Custer → Feed Archive";
 		meta.description = "Showing all feed posts grouped by month.";
 		const share_image_base_url = "http://feed.grantcuster.com";
-		meta.share_image = share_image_base_url + "/static/images/other/feed_archive_meta.jpg";
-
+		meta.share_image =
+			share_image_base_url + "/static/images/other/feed_archive_meta.jpg";
 
 		return (
 			<div>
 				<Head>
 					<title>{meta.title}</title>
-			    <meta name="og:title" content={meta.title} />
+					<meta name="og:title" content={meta.title} />
 					<meta name="og:description" content={meta.description} />
-			    <meta name="og:image" content={meta.share_image} />
-				  <meta name="twitter:card" content="summary_large_image" />
-				  <meta name="twitter:site" content="@grantcuster" />
-				  <meta name="twitter:creator" content="@grantcuster" />
-			    <meta name="twitter:title" content={meta.title} />
-			    <meta name="twitter:description" content={meta.description} />
-			    <meta name="twitter:image" content={meta.share_image} />
+					<meta name="og:image" content={meta.share_image} />
+					<meta name="twitter:card" content="summary_large_image" />
+					<meta name="twitter:site" content="@grantcuster" />
+					<meta name="twitter:creator" content="@grantcuster" />
+					<meta name="twitter:title" content={meta.title} />
+					<meta name="twitter:description" content={meta.description} />
+					<meta name="twitter:image" content={meta.share_image} />
 				</Head>
 
 				<Nav url={url} />
@@ -109,12 +109,22 @@ export default class extends React.Component {
 				<div className="mb3">
 					<div className="mb3 px2">
 						Showing all
-						{" "} 
-							{query.show && query.show === "inspiration" ? (
-								<span><Link href="/feed_archive"><a className="faded-link">work</a></Link>{" "}<span className="bold">inspiration</span></span>
-							) : (
-								<span><span className="bold">work</span>{" "}<Link href="/feed_archive?show=inspiration"><a className="faded-link">inspiration</a></Link></span>
-							)}
+						{" "}
+						{query.show && query.show === "inspiration"
+							? <span>
+									<Link href="/feed_archive">
+										<a className="faded-link">work</a>
+									</Link>
+									{" "}
+									<span className="bold">inspiration</span>
+								</span>
+							: <span>
+									<span className="bold">work</span>
+									{" "}
+									<Link href="/feed_archive?show=inspiration">
+										<a className="faded-link">inspiration</a>
+									</Link>
+								</span>}
 						{" "}
 						feed posts grouped by month.
 					</div>
@@ -137,16 +147,36 @@ export default class extends React.Component {
 										{group.posts.map(post => {
 											const date_slug = slugDate(post.posted);
 											return (
-												<div className="px1 pb2" style={{ maxWidth: "calc(20vw + 1rem)",lineHeight: "0" }}>
+												<div
+													className="px1 pb2"
+													style={{
+														maxWidth: "calc(20vw + 1rem)",
+														lineHeight: "0"
+													}}
+												>
 													<Link
 														href={`/feed_post_page?date_slug=${date_slug}`}
 														as={`/post/${date_slug}`}
 													>
-														<a style={{lineHeight: 0}}>
-															<img
-																src={post.img}
-																style={{ maxWidth: "20vw", maxHeight: "10rem" }}
-															/>
+														<a style={{ lineHeight: 0 }}>
+															{post.img
+																? <img
+																		src={post.img}
+																		style={{
+																			maxWidth: "20vw",
+																			maxHeight: "10rem"
+																		}}
+																	/>
+																: <div
+																		style={{
+																			maxWidth: "20vw",
+																			maxHeight: "10rem",
+																			overflow: "hidden",
+																			lineHeight: 1.5
+																		}}
+																	>
+																		&ldquo;{post.quote}&rdquo;
+																	</div>}
 														</a>
 													</Link>
 												</div>

@@ -32,6 +32,10 @@ export default class extends React.Component {
 		this.setState({ download_url: e.target.value });
 	}
 
+	handleQuoteChange(e) {
+		this.setState({ quote: e.target.value });
+	}
+
 	handleAltChange(e) {
 		this.setState({ alt: e.target.value });
 	}
@@ -66,6 +70,7 @@ export default class extends React.Component {
 		let formData = new FormData();
 		const post_object = {
 			type: this.state.category,
+			quote: this.checkText(this.state.quote),
 			text: this.checkText(this.state.alt),
 			src: this.checkText(this.state.from),
 			via: this.checkText(this.state.via),
@@ -105,22 +110,23 @@ export default class extends React.Component {
 					<h1>New Post</h1>
 				</div>
 				<form>
-					<div className="measure-max mx-auto px2">
-						<div>
-							<div>
-								category
+					<div className="measure-max mx-auto px2 pb3 mb3">
+						<div className="mb1">
+							<div className="">
+								Category:
 							</div>
 							<div>
-								<label>
+								<label className="px1">
 									<input
 										type="radio"
 										value="work"
 										onChange={this.handleCategoryClick.bind(this, "work")}
 										checked={this.state.category === "work"}
 									/>
-									work
+									{" "}
+									Work
 								</label>
-								<label>
+								<label className="px1">
 									<input
 										type="radio"
 										value="inspiration"
@@ -130,17 +136,23 @@ export default class extends React.Component {
 										)}
 										checked={this.state.category === "inspiration"}
 									/>
-									inspiration
+									{" "}
+								 	Inspiration
 								</label>
 							</div>
 						</div>
 						<div>
-							<div>
-								Image Upload Options
+							<div className="">
+								Image Options
 							</div>
-							<div className="p1 border">
-								<div>
+							<div className="p1 border mb2">
+								<div className="mb1">
+									<div>
+										File
+									</div>
 									<input
+										className="p1 col-12 h4"
+										style={{background: "#efefef"}}
 										type="file"
 										onChange={this.handleFileChange.bind(this)}
 									/>
@@ -150,6 +162,7 @@ export default class extends React.Component {
 								</div>
 								<div>
 									<input
+										className="col-12 h4 p1"
 										type="text"
 										onChange={this.handleUrlChange.bind(this)}
 									/>
@@ -158,36 +171,46 @@ export default class extends React.Component {
 						</div>
 						<div>
 							<div>
-								alt/title
+								Quote
 							</div>
 							<div>
-								<textarea onChange={this.handleAltChange.bind(this)} />
+								<textarea className="col-12 h4 p1" style={{height: "3.5rem"}} onChange={this.handleQuoteChange.bind(this)} />
 							</div>
 						</div>
-						<div>
+						<div className="mb1">
+							<div className="">
+								Text
+							</div>
+							<div>
+								<textarea className="col-12 h4 p1" style={{height: "3.5rem"}} onChange={this.handleAltChange.bind(this)} />
+							</div>
+						</div>
+						<div className="mb1">
 							<div>
 								From
 							</div>
 							<div>
 								<input
+									className="col-12 h4 p1"
 									type="text"
 									onChange={this.handleFromChange.bind(this)}
 								/>
 							</div>
 						</div>
-						<div>
+						<div className="mb1">
 							<div>
 								Via
 							</div>
 							<div>
 								<input
+									className="col-12 h4 p1"
 									type="text"
 									onChange={this.handleViaChange.bind(this)}
 								/>
 							</div>
 						</div>
 						<div>
-							<label>
+							<label className="">
 								<input
 									name="tweet"
 									type="checkbox"
@@ -200,7 +223,7 @@ export default class extends React.Component {
 						<div>
 							<input
 								type="submit"
-								className="p1 block mt2"
+								className="p2 h4 block mt2"
 								onClick={this.handlePost.bind(this)}
 								value="Post"
 							/>
