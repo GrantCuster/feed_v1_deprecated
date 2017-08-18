@@ -266,8 +266,6 @@ app.prepare().then(() => {
     const post_object = Object.assign({}, req.body);
     post_object.posted = Date.now();
 
-    console.log(post_object);
-
     if (req.file === undefined && req.body.quote === undefined) {
       request.head(req.body.download_url, (err, res, body) => {
         const filename = downloadName(req.body.download_url);
@@ -276,16 +274,15 @@ app.prepare().then(() => {
           .pipe(fs.createWriteStream("./static/images/feed/" + filename))
           .on("close", () => {
             delete post_object.download_url;
-            // makePost(post_object);
+            makePost(post_object);
           });
       });
     } else if (req.body.quote) {
-      console.log('there is a quote');
       delete post_object.download_url;
       makePost(post_object);
     } else {
       post_object.img = "/" + req.file.path;
-      // makePost(post_object);
+      makePost(post_object);
     }
     return res.json({ test: "test" });
   });
