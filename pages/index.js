@@ -9,8 +9,11 @@ import Router from "next/router";
 import {makeBaseUrl} from "../utils/utils-general";
 
 export default class extends React.Component {
-	static async getInitialProps({ req, query }) {
-		const baseUrl = makeBaseUrl(req);
+	static async getInitialProps({ req, query, asPath }) {
+		let baseUrl = "";
+		if (req) {
+			baseUrl = makeBaseUrl(req);
+		}
 		const res = await fetch(`${baseUrl}/api/feed_posts`);
 		const feed_posts = await res.json();
 		return { feed_posts };
