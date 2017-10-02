@@ -39,6 +39,10 @@ class App extends Component {
   componentDidMount() {
     document.body.style.background = '#111';
     this.ticker();
+    window.addEventListener('resize', () => {
+      clearInterval(this.state.interval);
+      this.ticker();
+    });
   }
 
   componentDidUpdate(prevProps, prevState) {
