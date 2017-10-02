@@ -25,6 +25,7 @@ class App extends Component {
     this.state = {
       animate_mode: 'animate_all',
       interval: false,
+      c_width: false,
     };
   }
 
@@ -39,9 +40,13 @@ class App extends Component {
   componentDidMount() {
     document.body.style.background = '#111';
     this.ticker();
+    this.setState({c_width: window.innerWidth});
     window.addEventListener('resize', () => {
-      clearInterval(this.state.interval);
-      this.ticker();
+      if (this.state.c_width !== window.innerWidth) {
+        clearInterval(this.state.interval);
+        this.ticker();
+        this.setState({c_width: window.innerWidth});
+      }
     });
   }
 
