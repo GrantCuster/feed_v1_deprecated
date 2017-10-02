@@ -1,3 +1,5 @@
+// @format
+
 const express = require("express");
 const passport = require("passport");
 const Strategy = require("passport-twitter").Strategy;
@@ -14,11 +16,15 @@ const bodyParser = require("body-parser");
 const keys = require("../local_keys");
 const path = require("path");
 
-const slugDate = (date_string) => {
+const slugDate = date_string => {
   const date = new Date(date_string);
-  const slug_date = date.toISOString().replace(/-/g,'').replace(/:/g,'').replace(/\./g,'');
+  const slug_date = date
+    .toISOString()
+    .replace(/-/g, "")
+    .replace(/:/g, "")
+    .replace(/\./g, "");
   return slug_date;
-}
+};
 
 const capitalizeFirstLetter = string => {
   return string.charAt(0).toUpperCase() + string.slice(1);
@@ -43,12 +49,10 @@ const postTweet = post => {
   const domain = "http://feed.grantcuster.com";
   const date_slug = slugDate(post.posted);
 
-  var preamble = "Feed → " +
-    capitalizeFirstLetter(post.type) +
-    " ↓ ";
+  var preamble = "Feed → " + capitalizeFirstLetter(post.type) + " ↓ ";
   var count = preamble.length;
 
-  var link = domain + "/post/" + (date_slug);
+  var link = domain + "/post/" + date_slug;
   count += 23;
 
   var additional = "";
@@ -81,7 +85,7 @@ const postTweet = post => {
     if (quote.length > characters_left) {
       quote = " " + quote.substring(0, characters_left - 5).trim() + "”...";
     } else {
-      quote =  " “" + post.quote + "”";
+      quote = " “" + post.quote + "”";
     }
     count += quote.length;
     characters_left = 140 - count;
@@ -173,7 +177,13 @@ const storage = multer.diskStorage({
 });
 
 const downloadName = url => {
-  const filename = decodeURIComponent(url.split("\\").pop().split("/").pop());
+  const filename = decodeURIComponent(
+    url
+      .split("\\")
+      .pop()
+      .split("/")
+      .pop()
+  );
   const filename_split = filename.split(".");
   const filename_dated =
     filename_split[0] + "-" + Date.now() + "." + filename_split[1];
@@ -229,7 +239,7 @@ app.prepare().then(() => {
   server.get("/api/project_ideas", (req, res) => {
     const file = fs.readFileSync(`./static/project_ideas.md`, "utf8");
     return res.json(file);
-  })
+  });
 
   server.post("/api/project_ideas", ensure.ensureLoggedIn(), (req, res) => {
     const ideas_text = req.body.ideas_text;
@@ -237,55 +247,62 @@ app.prepare().then(() => {
       if (err) console.log(err);
       return res.json(req.body);
     });
-  })
-
-  server.post("/api/private/post", [upload.single("image"), ensure.ensureLoggedIn()
-], (req, res) => {
-    const makePost = post_object => {
-      fs.readFile("./static/feed_posts.json", (err, data) => {
-        if (err) throw err;
-        // Make backup
-        const backup_file_name = Date.now() + ".json";
-        fs.writeFile(`./static/feed/backups/${backup_file_name}`, data, err => {
-          if (err) throw err;
-          const posts = JSON.parse(data);
-          posts.unshift(post_object);
-          const new_posts = JSON.stringify(posts);
-          fs.writeFile("./static/feed_posts.json", new_posts, err => {
-            if (err) throw err;
-            console.log("The file has been saved!");
-            if (post_object.tweet === "true") {
-              delete post_object.tweet;
-              postTweet(post_object);
-            }
-          });
-        });
-      });
-    };
-
-    const post_object = Object.assign({}, req.body);
-    post_object.posted = Date.now();
-
-    if (req.file === undefined && req.body.quote === undefined) {
-      request.head(req.body.download_url, (err, res, body) => {
-        const filename = downloadName(req.body.download_url);
-        post_object.img = "/static/images/feed/" + filename;
-        request(req.body.download_url)
-          .pipe(fs.createWriteStream("./static/images/feed/" + filename))
-          .on("close", () => {
-            delete post_object.download_url;
-            makePost(post_object);
-          });
-      });
-    } else if (req.body.quote) {
-      delete post_object.download_url;
-      makePost(post_object);
-    } else {
-      post_object.img = "/" + req.file.path;
-      makePost(post_object);
-    }
-    return res.json({ test: "test" });
   });
+
+  server.post(
+    "/api/private/post",
+    [upload.single("image"), ensure.ensureLoggedIn()],
+    (req, res) => {
+      const makePost = post_object => {
+        fs.readFile("./static/feed_posts.json", (err, data) => {
+          if (err) throw err;
+          // Make backup
+          const backup_file_name = Date.now() + ".json";
+          fs.writeFile(
+            `./static/feed/backups/${backup_file_name}`,
+            data,
+            err => {
+              if (err) throw err;
+              const posts = JSON.parse(data);
+              posts.unshift(post_object);
+              const new_posts = JSON.stringify(posts);
+              fs.writeFile("./static/feed_posts.json", new_posts, err => {
+                if (err) throw err;
+                console.log("The file has been saved!");
+                if (post_object.tweet === "true") {
+                  delete post_object.tweet;
+                  postTweet(post_object);
+                }
+              });
+            }
+          );
+        });
+      };
+
+      const post_object = Object.assign({}, req.body);
+      post_object.posted = Date.now();
+
+      if (req.file === undefined && req.body.quote === undefined) {
+        request.head(req.body.download_url, (err, res, body) => {
+          const filename = downloadName(req.body.download_url);
+          post_object.img = "/static/images/feed/" + filename;
+          request(req.body.download_url)
+            .pipe(fs.createWriteStream("./static/images/feed/" + filename))
+            .on("close", () => {
+              delete post_object.download_url;
+              makePost(post_object);
+            });
+        });
+      } else if (req.body.quote) {
+        delete post_object.download_url;
+        makePost(post_object);
+      } else {
+        post_object.img = "/" + req.file.path;
+        makePost(post_object);
+      }
+      return res.json({ test: "test" });
+    }
+  );
 
   server.get("/login", (req, res) => {
     app.render(req, res, "/login", req.query);
@@ -320,29 +337,19 @@ app.prepare().then(() => {
   });
 
   server.get("/project_ideas", (req, res) => {
-    return app.render(
-      req,
-      res,
-      "/project_ideas",
-      req.query
-    );
+    return app.render(req, res, "/project_ideas", req.query);
   });
 
   server.get("/evolving_button", (req, res) => {
-    return app.render(
-      req,
-      res,
-      "/evolving_button",
-      req.query
-    );
+    return app.render(req, res, "/evolving_button", req.query);
   });
 
   server.get("/cityand/v1", (req, res) => {
-    res.sendFile(path.join(__dirname + '/static/cityand_files/v1/index.html'));
+    res.sendFile(path.join(__dirname + "/static/cityand_files/v1/index.html"));
   });
 
   server.get("/cityand/v2", (req, res) => {
-    res.sendFile(path.join(__dirname + '/static/cityand_files/v2/index.html'));
+    res.sendFile(path.join(__dirname + "/static/cityand_files/v2/index.html"));
   });
 
   server.get("/writing/:file_slug", (req, res) => {
@@ -367,8 +374,8 @@ app.prepare().then(() => {
     return handle(req, res);
   });
 
-  server.listen(port, (err) => {
+  server.listen(port, err => {
     if (err) throw err;
-    console.log('Ready on port ' + port);
+    console.log("Ready on port " + port);
   });
 });
