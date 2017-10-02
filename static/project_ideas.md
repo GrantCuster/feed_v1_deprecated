@@ -1,4 +1,5 @@
 ### feed.grantcuster.com
+- Add RSS feed
 - Add updated date to project ideas file
 - Set-up project ideas back-up system
 - Look at pre-processing markdown solution
