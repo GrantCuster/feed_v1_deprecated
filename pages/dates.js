@@ -4,9 +4,11 @@ import Nav from "../components/nav";
 
 export default ({ url }) => {
   return (
+    <div>
     <Nav url={url} />
     <div>
       Dates
 </div>
+    </div>
   )
 }
