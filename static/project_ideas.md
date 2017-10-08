@@ -1,4 +1,5 @@
 ### feed.grantcuster.com
+- Add links to external writings in writings
 - Add RSS feed
 - Add updated date to project ideas file
 - Set-up project ideas back-up system
