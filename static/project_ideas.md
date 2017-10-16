@@ -1,5 +1,6 @@
 ### feed.grantcuster.com
-- Add links to external writings in writings
+- Think about a different way of organizing Misc/project pages
+- Add hobbies/activities section to dates page
 - Add RSS feed
 - Add updated date to project ideas file
 - Set-up project ideas back-up system
@@ -18,6 +19,7 @@
 - Death metal logo generator
 
 ### complete
+- ~~Add links to external writings in writings~~
 - ~~Make the feed post form look nice~~
 - ~~Add ability to add quotes as text~~
 - ~~Add caption text (as much as will fit) to tweets~~
