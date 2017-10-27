@@ -1,4 +1,6 @@
 ### feed.grantcuster.com
+- Enable GIF style videos in feed
+- Remove 'Feed' text from tweets
 - Think about a different way of organizing Misc/project pages
 - Add hobbies/activities section to dates page
 - Add RSS feed
