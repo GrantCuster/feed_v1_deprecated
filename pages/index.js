@@ -150,6 +150,15 @@ export default class extends React.Component {
       <div>
         <Head>
           <title>Grant Custer → Feed</title>
+          <link
+            rel="alternate"
+            type="application/rss+xml"
+            href="http://feed.grantcuster.com/rss"
+          />
+          <meta
+            name="description"
+            content="A feed of things I'm working on (on the right) and inspired by (on the left)."
+          />
         </Head>
 
         <Nav url={url} />
