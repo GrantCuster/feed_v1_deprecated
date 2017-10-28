@@ -1,6 +1,20 @@
 [
   {
     "type": "work",
+    "text": "test",
+    "posted": 1509223556648,
+    "img":
+      "/static/images/feed/Screen Shot 2017-10-27 at 9.55.35 PM-1509223556643.png"
+  },
+  {
+    "type": "work",
+    "text": "Test",
+    "posted": 1509222955693,
+    "img":
+      "/static/images/feed/Screen Shot 2017-10-27 at 9.55.35 PM-1509222955690.png"
+  },
+  {
+    "type": "work",
     "text": "My RSS feed seems to work.",
     "src": "http://feed.grantcuster.com/rss",
     "tweet": "true",

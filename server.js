@@ -16,6 +16,7 @@ const bodyParser = require("body-parser");
 const keys = require("../local_keys");
 const path = require("path");
 const RSS = require("rss");
+var slugify = require("slugify");
 
 const slugDate = date_string => {
   const date = new Date(date_string);
@@ -25,6 +26,18 @@ const slugDate = date_string => {
     .replace(/:/g, "")
     .replace(/\./g, "");
   return slug_date;
+};
+
+const makeImageSlug = filename => {
+  let date = new Date();
+  let ext = path.extname(filename);
+  let file_name = path.basename(filename, ext);
+
+  let slug = slugify(file_name, "_").replace(/\./g, "_");
+
+  let timestamp = date.getTime().toString();
+  let safe_filename = `${slug}-${timestamp}${ext}`;
+  return safe_filename;
 };
 
 const capitalizeFirstLetter = string => {
@@ -170,10 +183,8 @@ const storage = multer.diskStorage({
     cb(null, "static/images/feed");
   },
   filename: (req, file, cb) => {
-    var extension = "." + file.mimetype.split("/")[1];
-    var name = file.originalname.replace(extension, "");
-    var test = name + "-" + Date.now() + extension;
-    cb(null, test);
+    var name = makeImageSlug(file.originalname);
+    cb(null, name);
   }
 });
 
@@ -285,7 +296,9 @@ app.prepare().then(() => {
 
       if (req.file === undefined && req.body.quote === undefined) {
         request.head(req.body.download_url, (err, res, body) => {
-          const filename = downloadName(req.body.download_url);
+          console.log("first route");
+          console.log(req.body.download_url);
+          const filename = makeImageSlug(req.body.download_url);
           post_object.img = "/static/images/feed/" + filename;
           request(req.body.download_url)
             .pipe(fs.createWriteStream("./static/images/feed/" + filename))
@@ -298,6 +311,7 @@ app.prepare().then(() => {
         delete post_object.download_url;
         makePost(post_object);
       } else {
+        console.log("last route");
         post_object.img = "/" + req.file.path;
         makePost(post_object);
       }

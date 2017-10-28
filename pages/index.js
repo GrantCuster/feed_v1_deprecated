@@ -178,8 +178,13 @@ export default class extends React.Component {
             ) : query.filter && query.filter === "inspiration" ? (
               "↓ Filter: Inspiration"
             ) : (
-              <Link href="/?filter=inspiration" title="Show inspiration only">
-                <a className="no-underline hover-underline">↓ Inspiration</a>
+              <Link href="/?filter=inspiration">
+                <a
+                  title="Show inspiration only"
+                  className="no-underline hover-underline"
+                >
+                  ↓ Inspiration
+                </a>
               </Link>
             )}
           </div>
@@ -191,8 +196,13 @@ export default class extends React.Component {
             ) : query.filter && query.filter === "work" ? (
               "Filter: Work ↓"
             ) : (
-              <Link href="/?filter=work" title="Show work only">
-                <a className="no-underline hover-underline">Work ↓</a>
+              <Link href="/?filter=work">
+                <a
+                  title="Show work only"
+                  className="no-underline hover-underline"
+                >
+                  Work ↓
+                </a>
               </Link>
             )}
           </div>
