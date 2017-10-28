@@ -1,236 +1,226 @@
 import React from "react";
 import Nav from "../components/nav";
 import axios from "axios";
-import Head from 'next/head';
+import Head from "next/head";
 
 export default class extends React.Component {
-	constructor() {
-		super();
-		this.state = {
-			category: "work",
-			local_file: false,
-			alt: "",
-			from: "",
-			download_url: "",
-			via: "",
-			tweet: true
-		};
-	}
+  constructor() {
+    super();
+    this.state = {
+      category: "work",
+      local_file: false,
+      alt: "",
+      from: "",
+      download_url: "",
+      via: "",
+      tweet: true
+    };
+  }
 
-	handleCategoryClick(value) {
-		this.setState({ category: value });
-	}
+  handleCategoryClick(value) {
+    this.setState({ category: value });
+  }
 
-	handleFileChange(e) {
-		const reader = new FileReader();
-		let file = e.target.files[0];
-		if (!file) file = false;
-		this.setState({ local_file: file });
-	}
+  handleFileChange(e) {
+    const reader = new FileReader();
+    let file = e.target.files[0];
+    if (!file) file = false;
+    this.setState({ local_file: file });
+  }
 
-	handleUrlChange(e) {
-		this.setState({ download_url: e.target.value });
-	}
+  handleUrlChange(e) {
+    this.setState({ download_url: e.target.value });
+  }
 
-	handleQuoteChange(e) {
-		this.setState({ quote: e.target.value });
-	}
+  handleQuoteChange(e) {
+    this.setState({ quote: e.target.value });
+  }
 
-	handleAltChange(e) {
-		this.setState({ alt: e.target.value });
-	}
+  handleAltChange(e) {
+    this.setState({ alt: e.target.value });
+  }
 
-	handleFromChange(e) {
-		this.setState({ from: e.target.value });
-	}
+  handleFromChange(e) {
+    this.setState({ from: e.target.value });
+  }
 
-	handleViaChange(e) {
-		this.setState({ via: e.target.value });
-	}
+  handleViaChange(e) {
+    this.setState({ via: e.target.value });
+  }
 
-	handleTweetChange(e) {
-		const target = e.target;
-		const value = target.type === "checkbox" ? target.checked : target.value;
-		this.setState({
-			[target.name]: value
-		});
-	}
+  handleTweetChange(e) {
+    const target = e.target;
+    const value = target.type === "checkbox" ? target.checked : target.value;
+    this.setState({
+      [target.name]: value
+    });
+  }
 
-	checkText(string) {
-		if (string) {
-			let checked = string.trim();
-			if (checked.length === 0) checked = false;
-			return checked;
-		} else {
-			return false;
-		}
-	}
+  checkText(string) {
+    if (string) {
+      let checked = string.trim();
+      if (checked.length === 0) checked = false;
+      return checked;
+    } else {
+      return false;
+    }
+  }
 
-	handlePost(e) {
-		let formData = new FormData();
-		const post_object = {
-			type: this.state.category,
-			quote: this.checkText(this.state.quote),
-			text: this.checkText(this.state.alt),
-			src: this.checkText(this.state.from),
-			via: this.checkText(this.state.via),
-			tweet: this.state.tweet
-		};
-		Object.keys(post_object).forEach(key => {
-			if (post_object[key] !== false) {
-				formData.append(key, post_object[key]);
-			}
-		});
-		if (this.state.local_file !== false) {
-			formData.append("image", this.state.local_file);
-		} else {
-			formData.append("download_url", this.checkText(this.state.download_url));
-		}
-		axios
-			.post("/api/private/post", formData)
-			.then(response => {
-				console.log(response);
-			})
-			.catch(error => {
-				console.log(error);
-			});
-		e.preventDefault();
-	}
+  handlePost(e) {
+    let formData = new FormData();
+    const post_object = {
+      type: this.state.category,
+      quote: this.checkText(this.state.quote),
+      text: this.checkText(this.state.alt),
+      src: this.checkText(this.state.from),
+      via: this.checkText(this.state.via),
+      tweet: this.state.tweet
+    };
+    Object.keys(post_object).forEach(key => {
+      if (post_object[key] !== false) {
+        formData.append(key, post_object[key]);
+      }
+    });
+    if (this.state.local_file !== false) {
+      formData.append("image", this.state.local_file);
+    } else {
+      formData.append("download_url", this.checkText(this.state.download_url));
+    }
+    axios
+      .post("/api/private/post", formData)
+      .then(response => {
+        console.log(response);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+    e.preventDefault();
+  }
 
-	render() {
-		const { url } = this.props;
-		return (
-			<div>
-				<Head>
-					<title>Grant Custer → Admin</title>
-				</Head>
+  render() {
+    const { url } = this.props;
+    return (
+      <div>
+        <Head>
+          <title>Grant Custer → Admin</title>
+        </Head>
 
-				<Nav url={url} />
-				<div className="center mb3">
-					<h1>New Post</h1>
-				</div>
-				<form>
-					<div className="measure-max mx-auto px2 pb3 mb3">
-						<div className="mb1">
-							<div className="">
-								Category:
-							</div>
-							<div>
-								<label className="px1">
-									<input
-										type="radio"
-										value="work"
-										onChange={this.handleCategoryClick.bind(this, "work")}
-										checked={this.state.category === "work"}
-									/>
-									{" "}
-									Work
-								</label>
-								<label className="px1">
-									<input
-										type="radio"
-										value="inspiration"
-										onChange={this.handleCategoryClick.bind(
-											this,
-											"inspiration"
-										)}
-										checked={this.state.category === "inspiration"}
-									/>
-									{" "}
-								 	Inspiration
-								</label>
-							</div>
-						</div>
-						<div>
-							<div className="">
-								Image Options
-							</div>
-							<div className="p1 border mb2">
-								<div className="mb1">
-									<div>
-										File
-									</div>
-									<input
-										className="p1 col-12 h4"
-										style={{background: "#efefef"}}
-										type="file"
-										onChange={this.handleFileChange.bind(this)}
-									/>
-								</div>
-								<div>
-									URL
-								</div>
-								<div>
-									<input
-										className="col-12 h4 p1"
-										type="text"
-										onChange={this.handleUrlChange.bind(this)}
-									/>
-								</div>
-							</div>
-						</div>
-						<div>
-							<div>
-								Quote
-							</div>
-							<div>
-								<textarea className="col-12 h4 p1" style={{height: "3.5rem"}} onChange={this.handleQuoteChange.bind(this)} />
-							</div>
-						</div>
-						<div className="mb1">
-							<div className="">
-								Text
-							</div>
-							<div>
-								<textarea className="col-12 h4 p1" style={{height: "3.5rem"}} onChange={this.handleAltChange.bind(this)} />
-							</div>
-						</div>
-						<div className="mb1">
-							<div>
-								From
-							</div>
-							<div>
-								<input
-									className="col-12 h4 p1"
-									type="text"
-									onChange={this.handleFromChange.bind(this)}
-								/>
-							</div>
-						</div>
-						<div className="mb1">
-							<div>
-								Via
-							</div>
-							<div>
-								<input
-									className="col-12 h4 p1"
-									type="text"
-									onChange={this.handleViaChange.bind(this)}
-								/>
-							</div>
-						</div>
-						<div>
-							<label className="">
-								<input
-									name="tweet"
-									type="checkbox"
-									checked={this.state.tweet}
-									onChange={this.handleTweetChange.bind(this)}
-								/>
-								Tweet
-							</label>
-						</div>
-						<div>
-							<input
-								type="submit"
-								className="p2 h4 block mt2"
-								onClick={this.handlePost.bind(this)}
-								value="Post"
-							/>
-						</div>
-					</div>
-				</form>
-			</div>
-		);
-	}
+        <Nav url={url} />
+        <div className="center mb3">
+          <h1>New Post</h1>
+        </div>
+        <form>
+          <div className="measure-max mx-auto px2 pb3 mb3">
+            <div className="mb1">
+              <div className="">Category:</div>
+              <div>
+                <label className="px1">
+                  <input
+                    type="radio"
+                    value="work"
+                    onChange={this.handleCategoryClick.bind(this, "work")}
+                    checked={this.state.category === "work"}
+                  />{" "}
+                  Work
+                </label>
+                <label className="px1">
+                  <input
+                    type="radio"
+                    value="inspiration"
+                    onChange={this.handleCategoryClick.bind(
+                      this,
+                      "inspiration"
+                    )}
+                    checked={this.state.category === "inspiration"}
+                  />{" "}
+                  Inspiration
+                </label>
+              </div>
+            </div>
+            <div>
+              <div className="">Image Options</div>
+              <div className="p1 border mb2">
+                <div className="mb1">
+                  <div>File</div>
+                  <input
+                    className="p1 col-12 h4"
+                    style={{ background: "#efefef" }}
+                    type="file"
+                    onChange={this.handleFileChange.bind(this)}
+                  />
+                </div>
+                <div>URL</div>
+                <div>
+                  <input
+                    className="col-12 h4 p1"
+                    type="text"
+                    onChange={this.handleUrlChange.bind(this)}
+                  />
+                </div>
+              </div>
+            </div>
+            <div>
+              <div>Quote</div>
+              <div>
+                <textarea
+                  className="col-12 h4 p1"
+                  style={{ height: "3.5rem" }}
+                  onChange={this.handleQuoteChange.bind(this)}
+                />
+              </div>
+            </div>
+            <div className="mb1">
+              <div className="">Text</div>
+              <div>
+                <textarea
+                  className="col-12 h4 p1"
+                  style={{ height: "3.5rem" }}
+                  onChange={this.handleAltChange.bind(this)}
+                />
+              </div>
+            </div>
+            <div className="mb1">
+              <div>From</div>
+              <div>
+                <input
+                  className="col-12 h4 p1"
+                  type="text"
+                  onChange={this.handleFromChange.bind(this)}
+                />
+              </div>
+            </div>
+            <div className="mb1">
+              <div>Via</div>
+              <div>
+                <input
+                  className="col-12 h4 p1"
+                  type="text"
+                  onChange={this.handleViaChange.bind(this)}
+                />
+              </div>
+            </div>
+            <div>
+              <label className="">
+                <input
+                  name="tweet"
+                  type="checkbox"
+                  checked={this.state.tweet}
+                  onChange={this.handleTweetChange.bind(this)}
+                />
+                Tweet
+              </label>
+            </div>
+            <div>
+              <input
+                type="submit"
+                className="p2 h4 block mt2"
+                onClick={this.handlePost.bind(this)}
+                value="Post"
+              />
+            </div>
+          </div>
+        </form>
+      </div>
+    );
+  }
 }

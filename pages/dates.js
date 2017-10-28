@@ -1,17 +1,15 @@
-// @format
-
-import React from 'react';
-import fetch from 'isomorphic-unfetch';
-import Head from 'next/head';
-import Nav from '../components/nav';
-import moment from 'moment';
-import {makeBaseUrl} from '../utils/utils-general';
-import * as _ from 'lodash';
+import React from "react";
+import fetch from "isomorphic-unfetch";
+import Head from "next/head";
+import Nav from "../components/nav";
+import moment from "moment";
+import { makeBaseUrl } from "../utils/utils-general";
+import * as _ from "lodash";
 
 function formatDuration(start, end) {
   const sure_end = end ? end : new Date();
-  const ms = moment(sure_end, 'DD/MM/YYYY HH:mm:ss').diff(
-    moment(start, 'DD/MM/YYYY HH:mm:ss'),
+  const ms = moment(sure_end, "DD/MM/YYYY HH:mm:ss").diff(
+    moment(start, "DD/MM/YYYY HH:mm:ss")
   );
   const d = moment.duration(ms);
   let days = d.asDays();
@@ -28,17 +26,17 @@ function formatDuration(start, end) {
     days = days % 30;
   }
   days = Math.floor(days);
-  let string = '';
+  let string = "";
   if (years) {
-    string += years > 1 ? years + ' years' : years + ' year';
+    string += years > 1 ? years + " years" : years + " year";
   }
   if (months) {
-    if (years) string += ', ';
-    string += months > 1 ? months + ' months' : months + ' month';
+    if (years) string += ", ";
+    string += months > 1 ? months + " months" : months + " month";
   }
   if (days > 0) {
-    if (years || months) string += ' and ';
-    string += days > 1 ? days + ' days' : days + ' day';
+    if (years || months) string += " and ";
+    string += days > 1 ? days + " days" : days + " day";
   }
   return string;
 }
@@ -46,15 +44,15 @@ function formatDuration(start, end) {
 function sortUpcoming(dates) {
   for (let date of dates) {
     let current_date = moment();
-    let current_year = current_date.format('YYYY');
-    let f_date = date.monthday + ',' + current_year;
+    let current_year = current_date.format("YYYY");
+    let f_date = date.monthday + "," + current_year;
     let m = moment(f_date);
-    let ms = m.format('x');
-    let now_ms = current_date.format('x');
+    let ms = m.format("x");
+    let now_ms = current_date.format("x");
     if (now_ms > ms) {
-      let new_date = date.monthday + ',' + (parseInt(current_year) + 1);
+      let new_date = date.monthday + "," + (parseInt(current_year) + 1);
       let new_m = moment(new_date);
-      let new_ms = new_m.format('x');
+      let new_ms = new_m.format("x");
       date.year = (parseInt(current_year) + 1).toString();
       date.ms = new_ms;
     } else if (now_ms < ms) {
@@ -65,13 +63,13 @@ function sortUpcoming(dates) {
       date.ms = ms;
     }
   }
-  let sorted = _.sortBy(dates, 'ms');
+  let sorted = _.sortBy(dates, "ms");
   return sorted;
 }
 
 export default class extends React.Component {
-  static async getInitialProps({req, query, asPath}) {
-    let baseUrl = '';
+  static async getInitialProps({ req, query, asPath }) {
+    let baseUrl = "";
     if (req) {
       baseUrl = makeBaseUrl(req);
     }
@@ -79,11 +77,11 @@ export default class extends React.Component {
     const durations = await res.json();
     const res2 = await fetch(`${baseUrl}/static/dates/remember.json`);
     const dates = await res2.json();
-    return {durations, dates};
+    return { durations, dates };
   }
 
   render() {
-    const {url, durations, dates} = this.props;
+    const { url, durations, dates } = this.props;
     const s_dates = sortUpcoming(dates);
 
     return (
@@ -102,8 +100,8 @@ export default class extends React.Component {
           <div className="bold">Jump to</div>
           <ul>
             {durations.map(dur => (
-              <li key={dur.name + '_jump'}>
-                <a href={'#' + dur.name}>{dur.name}</a>
+              <li key={dur.name + "_jump"}>
+                <a href={"#" + dur.name}>{dur.name}</a>
               </li>
             ))}
             <li>
@@ -124,11 +122,11 @@ export default class extends React.Component {
                   return (
                     <li className="mb2" key={entry.name}>
                       <div className="bold">{entry.name}</div>
-                      <div className="flex" style={{color: '#888'}}>
-                        <div>{start.format('MMMM Do, YYYY')}</div>
+                      <div className="flex" style={{ color: "#888" }}>
+                        <div>{start.format("MMMM Do, YYYY")}</div>
                         <div>&ndash;</div>
                         {end ? (
-                          <div>{end.format('MMMM Do, YYYY')}</div>
+                          <div>{end.format("MMMM Do, YYYY")}</div>
                         ) : (
                           <div>Now</div>
                         )}
@@ -147,14 +145,14 @@ export default class extends React.Component {
           </div>
           <ul>
             {s_dates.map(date => {
-              const start = moment().format('DD/MM/YYYY HH:mm:ss');
-              const end = moment(date.ms, 'x').format('DD/MM/YYYY HH:mm:ss');
+              const start = moment().format("DD/MM/YYYY HH:mm:ss");
+              const end = moment(date.ms, "x").format("DD/MM/YYYY HH:mm:ss");
               const duration = formatDuration(start, end);
               return (
                 <li className="mb2" key={date.name}>
                   <div className="bold">{date.name}</div>
-                  <div style={{color: '#888'}}>
-                    {moment(date.ms, 'x').format('MMMM Do')}
+                  <div style={{ color: "#888" }}>
+                    {moment(date.ms, "x").format("MMMM Do")}
                   </div>
                   <div>In {duration}</div>
                 </li>
