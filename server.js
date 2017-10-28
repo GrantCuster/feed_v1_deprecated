@@ -49,7 +49,7 @@ const postTweet = post => {
   const domain = "http://feed.grantcuster.com";
   const date_slug = slugDate(post.posted);
 
-  var preamble = "Feed → " + capitalizeFirstLetter(post.type) + " ↓ ";
+  var preamble = capitalizeFirstLetter(post.type) + " ↓ ";
   var count = preamble.length;
 
   var link = domain + "/post/" + date_slug;
