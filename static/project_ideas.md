@@ -1,9 +1,6 @@
 ### feed.grantcuster.com
-- Enable GIF style videos in feed
-- Remove 'Feed' text from tweets
+- Better image slugs going forward
 - Think about a different way of organizing Misc/project pages
-- Add hobbies/activities section to dates page
-- Add RSS feed
 - Add updated date to project ideas file
 - Set-up project ideas back-up system
 - Look at pre-processing markdown solution
@@ -21,6 +18,10 @@
 - Death metal logo generator
 
 ### complete
+- ~~Add RSS feed~~
+- ~~Add hobbies/activities section to dates page~~
+- ~~Remove 'Feed' text from tweets~~
+- ~~Enable GIF style videos in feed~~
 - ~~Add links to external writings in writings~~
 - ~~Make the feed post form look nice~~
 - ~~Add ability to add quotes as text~~
