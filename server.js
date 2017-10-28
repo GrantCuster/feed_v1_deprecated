@@ -15,6 +15,7 @@ const cookieSession = require("cookie-session");
 const bodyParser = require("body-parser");
 const keys = require("../local_keys");
 const path = require("path");
+const RSS = require("rss");
 
 const slugDate = date_string => {
   const date = new Date(date_string);
@@ -334,6 +335,45 @@ app.prepare().then(() => {
       "/admin",
       Object.assign({}, { user: req.user }, req.query)
     );
+  });
+
+  server.get("/rss", (req, res) => {
+    let feed = new RSS({
+      title: "Grant Custer → Feed",
+      description:
+        "A feed of things I am working on and things I am inspired by.",
+      feed_url: "http://feed.grantcuster.com/rss",
+      site_url: "http://feed.grantcuster.com/",
+      webMaster: "Grant Custer",
+      language: "en"
+    });
+    const data = fs.readFileSync("./static/feed_posts.json", "utf8");
+    const posts = JSON.parse(data);
+    let posts20 = posts.slice(0, 20);
+    for (let post of posts20) {
+      const date_slug = slugDate(post.posted);
+      let feed_object = {
+        title: `${capitalizeFirstLetter(post.type)} ↓ ${new Date(
+          post.posted
+        ).toISOString()}`,
+        url: `http://feed.grantcuster.com/post/${date_slug}`,
+        description: post.text,
+        date: post.posted
+      };
+      if (post.img) {
+        feed_object.description = post.text;
+        feed_object.enclosure = {
+          url: "http://feed.grantcuster.com" + post.img
+        };
+      } else {
+        feed_object.description = `"${post.quote}" ― ${post.text}`;
+      }
+      feed.item(feed_object);
+    }
+
+    let xml = feed.xml();
+    res.set("Content-Type", "text/xml");
+    res.send(xml);
   });
 
   server.get("/project_ideas", (req, res) => {

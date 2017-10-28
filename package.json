@@ -36,6 +36,7 @@
     "react-dom": "^15.5.4",
     "remarkable": "^1.7.1",
     "request": "^2.81.0",
+    "rss": "^1.2.2",
     "twitter": "^1.7.0",
     "webpack": "^2.5.1"
   }
