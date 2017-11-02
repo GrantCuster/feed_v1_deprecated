@@ -1,5 +1,4 @@
 ### feed.grantcuster.com
-- Better image slugs going forward
 - Think about a different way of organizing Misc/project pages
 - Add updated date to project ideas file
 - Set-up project ideas back-up system
@@ -18,6 +17,7 @@
 - Death metal logo generator
 
 ### complete
+- ~~Better image slugs going forward~~
 - ~~Add RSS feed~~
 - ~~Add hobbies/activities section to dates page~~
 - ~~Remove 'Feed' text from tweets~~
