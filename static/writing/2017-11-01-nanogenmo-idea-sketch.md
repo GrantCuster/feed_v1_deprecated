@@ -1,5 +1,6 @@
 ---
 title: "NaNoGenMo idea sketch"
+preview_image: "/static/images/feed/r2-1503281192134.gif"
 date: "Thu, 02 Nov 2017 02:18:37 GMT"
 ---
 
