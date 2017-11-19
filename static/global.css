@@ -67,6 +67,12 @@ h2 {
 	color: #777;
 }
 
+blockquote {
+  border-left: solid 1px #000;
+  margin-left: 1em;
+  padding-left: 1em;
+}
+
 .bg-gray {
 	background: #ccc;
 }
