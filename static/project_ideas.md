@@ -1,4 +1,5 @@
 ### feed.grantcuster.com
+- Change feed tweets to allow 280 characters
 - Think about a different way of organizing Misc/project pages
 - Add updated date to project ideas file
 - Set-up project ideas back-up system
@@ -8,6 +9,7 @@
 - Switch images so they live on S3
 
 ### random
+- Add going.im functionality for myself
 - Roguelike simulation of our backyard
 - Prince hand-signal reference
 - Important dates countdown (framework?)
