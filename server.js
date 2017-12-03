@@ -92,7 +92,7 @@ const postTweet = post => {
   }
   var path_name = "." + post.img;
 
-  var characters_left = 140 - count;
+  var characters_left = 280 - count;
 
   var quote = "";
   if (!post.img && post.quote) {
@@ -102,7 +102,7 @@ const postTweet = post => {
       quote = " “" + post.quote + "”";
     }
     count += quote.length;
-    characters_left = 140 - count;
+    characters_left = 280 - count;
   }
 
   var text = "";
