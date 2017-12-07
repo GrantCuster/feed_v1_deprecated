@@ -1,5 +1,4 @@
 ### feed.grantcuster.com
-- Change feed tweets to allow 280 characters
 - Think about a different way of organizing Misc/project pages
 - Add updated date to project ideas file
 - Set-up project ideas back-up system
@@ -19,6 +18,7 @@
 - Death metal logo generator
 
 ### complete
+- ~~Change feed tweets to allow 280 characters~~
 - ~~Better image slugs going forward~~
 - ~~Add RSS feed~~
 - ~~Add hobbies/activities section to dates page~~
