@@ -406,6 +406,10 @@ app.prepare().then(() => {
     res.sendFile(path.join(__dirname + "/static/cityand_files/v2/index.html"));
   });
 
+  server.get("/birthday_roll", (req, res) => {
+    return app.render(req, res, "/birthday_roll");
+  });
+
   server.get("/writing/:file_slug", (req, res) => {
     return app.render(
       req,
