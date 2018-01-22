@@ -8,6 +8,7 @@
 - Switch images so they live on S3
 
 ### random
+- Gig journal (reference: [https://twitter.com/thomasABoyt/status/941178527210237952](https://twitter.com/thomasABoyt/status/941178527210237952))
 - Add going.im functionality for myself
 - Roguelike simulation of our backyard
 - Prince hand-signal reference
