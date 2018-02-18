@@ -46,7 +46,6 @@ function makeTimeSlots() {
 // getLuminance from https://stackoverflow.com/a/3943023/8691291
 function getLuminance(rgb) {
   let [R, G, B] = rgb;
-  console.log(R, G, B);
   let C = [R / 255, G / 255, B / 255];
   for (var i = 0; i < C.length; ++i) {
     if (C[i] <= 0.03928) {
@@ -55,7 +54,6 @@ function getLuminance(rgb) {
       C[i] = Math.pow((C[i] + 0.055) / 1.055, 2.4);
     }
   }
-  console.log(C);
   return 0.2126 * C[0] + 0.7152 * C[1] + 0.0722 * C[2];
 }
 
