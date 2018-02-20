@@ -136,16 +136,20 @@ class App extends Component {
   }
 
   fetchData() {
+    let location = "brooklyn";
+    if (this.props.url.query.location) {
+      location = this.props.url.query.location;
+    }
     // fetch("/color/brooklyn")
     // fetch("/color/tokyo")
-    fetch("http://skycolor.toymaker.ops.fastforwardlabs.com/color/brooklyn")
+    fetch("http://skycolor.toymaker.ops.fastforwardlabs.com/color/" + location)
       .then(response => response.json())
       .then(response => {
         let minute_time = format(new Date(), "HH:mm");
         let rgb = response;
         let hex = rgbToHex(rgb);
         console.log(
-          "%c" + minute_time,
+          "%c" + minute_time + " " + hex,
           "background: " + hex + "; color: " + getContrastTextColor(rgb) + ";"
         );
         setFavicon(rgb);
@@ -153,7 +157,9 @@ class App extends Component {
       });
     // fetch("/archive/brooklyn")
     // fetch("/archive/tokyo")
-    fetch("http://skycolor.toymaker.ops.fastforwardlabs.com/archive/brooklyn")
+    fetch(
+      "http://skycolor.toymaker.ops.fastforwardlabs.com/archive/" + location
+    )
       .then(response => response.json())
       .then(response => {
         let last_archive_time = format(new Date(response[0].time), "HH:mm");
