@@ -4,6 +4,7 @@ import Link from "next/link";
 import { slugDate } from "../utils/utils-general.js";
 import Nav from "../components/nav";
 import FeedPost from "../components/feed_post";
+import CenterPost from "../components/center_post";
 import Head from "next/head";
 import Router from "next/router";
 import { makeBaseUrl } from "../utils/utils-general";

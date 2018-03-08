@@ -130,6 +130,7 @@ class App extends Component {
       columns: 8,
       rows: 12,
       grid_loaded: false,
+      archive_loaded: false,
       last_archive_time: "00:00",
       minute_time: "",
       option_keys: [],
@@ -139,7 +140,6 @@ class App extends Component {
 
   fetchData() {
     if (this.props.url.query.location === "options") {
-      console.log("fetch options");
       fetch("http://skycolor.toymaker.ops.fastforwardlabs.com/presets")
         .then(response => response.json())
         .then(response => {
@@ -193,7 +193,7 @@ class App extends Component {
         .then(response => {
           let last_archive_time = format(new Date(response[0].time), "HH:mm");
           let archive = processArchive(response);
-          this.setState({ last_archive_time, archive });
+          this.setState({ last_archive_time, archive, archive_loaded: true });
         });
     }
   }
@@ -220,9 +220,9 @@ class App extends Component {
   }
 
   render() {
+    let me = this;
     let last_time_index = time_slots.indexOf(this.state.last_archive_time);
     let filtered_time_slots = time_slots.slice(0, last_time_index + 1);
-    console.log(this.state);
     return (
       <div>
         <Head>
@@ -231,7 +231,7 @@ class App extends Component {
 
         {this.props.url.query.location !== "options" ? (
           <div
-            cssName="App"
+            className="App"
             title={
               this.state.minute_time + " " + rgbToHex(this.state.current_color)
             }
@@ -245,11 +245,29 @@ class App extends Component {
               gridTemplateRows: `repeat(${this.state.rows}, 1fr)`
             }}
           >
-            {this.state.grid_loaded
-              ? filtered_time_slots.map(time => {
+            {this.state.grid_loaded && this.state.archive_loaded
+              ? filtered_time_slots.map((time, index) => {
                   let archive_check = this.state.archive[time];
-                  let background = "transparent";
-                  if (archive_check) background = rgbToHex(archive_check);
+                  let background;
+                  if (archive_check) {
+                    background = rgbToHex(archive_check);
+                  } else {
+                    function getPrevious(index) {
+                      if (index > 0) {
+                        let prev = index - 1;
+                        let check = me.state.archive[filtered_time_slots[prev]];
+                        if (check !== undefined) {
+                          return check;
+                        } else {
+                          return getPrevious(prev);
+                        }
+                      } else {
+                        return "#222";
+                      }
+                    }
+                    console.log(`Missing: ${time}`);
+                    background = rgbToHex(getPrevious(index));
+                  }
                   return (
                     <div
                       key={time}
