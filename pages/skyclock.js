@@ -131,41 +131,71 @@ class App extends Component {
       rows: 12,
       grid_loaded: false,
       last_archive_time: "00:00",
-      minute_time: ""
+      minute_time: "",
+      option_keys: [],
+      option_colors: []
     };
   }
 
   fetchData() {
-    let location = "brooklyn";
-    if (this.props.url.query.location) {
-      location = this.props.url.query.location;
+    if (this.props.url.query.location === "options") {
+      console.log("fetch options");
+      fetch("http://skycolor.toymaker.ops.fastforwardlabs.com/presets")
+        .then(response => response.json())
+        .then(response => {
+          let option_keys = [];
+          for (let key in response) {
+            option_keys.push(key);
+            fetch(
+              "http://skycolor.toymaker.ops.fastforwardlabs.com/color/" + key
+            )
+              .then(response => response.json())
+              .then(response => {
+                this.setState(state => {
+                  return {
+                    option_colors: Object.assign({}, state.option_colors, {
+                      [key]: response
+                    })
+                  };
+                });
+              });
+          }
+          this.setState({ option_keys: option_keys });
+        });
+    } else {
+      let location = "brooklyn";
+      if (this.props.url.query.location) {
+        location = this.props.url.query.location;
+      }
+      // fetch("/color/brooklyn")
+      // fetch("/color/tokyo")
+      fetch(
+        "http://skycolor.toymaker.ops.fastforwardlabs.com/color/" + location
+      )
+        .then(response => response.json())
+        .then(response => {
+          let minute_time = format(new Date(), "HH:mm");
+          let rgb = response;
+          let hex = rgbToHex(rgb);
+          console.log(
+            "%c" + minute_time + " " + hex,
+            "background: " + hex + "; color: " + getContrastTextColor(rgb) + ";"
+          );
+          setFavicon(rgb);
+          this.setState({ current_color: rgb, minute_time });
+        });
+      // fetch("/archive/brooklyn")
+      // fetch("/archive/tokyo")
+      fetch(
+        "http://skycolor.toymaker.ops.fastforwardlabs.com/archive/" + location
+      )
+        .then(response => response.json())
+        .then(response => {
+          let last_archive_time = format(new Date(response[0].time), "HH:mm");
+          let archive = processArchive(response);
+          this.setState({ last_archive_time, archive });
+        });
     }
-    // fetch("/color/brooklyn")
-    // fetch("/color/tokyo")
-    fetch("http://skycolor.toymaker.ops.fastforwardlabs.com/color/" + location)
-      .then(response => response.json())
-      .then(response => {
-        let minute_time = format(new Date(), "HH:mm");
-        let rgb = response;
-        let hex = rgbToHex(rgb);
-        console.log(
-          "%c" + minute_time + " " + hex,
-          "background: " + hex + "; color: " + getContrastTextColor(rgb) + ";"
-        );
-        setFavicon(rgb);
-        this.setState({ current_color: rgb, minute_time });
-      });
-    // fetch("/archive/brooklyn")
-    // fetch("/archive/tokyo")
-    fetch(
-      "http://skycolor.toymaker.ops.fastforwardlabs.com/archive/" + location
-    )
-      .then(response => response.json())
-      .then(response => {
-        let last_archive_time = format(new Date(response[0].time), "HH:mm");
-        let archive = processArchive(response);
-        this.setState({ last_archive_time, archive });
-      });
   }
 
   componentDidMount() {
@@ -192,44 +222,66 @@ class App extends Component {
   render() {
     let last_time_index = time_slots.indexOf(this.state.last_archive_time);
     let filtered_time_slots = time_slots.slice(0, last_time_index + 1);
+    console.log(this.state);
     return (
       <div>
         <Head>
           <title>Sky Clock</title>
         </Head>
 
-        <div
-          className="App"
-          title={
-            this.state.minute_time + " " + rgbToHex(this.state.current_color)
-          }
-          style={{
-            display: "grid",
-            height: "100vh",
-            width: "100%",
-            background: rgbToHex(this.state.current_color),
-            transition: "background 0.25s linear",
-            gridTemplateColumns: `repeat(${this.state.columns}, 1fr)`,
-            gridTemplateRows: `repeat(${this.state.rows}, 1fr)`
-          }}
-        >
-          {this.state.grid_loaded
-            ? filtered_time_slots.map(time => {
-                let archive_check = this.state.archive[time];
-                let background = "transparent";
-                if (archive_check) background = rgbToHex(archive_check);
-                return (
-                  <div
-                    key={time}
-                    title={`${time} ${background}`}
-                    style={{
-                      background: background
-                    }}
-                  />
-                );
-              })
-            : null}
-        </div>
+        {this.props.url.query.location !== "options" ? (
+          <div
+            cssName="App"
+            title={
+              this.state.minute_time + " " + rgbToHex(this.state.current_color)
+            }
+            style={{
+              display: "grid",
+              height: "100vh",
+              width: "100%",
+              background: rgbToHex(this.state.current_color),
+              transition: "background 0.25s linear",
+              gridTemplateColumns: `repeat(${this.state.columns}, 1fr)`,
+              gridTemplateRows: `repeat(${this.state.rows}, 1fr)`
+            }}
+          >
+            {this.state.grid_loaded
+              ? filtered_time_slots.map(time => {
+                  let archive_check = this.state.archive[time];
+                  let background = "transparent";
+                  if (archive_check) background = rgbToHex(archive_check);
+                  return (
+                    <div
+                      key={time}
+                      title={`${time} ${background}`}
+                      style={{
+                        background: background
+                      }}
+                    />
+                  );
+                })
+              : null}
+          </div>
+        ) : (
+          <div style={{ background: "#222", minHeight: "100vh" }}>
+            {this.state.option_keys.map(key => {
+              let key_color = this.state.option_colors[key];
+              return (
+                <div
+                  style={{
+                    padding: "1rem",
+                    color: key_color
+                      ? getContrastTextColor(key_color)
+                      : "white",
+                    background: key_color ? rgbToHex(key_color) : "transparent"
+                  }}
+                >
+                  {key}
+                </div>
+              );
+            })}
+          </div>
+        )}
       </div>
     );
   }
