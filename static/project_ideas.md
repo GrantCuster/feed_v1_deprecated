@@ -8,6 +8,7 @@
 - Switch images so they live on S3
 
 ### random
+- Simple ReasonML project
 - Project time tracker. Just let people name the project and click start and end (delete too I guess)
 - Articles to read w/ via
 - This is my jam-like personal music thing (one song a week)
