@@ -78,3 +78,14 @@ blockquote {
 }
 
 .font-14 { font-size: 14px; }
+
+
+.keelyn-hover .image-text {
+  opacity: 0.5;
+}
+.keelyn-hover:hover {
+  box-shadow: inset 0 0 800px rgba(0,0,0,0.125);
+}
+.keelyn-hover:hover .image-text {
+  opacity: 0.8;
+}

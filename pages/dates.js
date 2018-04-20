@@ -156,7 +156,8 @@ export default class extends React.Component {
         </div>
         <div className="mb3">
           <div className="measure-max mx-auto px2">
-            🔊 <button onClick={this.getInfo.bind(this)}>
+            🔊{' '}
+            <button onClick={this.getInfo.bind(this)}>
               Read me the status report
             </button>
           </div>
