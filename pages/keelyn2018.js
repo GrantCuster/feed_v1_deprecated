@@ -184,14 +184,14 @@ class App extends Component {
       if (to_speak === 'parvoneh') {
         to_speak = 'parvuh nay'
       }
-      if (to_speak === 'ernie') {
+      if (to_speak === 'ernie' && !this.state.playing_through) {
         if (Math.random() < 0.33) {
           to_speak = 'meow'
         }
       }
-      if (to_speak === 'prince') {
+      if (to_speak === 'prince' && !this.state.playing_through) {
         if (Math.random() < 0.33) {
-          to_speak = 'arf, arf'
+          to_speak = 'woof, woof'
         }
       }
       let utterThis = this.speak(to_speak)
