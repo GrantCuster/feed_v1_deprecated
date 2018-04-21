@@ -181,7 +181,7 @@ class App extends Component {
       let { images_displayed, styles } = this.state
       let to_speak = to_display
       if (to_speak === 'parvoneh') {
-        to_speak = 'par vah nay'
+        to_speak = 'par vuh nay'
       }
       let utterThis = this.speak(to_speak)
       let style = this.createStyle()
@@ -217,8 +217,8 @@ class App extends Component {
             <div
               style={{
                 textAlign: 'center',
-                fontSize: '22px',
-                padding: '1em',
+                fontSize: '19px',
+                padding: '1.5em',
                 background: color_palette[10],
                 fontStyle: 'italic',
               }}
@@ -231,9 +231,9 @@ class App extends Component {
               style={{
                 fontWeight: 'bold',
                 textAlign: 'center',
-                fontSize: '22px',
+                fontSize: '19px',
                 cursor: 'pointer',
-                padding: '1em',
+                padding: '1.5em',
                 cursor: 'pointer',
                 background: color_palette[11],
               }}
