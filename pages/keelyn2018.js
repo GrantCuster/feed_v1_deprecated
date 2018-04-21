@@ -180,9 +180,9 @@ class App extends Component {
       let image_url = getRandom(image_urls)
       let { images_displayed, styles } = this.state
       let to_speak = to_display
-      if (to_speak === 'parvoneh') {
-        to_speak = 'par vuh nay'
-      }
+      // if (to_speak === 'parvoneh') {
+      //   to_speak = 'par vuh nay'
+      // }
       let utterThis = this.speak(to_speak)
       let style = this.createStyle()
       styles = [style]
