@@ -334,7 +334,7 @@ class App extends Component {
     return (
       <div>
         <Head>
-          <title>Grant Custer → Feed</title>
+          <title>Happy Birthday Jackson 2017</title>
         </Head>
 
         <div style={{ background: '#111' }}>

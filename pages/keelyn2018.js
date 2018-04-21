@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import Head from 'next/head'
 
 if (!String.prototype.padStart) {
   String.prototype.padStart = function padStart(targetLength, padString) {
@@ -205,106 +206,111 @@ class App extends Component {
   render() {
     let { images_displayed, styles } = this.state
     return (
-      <div style={sceneStyle()}>
-        <div
-          style={{
-            display: 'grid',
-            gridTemplateRows: 'auto 1fr',
-            height: '100vh',
-          }}
-        >
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr' }}>
-            <div
-              style={{
-                textAlign: 'center',
-                fontSize: '19px',
-                padding: '1.5em',
-                background: color_palette[10],
-                fontStyle: 'italic',
-              }}
-            >
-              Tap squares to play words
+      <div>
+        <Head>
+          <title>Happy Birthday Keelyn 2018</title>
+        </Head>
+        <div style={sceneStyle()}>
+          <div
+            style={{
+              display: 'grid',
+              gridTemplateRows: 'auto 1fr',
+              height: '100vh',
+            }}
+          >
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr' }}>
+              <div
+                style={{
+                  textAlign: 'center',
+                  fontSize: '19px',
+                  padding: '1.5em',
+                  background: color_palette[10],
+                  fontStyle: 'italic',
+                }}
+              >
+                Tap squares to play words
+              </div>
+              <div
+                className="keelyn-hover"
+                onClick={() => this.wordFlow('play all')}
+                style={{
+                  fontWeight: 'bold',
+                  textAlign: 'center',
+                  fontSize: '19px',
+                  cursor: 'pointer',
+                  padding: '1.5em',
+                  cursor: 'pointer',
+                  background: color_palette[11],
+                }}
+              >
+                <div className="image-text">Play all (tap here)</div>
+              </div>
             </div>
-            <div
-              className="keelyn-hover"
-              onClick={() => this.wordFlow('play all')}
-              style={{
-                fontWeight: 'bold',
-                textAlign: 'center',
-                fontSize: '19px',
-                cursor: 'pointer',
-                padding: '1.5em',
-                cursor: 'pointer',
-                background: color_palette[11],
-              }}
-            >
-              <div className="image-text">Play all (tap here)</div>
+            <div style={holderStyle()}>
+              {catalog_words.map((word, i) => (
+                <div
+                  key={`square_${word}`}
+                  className="keelyn-hover"
+                  style={{
+                    position: 'relative',
+                    cursor: 'pointer',
+                    background: color_palette[i],
+                  }}
+                  onClick={() => this.wordFlow(word)}
+                >
+                  <div
+                    className="image-text"
+                    style={{
+                      position: 'absolute',
+                      width: '80%',
+                      left: '10%',
+                      top: '10%',
+                      height: '80%',
+                      backgroundImage:
+                        this.state.default_images.length > 0
+                          ? `url(${this.state.default_images[i]})`
+                          : 'none',
+                      backgroundSize: 'contain',
+                      backgroundPosition: 'center center',
+                      backgroundRepeat: 'no-repeat',
+                    }}
+                  />
+                </div>
+              ))}
             </div>
           </div>
-          <div style={holderStyle()}>
-            {catalog_words.map((word, i) => (
-              <div
-                key={`square_${word}`}
-                className="keelyn-hover"
-                style={{
-                  position: 'relative',
-                  cursor: 'pointer',
-                  background: color_palette[i],
-                }}
-                onClick={() => this.wordFlow(word)}
-              >
+          <div
+            style={{
+              position: 'absolute',
+              left: 0,
+              top: 0,
+              right: 0,
+              bottom: 0,
+              pointerEvents: 'none',
+              overflow: 'hidden',
+            }}
+          >
+            {images_displayed.map((array, i) => {
+              let url = array[1]
+              return (
                 <div
-                  className="image-text"
+                  key={array[1]}
                   style={{
                     position: 'absolute',
-                    width: '80%',
-                    left: '10%',
-                    top: '10%',
-                    height: '80%',
-                    backgroundImage:
-                      this.state.default_images.length > 0
-                        ? `url(${this.state.default_images[i]})`
-                        : 'none',
+                    left: '5%',
+                    top: '5%',
+                    width: '90%',
+                    height: '90%',
+                    backgroundImage: `url(${url})`,
                     backgroundSize: 'contain',
                     backgroundPosition: 'center center',
                     backgroundRepeat: 'no-repeat',
+                    transform: `rotate(${styles[i].rotation}deg)`,
                   }}
                 />
-              </div>
-            ))}
+              )
+            })}
           </div>
-        </div>
-        <div
-          style={{
-            position: 'absolute',
-            left: 0,
-            top: 0,
-            right: 0,
-            bottom: 0,
-            pointerEvents: 'none',
-            overflow: 'hidden',
-          }}
-        >
-          {images_displayed.map((array, i) => {
-            let url = array[1]
-            return (
-              <div
-                key={array[1]}
-                style={{
-                  position: 'absolute',
-                  left: '5%',
-                  top: '5%',
-                  width: '90%',
-                  height: '90%',
-                  backgroundImage: `url(${url})`,
-                  backgroundSize: 'contain',
-                  backgroundPosition: 'center center',
-                  backgroundRepeat: 'no-repeat',
-                  transform: `rotate(${styles[i].rotation}deg)`,
-                }}
-              />
-            )
-          })}
         </div>
       </div>
     )
