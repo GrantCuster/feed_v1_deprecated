@@ -24,8 +24,7 @@ function getRandom(array) {
 let holderStyle = props => {
   return {
     display: 'grid',
-    height: '100vh',
-    gridTemplateColumns: '1fr 1fr 1fr 1fr',
+    gridTemplateColumns: '1fr 1fr 1fr',
     gridTemplateRows: '1fr 1fr 1fr',
     position: 'relative',
     overflow: 'hidden',
@@ -57,8 +56,7 @@ let color_palette = [
 let catalog_words = [
   'happy',
   'birthday',
-  'kee',
-  'lyn',
+  'keelyn',
   'from',
   'grant',
   'parvoneh',
@@ -81,10 +79,6 @@ let catalog_images = catalog_words.map((word, i) => {
   return image_urls
 })
 
-let default_images = catalog_images.map(urls => {
-  return getRandom(urls)
-})
-
 class App extends Component {
   constructor(props) {
     super(props)
@@ -93,6 +87,8 @@ class App extends Component {
       synth: null,
       images_displayed: [],
       styles: [],
+      playing_through: false,
+      default_images: [],
     }
   }
 
@@ -105,6 +101,7 @@ class App extends Component {
     this.cancelSpeech()
     var utterThis = new window.SpeechSynthesisUtterance(text)
     this.state.synth.speak(utterThis)
+    return utterThis
   }
 
   cancelSpeech() {
@@ -121,16 +118,26 @@ class App extends Component {
   }
 
   componentDidMount() {
-    this.determineOrientation()
+    let default_images = catalog_images.map(urls => {
+      return getRandom(urls)
+    })
+    this.setState({ default_images: default_images })
     this.initiateSynth()
   }
 
-  removeWord(image_url) {
+  clearWords() {
+    this.setState({ images_displayed: [] })
+  }
+
+  removeWord(timestamp) {
     let { images_displayed, styles } = this.state
-    let index = images_displayed.indexOf(image_url)
-    images_displayed.splice(index, 1)
-    styles.splice(index, 1)
-    this.setState({ images_displayed: images_displayed })
+    let timestamps = images_displayed.map(array => array[0])
+    let index = timestamps.indexOf(timestamp)
+    if (index > -1) {
+      images_displayed.splice(index, 1)
+      styles.splice(index, 1)
+      this.setState({ images_displayed: images_displayed })
+    }
   }
 
   createStyle() {
@@ -140,56 +147,132 @@ class App extends Component {
     }
   }
 
-  wordFlow(to_say, to_display) {
-    let word_index = catalog_words.indexOf(to_display)
-    let image_urls = catalog_images[word_index]
-    let image_url = getRandom(image_urls)
-    let { images_displayed, styles } = this.state
-    images_displayed.push(image_url)
-    this.speak(to_say)
-    let style = this.createStyle()
-    styles.push(style)
-    this.setState({
-      images_displayed,
-      styles,
-    })
-    let me = this
-    setTimeout(() => {
-      me.removeWord(image_url)
-    }, 1000)
+  wordFlow(to_display, play_through) {
+    if (to_display === 'play all') {
+      let me = this
+      this.setState({ playing_through: true }, () => {
+        let iterate_count = catalog_words.length
+        function utterNext(selector) {
+          if (me.state.playing_through) {
+            let word = catalog_words[selector]
+            let utter = me.wordFlow(word, true)
+            utter.onend = function() {
+              let new_selector = selector + 1
+              if (new_selector < iterate_count) {
+                utterNext(new_selector)
+              } else {
+                me.clearWords()
+              }
+            }
+          }
+        }
+        utterNext(0)
+      })
+    } else {
+      if (!play_through) {
+        // Cancel any play throughs that are running
+        if (this.state.playing_through) {
+          this.setState({ playing_through: false })
+        }
+      }
+      let word_index = catalog_words.indexOf(to_display)
+      let image_urls = catalog_images[word_index]
+      let image_url = getRandom(image_urls)
+      let { images_displayed, styles } = this.state
+      let to_speak = to_display
+      if (to_speak === 'parvoneh') {
+        to_speak = 'par vah nay'
+      }
+      let utterThis = this.speak(to_speak)
+      let style = this.createStyle()
+      styles = [style]
+      let timestamp = +new Date()
+      this.setState({
+        images_displayed: [[timestamp, image_url]],
+        styles,
+      })
+      if (play_through) {
+        return utterThis
+      } else {
+        let me = this
+        utterThis.onend = function() {
+          me.removeWord(timestamp)
+        }
+      }
+    }
   }
 
   render() {
     let { images_displayed, styles } = this.state
     return (
       <div style={sceneStyle()}>
-        <div style={holderStyle()}>
-          {catalog_words.map((word, i) => (
+        <div
+          style={{
+            display: 'grid',
+            gridTemplateRows: 'auto 1fr',
+            height: '100vh',
+          }}
+        >
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr' }}>
+            <div
+              style={{
+                textAlign: 'center',
+                fontSize: '22px',
+                padding: '1em',
+                background: color_palette[10],
+                fontStyle: 'italic',
+              }}
+            >
+              Tap squares to play words
+            </div>
             <div
               className="keelyn-hover"
+              onClick={() => this.wordFlow('play all')}
               style={{
-                position: 'relative',
+                fontWeight: 'bold',
+                textAlign: 'center',
+                fontSize: '22px',
                 cursor: 'pointer',
-                background: color_palette[i],
+                padding: '1em',
+                cursor: 'pointer',
+                background: color_palette[11],
               }}
-              onClick={() => this.wordFlow(word, word)}
             >
-              <div
-                className="image-text"
-                style={{
-                  position: 'absolute',
-                  width: '80%',
-                  left: '10%',
-                  top: '10%',
-                  height: '80%',
-                  backgroundImage: `url(${default_images[i]})`,
-                  backgroundSize: 'contain',
-                  backgroundPosition: 'center center',
-                  backgroundRepeat: 'no-repeat',
-                }}
-              />
+              <div className="image-text">Play all (tap here)</div>
             </div>
-          ))}
+          </div>
+          <div style={holderStyle()}>
+            {catalog_words.map((word, i) => (
+              <div
+                key={`square_${word}`}
+                className="keelyn-hover"
+                style={{
+                  position: 'relative',
+                  cursor: 'pointer',
+                  background: color_palette[i],
+                }}
+                onClick={() => this.wordFlow(word)}
+              >
+                <div
+                  className="image-text"
+                  style={{
+                    position: 'absolute',
+                    width: '80%',
+                    left: '10%',
+                    top: '10%',
+                    height: '80%',
+                    backgroundImage:
+                      this.state.default_images.length > 0
+                        ? `url(${this.state.default_images[i]})`
+                        : 'none',
+                    backgroundSize: 'contain',
+                    backgroundPosition: 'center center',
+                    backgroundRepeat: 'no-repeat',
+                  }}
+                />
+              </div>
+            ))}
+          </div>
         </div>
         <div
           style={{
@@ -202,22 +285,26 @@ class App extends Component {
             overflow: 'hidden',
           }}
         >
-          {images_displayed.map((url, i) => (
-            <div
-              style={{
-                position: 'absolute',
-                left: '5%',
-                top: '5%',
-                width: '90%',
-                height: '90%',
-                backgroundImage: `url(${url})`,
-                backgroundSize: 'contain',
-                backgroundPosition: 'center center',
-                backgroundRepeat: 'no-repeat',
-                transform: `rotate(${styles[i].rotation}deg)`,
-              }}
-            />
-          ))}
+          {images_displayed.map((array, i) => {
+            let url = array[1]
+            return (
+              <div
+                key={array[1]}
+                style={{
+                  position: 'absolute',
+                  left: '5%',
+                  top: '5%',
+                  width: '90%',
+                  height: '90%',
+                  backgroundImage: `url(${url})`,
+                  backgroundSize: 'contain',
+                  backgroundPosition: 'center center',
+                  backgroundRepeat: 'no-repeat',
+                  transform: `rotate(${styles[i].rotation}deg)`,
+                }}
+              />
+            )
+          })}
         </div>
       </div>
     )
