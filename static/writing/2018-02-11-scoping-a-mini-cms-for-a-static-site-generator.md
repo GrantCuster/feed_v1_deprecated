@@ -4,6 +4,8 @@ preview_image: "/static/images/feed/Screen_Shot_2018_02_10_at_4_23_53_PM-1518297
 date: "Sun Feb 11 2018 19:17:26 GMT-0500 (EST)"
 ---
 
+_Note: this post is unfinished. (because it was badly scoped? Ba-dum-tss)_
+
 ![](/static/images/feed/Screen_Shot_2018_02_10_at_4_23_53_PM-1518297923315.png)
 
 _A screenshot of the new CFFL Post Editor_
@@ -31,7 +33,7 @@ spots, and wanting to do something about it for a while.
 
 We do a lot of our blog post editing through the Github interface. Github has
 built a really nice editor and markdown preview, but  there are some tedious parts. The biggest
-one of those is adding images, having to open a new tab, remembering which
+one of those is adding images. Having to open a new tab, remembering which
 folder to add the image to, and then how to write the link for it is a slog and
 can break the flow of writing a post.
 

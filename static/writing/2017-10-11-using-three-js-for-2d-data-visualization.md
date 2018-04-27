@@ -1,5 +1,5 @@
 ---
-title: "Using three.js for 2D data visualization"
+title: "First look: using three.js for 2D data visualization"
 date: "Wed, 11 Oct 2017 03:00:00 GMT"
 preview_image: "http://blog.fastforwardlabs.com/images/2017/10/tsne-final.png"
 external: "http://blog.fastforwardlabs.com/2017/10/04/using-three-js-for-2d-data-visualization.html"
