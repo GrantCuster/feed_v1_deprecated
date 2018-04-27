@@ -8,6 +8,7 @@
 - Switch images so they live on S3
 
 ### random
+- Movies to watch list -- records date added and date watched (maybe good ReasonML candidate)?
 - Simple ReasonML project
 - Project time tracker. Just let people name the project and click start and end (delete too I guess)
 - Articles to read w/ via
