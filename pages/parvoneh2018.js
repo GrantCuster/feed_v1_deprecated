@@ -210,7 +210,6 @@ class App extends Component {
                 left: '0',
                 top: '0',
                 transformOrigin: '54% 38.5% 0px',
-                transform: 'rotate(15deg)',
                 backgroundImage: `url(${source('princehead')})`,
               }}
             />
