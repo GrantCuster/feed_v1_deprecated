@@ -1,0 +1,39 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+}
+
+.head-bob-1 {
+  animation: headbob 0.2s alternate infinite;
+  animation-timing-function: linear;
+}
+.head-bob-2 {
+  animation: headbob 0.4s alternate infinite;
+  animation-timing-function: linear;
+}
+.head-bob-3 {
+  animation: headbob 0.8s alternate infinite;
+  animation-timing-function: linear;
+}
+.head-bob-4 {
+  animation: headbob 1s alternate infinite;
+  animation-timing-function: linear;
+}
+.head-bob-5 {
+  animation: headbob 1.2s alternate infinite;
+  animation-timing-function: linear;
+}
+.head-bob-6 {
+  animation: headbob 1.4s alternate infinite;
+  animation-timing-function: linear;
+}
+
+@keyframes headbob {
+  0% {
+    transform: rotate(12.5deg);
+  }
+  100% {
+    transform: rotate(-12.5deg);
+  }
+}
