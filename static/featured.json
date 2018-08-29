@@ -1,5 +1,6 @@
 [
   {
+    "id": "skyclock",
     "name": "Skyclock",
     "description": "Skyclock description",
     "posts": [
@@ -11,6 +12,7 @@
     ]
   },
   {
+    "id": "3js-2d",
     "name": "Using three.js for 2D animation",
     "description": "three.js description",
     "posts": [1518810755503, 1518622295907, 1519499170199]

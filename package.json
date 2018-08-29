@@ -1,7 +1,6 @@
 {
   "name": "feed",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -43,5 +42,14 @@
     "slugify": "^1.2.9",
     "twitter": "^1.7.0",
     "webpack": "^2.5.1"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GrantCuster/feed.git"
+  },
+  "bugs": {
+    "url": "https://github.com/GrantCuster/feed/issues"
+  },
+  "homepage": "https://github.com/GrantCuster/feed#readme",
+  "description": ""
 }
