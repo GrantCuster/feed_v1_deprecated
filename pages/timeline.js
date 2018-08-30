@@ -99,11 +99,14 @@ export default class extends React.Component {
       max_height = 33
       space = 20
     }
-
     return (
       <div>
         <Head>
           <title>Grant Custer → Timeline</title>
+          <meta
+            name="description"
+            content="Work posts visualized by date and time of day."
+          />
         </Head>
 
         <Nav url={url} />
@@ -185,7 +188,7 @@ export default class extends React.Component {
                         style={{
                           display: 'block',
                         }}
-                        title={dated.toLocaleString()}
+                        title={`${dated.toLocaleString()} - ${post.text}`}
                       >
                         <img
                           key={post.posted}

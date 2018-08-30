@@ -1,10 +1,11 @@
-import React from "react";
-import Nav from "../components/nav";
-import Remarkable from "remarkable";
-import Head from "next/head";
+import React from 'react'
+import Nav from '../components/nav'
+import Remarkable from 'remarkable'
+import Head from 'next/head'
 
 const markdown_text = `
 Experimental projects at varying stages of completion.
+- [Timeline](/timeline) (8/29/2018) - A timeline view of my work posts. Vertical position is determine by date and horizontal by time of day.
 - [RSS Feed](/rss) (10/27/2017) - An RSS feed for my feed.
 - [Dates](/dates) (10/8/2017) - A page to help me remember important dates and how long I've been doing certain things.
 - The City and the City - An experiment in terrain generation and possibly game development.
@@ -12,12 +13,12 @@ Experimental projects at varying stages of completion.
 	- [v2](/cityand/v2) (8/12/2017) - People crossing paths and saying excuse me.
 - [Project Ideas](/project_ideas) (7/6/2017) - A list of personal project ideas.
 - [Feed Archive View](/feed_archive) (7/1/2017) - An alternate view of the feed, where post thumbnails are grouped by month. It loads a lot of images at once so proceed with caution if you're paying for data.
-`;
+`
 
 export default ({ url }) => {
-  const md = new Remarkable();
+  const md = new Remarkable()
 
-  const markdown = md.render(markdown_text);
+  const markdown = md.render(markdown_text)
 
   return (
     <div>
@@ -33,5 +34,5 @@ export default ({ url }) => {
         dangerouslySetInnerHTML={{ __html: markdown }}
       />
     </div>
-  );
-};
+  )
+}
