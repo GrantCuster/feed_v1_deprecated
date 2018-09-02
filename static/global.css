@@ -9,6 +9,7 @@ html {
 }
 body {
   margin: 0;
+  background: #f7f7f7;
 }
 .no-underline {
   text-decoration: none;
