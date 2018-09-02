@@ -126,7 +126,7 @@ export default class extends React.Component {
           return (
             <div key={`page_${i}`} className="posts-page" data-page-num={i}>
               {posts.map(post => {
-                return <CenterPost key={post.posted} post={post} layout="post" />;
+                return <FeedPost key={post.posted} post={post} layout="post" />;
               })}
             </div>
           );
@@ -141,6 +141,13 @@ export default class extends React.Component {
     const query = url.query;
 
     let display_posts = feed_posts.slice(0);
+    if (
+      query.filter &&
+      (query.filter === "work" || query.filter === "inspiration")
+    ) {
+      display_posts = display_posts.filter(p => p.type === query.filter);
+    }
+
     return (
       <div>
         <Head>
@@ -164,9 +171,46 @@ export default class extends React.Component {
             </Link>
           </h1>
         </div>
+        <div className="flex justify-between px2 mb4">
+          <div>
+            {query.filter && query.filter === "work" ? (
+              <Link href="/">
+                <a>Show Inspiration</a>
+              </Link>
+            ) : query.filter && query.filter === "inspiration" ? (
+              "↓ Filter: Inspiration"
+            ) : (
+                  <Link href="/?filter=inspiration">
+                    <a
+                      title="Show inspiration only"
+                      className="no-underline hover-underline"
+                    >
+                      ↓ Inspiration
+                </a>
+                  </Link>
+                )}
+          </div>
+          <div>
+            {query.filter && query.filter === "inspiration" ? (
+              <Link href="/">
+                <a>Show Work</a>
+              </Link>
+            ) : query.filter && query.filter === "work" ? (
+              "Filter: Work ↓"
+            ) : (
+                  <Link href="/?filter=work">
+                    <a
+                      title="Show work only"
+                      className="no-underline hover-underline"
+                    >
+                      Work ↓
+                </a>
+                  </Link>
+                )}
+          </div>
+        </div>
         <div>{this.displayPosts(display_posts)}</div>
       </div>
     );
   }
 }
-

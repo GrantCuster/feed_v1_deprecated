@@ -55,6 +55,19 @@ html {
   }
 }
 
+@media screen and (min-width: 740px) {
+  .small-px2 {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}
+
+@media screen and (min-width: 740px) {
+  .big-100vh {
+    min-height: 100vh;
+  }
+}
+
 .text {
   font-family: serif;
   font-size: 1.1em;

@@ -16,15 +16,15 @@ export default ({ post, layout }) => {
         {layout === "post" ? (
           <Link
             href={`/feed_post_page?date_slug=${date_slug}`}
-            as={`/post/${date_slug}`}
+            as={`/dialog_post/${date_slug}`}
           >
             <a className="no-underline hover-underline">
               {new Date(post.posted).toLocaleString()}
             </a>
           </Link>
         ) : (
-          new Date(post.posted).toLocaleString()
-        )}
+            new Date(post.posted).toLocaleString()
+          )}
       </div>
       {post.img ? (
         video_check ? (
@@ -39,32 +39,32 @@ export default ({ post, layout }) => {
             controls
           />
         ) : (
-          <img
-            style={{
-              maxHeight: layout === "post" ? "calc(80vh)" : "none",
-              maxWidth: layout === "post" ? "calc(100vw - 1rem)" : "100%"
-            }}
-            src={`${post.img}`}
-          />
-        )
+            <img
+              style={{
+                maxHeight: layout === "post" ? "calc(80vh)" : "none",
+                maxWidth: layout === "post" ? "calc(100vw - 1rem)" : "100%"
+              }}
+              src={`${post.img}`}
+            />
+          )
       ) : (
-        <div
-          className="flex"
-          style={{
-            justifyContent: post.type === "work" ? "flex-end" : "flex-start"
-          }}
-        >
           <div
-            className="px2 mb2"
+            className="flex"
             style={{
-              fontSize: "2rem",
-              maxWidth: layout === "post" ? "calc(100vw - 1rem)" : "100%"
+              justifyContent: post.type === "work" ? "flex-end" : "flex-start"
             }}
           >
-            “{post.quote}”
+            <div
+              className="px2 mb2"
+              style={{
+                fontSize: "2rem",
+                maxWidth: layout === "post" ? "calc(100vw - 1rem)" : "100%"
+              }}
+            >
+              “{post.quote}”
           </div>
-        </div>
-      )}
+          </div>
+        )}
       {post.text ? (
         <div
           className={"flex mt2 " + (post.type === "work" ? "justify-end" : "")}
