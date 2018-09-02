@@ -88,13 +88,13 @@ export default class extends React.Component {
           let new_query = Object.assign({}, query);
           delete new_query.page;
           Router.replace({
-            pathname: "/",
+            pathname: "/dialog_feed",
             query: new_query
           });
         } else {
           let new_query = Object.assign({}, query, { page: position_page });
           Router.replace({
-            pathname: "/",
+            pathname: "/dialog_feed",
             query: new_query
           });
         }
