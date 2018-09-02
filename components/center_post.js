@@ -11,7 +11,7 @@ export default ({ post, layout }) => {
     if (extension === "mp4") video_check = true;
   }
   return (
-    <div className={layout === 'page' ? 'image-max' : `image-max py3 mx-auto big-100vh`} style={{ maxWidth: layout === 'post' ? 740 : 'none', display: 'grid', alignItems: 'center' }} key={post.posted}>
+    <div className={layout === 'page' ? 'image-max' : `image-max py3 mx-auto`} style={{ maxWidth: layout === 'post' ? 740 : 'none', display: 'grid', alignItems: 'center' }} key={post.posted}>
       <div className="py3">
         <div className="px2 mx-auto" style={{ maxWidth: 740 }}>
           <div className="mb2" style={{ display: 'flex', justifyContent: 'space-between' }}>
