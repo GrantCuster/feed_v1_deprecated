@@ -118,7 +118,7 @@ const postTweet = post => {
 
   if (post.img) {
     var img_data = fs.readFileSync(path_name)
-    Twitter.post('media/upload', { media: img_data }, function(
+    Twitter.post('media/upload', { media: img_data }, function (
       error,
       media,
       response
@@ -128,7 +128,7 @@ const postTweet = post => {
           status: message,
           media_ids: media.media_id_string,
         }
-        Twitter.post('statuses/update', the_tweet, function(
+        Twitter.post('statuses/update', the_tweet, function (
           error,
           tweet,
           response
@@ -143,7 +143,7 @@ const postTweet = post => {
     var the_tweet = {
       status: message,
     }
-    Twitter.post('statuses/update', the_tweet, function(
+    Twitter.post('statuses/update', the_tweet, function (
       error,
       tweet,
       response
@@ -162,7 +162,7 @@ passport.use(
       consumerSecret: secret.consumer_secret,
       callbackURL: '/auth/twitter/callback',
     },
-    function(token, tokenSecret, profile, cb) {
+    function (token, tokenSecret, profile, cb) {
       if (profile.username !== 'GrantCuster') {
         return cb(null, false)
       }
@@ -171,10 +171,10 @@ passport.use(
   )
 )
 
-passport.serializeUser(function(user, cb) {
+passport.serializeUser(function (user, cb) {
   cb(null, user)
 })
-passport.deserializeUser(function(obj, cb) {
+passport.deserializeUser(function (obj, cb) {
   cb(null, obj)
 })
 
@@ -430,6 +430,15 @@ app.prepare().then(() => {
   })
 
   server.get('/post/:date_slug', (req, res) => {
+    return app.render(
+      req,
+      res,
+      '/center_post_page',
+      Object.assign({}, req.params, req.query)
+    )
+  })
+
+  server.get('/dialog_post/:date_slug', (req, res) => {
     return app.render(
       req,
       res,
