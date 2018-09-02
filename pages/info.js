@@ -7,7 +7,7 @@ const markdown_text = `
 I am a designer-developer at [Fast Forward Labs](http://fastforwardlabs.com). We build prototypes and write reports on near future technologies.
 
 On this site you'll find:
-- [Feed](/) &ndash; images of my own work in progress (on the right) and things I am inspired by (on the left).
+- [Feed](/) &ndash; images of my own work in progress and things I am inspired by.
 - [Writing](/writing) &ndash; my writing. Mostly about design and coding but hopefully some other things as well.
 - [Misc](/misc) &ndash; experimental stuff.
 
@@ -30,7 +30,7 @@ export default ({ url }) => {
 			<div className="center mb3">
 				<h1>Info</h1>
 			</div>
-			<div className="measure-max mx-auto px2" dangerouslySetInnerHTML={{__html: markdown}}>
+			<div className="measure-max mx-auto px2" dangerouslySetInnerHTML={{ __html: markdown }}>
 			</div>
 		</div>
 	);

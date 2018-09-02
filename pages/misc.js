@@ -5,6 +5,7 @@ import Head from 'next/head'
 
 const markdown_text = `
 Experimental projects at varying stages of completion.
+- [Dialog Feed](/dialog_feed) (9/1/2018) - The previous version of my feed. It has inspiration posts on the left and my work on the right.
 - [Timeline](/timeline) (8/29/2018) - A timeline view of my work posts. Vertical position is determine by date and horizontal by time of day.
 - [RSS Feed](/rss) (10/27/2017) - An RSS feed for my feed.
 - [Dates](/dates) (10/8/2017) - A page to help me remember important dates and how long I've been doing certain things.

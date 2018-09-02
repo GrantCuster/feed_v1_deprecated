@@ -15,7 +15,6 @@ export default class extends React.Component {
     if (req) {
       baseUrl = makeBaseUrl(req);
     }
-    console.log(baseUrl);
     const res = await fetch(`${baseUrl}/api/feed_posts`);
     const feed_posts = await res.json();
     return { feed_posts };
@@ -152,7 +151,7 @@ export default class extends React.Component {
           />
           <meta
             name="description"
-            content="A feed of things I'm working on (on the right) and inspired by (on the left)."
+            content="A feed of things I'm working on and inspired by."
           />
         </Head>
 
