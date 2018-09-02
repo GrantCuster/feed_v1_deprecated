@@ -117,13 +117,13 @@ export default class extends React.Component {
                 <span className="bold">inspiration</span>
               </span>
             ) : (
-              <span>
-                <span className="bold">work</span>{" "}
-                <Link href="/feed_archive?show=inspiration">
-                  <a className="faded-link">inspiration</a>
-                </Link>
-              </span>
-            )}{" "}
+                <span>
+                  <span className="bold">work</span>{" "}
+                  <Link href="/feed_archive?show=inspiration">
+                    <a className="faded-link">inspiration</a>
+                  </Link>
+                </span>
+              )}{" "}
             feed posts grouped by month.
           </div>
           <div className="">
@@ -146,7 +146,7 @@ export default class extends React.Component {
                           }}
                         >
                           <Link
-                            href={`/feed_post_page?date_slug=${date_slug}`}
+                            href={`/center_post_page?date_slug=${date_slug}`}
                             as={`/post/${date_slug}`}
                           >
                             <a style={{ lineHeight: 0 }}>
@@ -159,17 +159,17 @@ export default class extends React.Component {
                                   }}
                                 />
                               ) : (
-                                <div
-                                  style={{
-                                    maxWidth: "20vw",
-                                    maxHeight: "10rem",
-                                    overflow: "hidden",
-                                    lineHeight: 1.5
-                                  }}
-                                >
-                                  &ldquo;{post.quote}&rdquo;
+                                  <div
+                                    style={{
+                                      maxWidth: "20vw",
+                                      maxHeight: "10rem",
+                                      overflow: "hidden",
+                                      lineHeight: 1.5
+                                    }}
+                                  >
+                                    &ldquo;{post.quote}&rdquo;
                                 </div>
-                              )}
+                                )}
                             </a>
                           </Link>
                         </div>

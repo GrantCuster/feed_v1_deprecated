@@ -160,8 +160,8 @@ export default class extends React.Component {
                   Load more
                 </button>
               ) : (
-                <div style={{ height: 57 }} />
-              )}
+                  <div style={{ height: 57 }} />
+                )}
             </div>
             <div>
               {display_posts.map((post, i) => {
@@ -181,7 +181,7 @@ export default class extends React.Component {
                     }}
                   >
                     <Link
-                      href={`/feed_post_page?date_slug=${date_slug}`}
+                      href={`/center_post_page?date_slug=${date_slug}`}
                       as={`/post/${date_slug}`}
                     >
                       <a
