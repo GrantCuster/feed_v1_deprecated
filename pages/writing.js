@@ -45,16 +45,16 @@ export default class extends React.Component {
                   {f.meta.external ? (
                     <a href={f.meta.external}>{f.meta.title}</a>
                   ) : (
-                    <Link
-                      href={`/writing_page?file_slug=${f.meta.filename.slice(
-                        0,
-                        -3
-                      )}`}
-                      as={`/writing/${f.meta.filename.slice(0, -3)}`}
-                    >
-                      <a>{f.meta.title}</a>
-                    </Link>
-                  )}
+                      <Link
+                        href={`/writing_page?file_slug=${f.meta.filename.slice(
+                          0,
+                          -3
+                        )}`}
+                        as={`/writing/${f.meta.filename.slice(0, -3)}`}
+                      >
+                        <a>{f.meta.title}</a>
+                      </Link>
+                    )}
                 </h2>
               </div>
               {f.meta.preview_image ? (
@@ -64,7 +64,7 @@ export default class extends React.Component {
                   src={f.meta.preview_image}
                 />
               ) : null}
-              <div className="mb2">
+              <div className="mb2" style={{ wordBreak: 'break-word' }}>
                 {f.content
                   .replace(/\n\n/g, " ¶ ")
                   .replace(" ¶ ", "")
@@ -77,16 +77,16 @@ export default class extends React.Component {
                 {f.meta.external ? (
                   <a href={f.meta.external}>Read more</a>
                 ) : (
-                  <Link
-                    href={`/writing_page?file_slug=${f.meta.filename.slice(
-                      0,
-                      -3
-                    )}`}
-                    as={`/writing/${f.meta.filename.slice(0, -3)}`}
-                  >
-                    <a>Read more</a>
-                  </Link>
-                )}
+                    <Link
+                      href={`/writing_page?file_slug=${f.meta.filename.slice(
+                        0,
+                        -3
+                      )}`}
+                      as={`/writing/${f.meta.filename.slice(0, -3)}`}
+                    >
+                      <a>Read more</a>
+                    </Link>
+                  )}
               </div>
             </div>
           );

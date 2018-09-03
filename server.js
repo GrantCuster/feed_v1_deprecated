@@ -17,6 +17,7 @@ const keys = require('../local_keys')
 const path = require('path')
 const RSS = require('rss')
 var slugify = require('slugify')
+let Masto = require('mastodon')
 
 const slugDate = date_string => {
   const date = new Date(date_string)
@@ -58,6 +59,11 @@ const secret = {
 }
 
 const Twitter = new TwitterPackage(secret)
+
+let Mastodon = new Masto({
+  access_token: keys.mastodon_token,
+  api_url: 'https://vis.social/api/v1/'
+})
 
 const postTweet = post => {
   const domain = 'http://feed.grantcuster.com'
@@ -154,6 +160,79 @@ const postTweet = post => {
     })
   }
 }
+
+
+const postMastodon = post => {
+  let limit = 500
+  const domain = 'http://feed.grantcuster.com'
+  const date_slug = slugDate(post.posted)
+
+  var preamble = capitalizeFirstLetter(post.type) + ' ↓ '
+  var count = preamble.length
+
+  var link = domain + '/post/' + date_slug
+  count += 23
+
+  var additional = ''
+  if (post.src && post.src.length > 0) {
+    var additional_pre = ' from '
+    additional += additional_pre + post.src
+    count += additional_pre.length
+    if (post.src.indexOf('http') > -1) {
+      count += 23
+    } else {
+      count += post.src.length
+    }
+  }
+  if (post.via && post.via.length > 0) {
+    var via_pre = ' via '
+    additional += via_pre + post.via
+    count += via_pre.length
+    if (post.via.indexOf('http') > -1) {
+      count += 23
+    } else {
+      count += post.via.length
+    }
+  }
+  var path_name = '.' + post.img
+
+  var characters_left = limit - count
+
+  var quote = ''
+  if (!post.img && post.quote) {
+    if (quote.length > characters_left) {
+      quote = ' ' + quote.substring(0, characters_left - 5).trim() + '”...'
+    } else {
+      quote = ' “' + post.quote + '”'
+    }
+    count += quote.length
+    characters_left = limit - count
+  }
+
+  var text = ''
+  if (post.text && post.text.length > 0) text = ' ' + post.text
+  var text_length = text.length
+
+  var message = ''
+  if (text_length > characters_left) {
+    text = ' ' + text.substring(0, characters_left - 3).trim() + '...'
+  }
+
+  message = preamble + link + quote + text + additional
+
+  if (post.img) {
+    Mastodon.post('media', { file: fs.createReadStream(path_name) }).then(resp => {
+      id = resp.data.id;
+      Mastodon.post('statuses', { status: message, media_ids: [id] })
+    })
+  } else {
+    var the_tweet = {
+      status: message,
+    }
+    Mastodon.post('statuses', the_tweet)
+  }
+}
+
 
 passport.use(
   new Strategy(
@@ -291,6 +370,8 @@ app.prepare().then(() => {
                   delete post_object.tweet
                   postTweet(post_object)
                 }
+                // Always post to Mastodon
+                postMastodon(post_object)
               })
             }
           )
@@ -302,8 +383,6 @@ app.prepare().then(() => {
 
       if (req.file === undefined && req.body.quote === undefined) {
         request.head(req.body.download_url, (err, res, body) => {
-          console.log('first route')
-          console.log(req.body.download_url)
           const filename = makeImageSlug(req.body.download_url)
           post_object.img = '/static/images/feed/' + filename
           request(req.body.download_url)
