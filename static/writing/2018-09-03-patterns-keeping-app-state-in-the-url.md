@@ -4,11 +4,11 @@ preview_image: "/static/images/feed/Screen_Shot_2018_08_26_at_11_24_27_PM-153534
 date: "Mon Sep 03 2018 12:21:16 GMT-0400 (Eastern Daylight Time)"
 ---
 
+Lately I've been experimenting with putting all of the app state in the URL as query paramaters. I want to sketch out my current thinking about the pattern.
+
 ![A screenshot of the set-counter app with nine counters set up. Matching the URL query parameters.](/static/images/feed/Screen_Shot_2018_08_26_at_11_24_27_PM-1535340400325.png)
 
 _In my set-counter app, all of the configuration is contained within the URL: [https://grantcuster.github.io/set-counter?c[0][to]=10&c[1][sc]=2&c[1][to]=10&c[2][sc]=3&c[2][to]=10&c[3][sc]=4&c[3][to]=10&c[4][sc]=5&c[4][to]=10&c[5][sc]=4&c[5][to]=10&c[6][sc]=3&c[6][to]=10&c[7][sc]=2&c[7][to]=10&c[8][to]=10&sp=s&cv=1&cr=1&sv=0.5&sr=1.5&rl=y](https://grantcuster.github.io/set-counter?c[0][to]=10&c[1][sc]=2&c[1][to]=10&c[2][sc]=3&c[2][to]=10&c[3][sc]=4&c[3][to]=10&c[4][sc]=5&c[4][to]=10&c[5][sc]=4&c[5][to]=10&c[6][sc]=3&c[6][to]=10&c[7][sc]=2&c[7][to]=10&c[8][to]=10&sp=s&cv=1&cr=1&sv=0.5&sr=1.5&rl=y)_
-
-Lately I've been experimenting with putting all of the app state in the URL as query paramaters. I want to sketch out my current thinking about the pattern.
 
 ## Origins
 
