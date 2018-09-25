@@ -62,7 +62,7 @@ const Twitter = new TwitterPackage(secret)
 
 let Mastodon = new Masto({
   access_token: keys.mastodon_token,
-  api_url: 'https://vis.social/api/v1/'
+  api_url: 'https://vis.social/api/v1/',
 })
 
 const postTweet = post => {
@@ -124,7 +124,7 @@ const postTweet = post => {
 
   if (post.img) {
     var img_data = fs.readFileSync(path_name)
-    Twitter.post('media/upload', { media: img_data }, function (
+    Twitter.post('media/upload', { media: img_data }, function(
       error,
       media,
       response
@@ -134,7 +134,7 @@ const postTweet = post => {
           status: message,
           media_ids: media.media_id_string,
         }
-        Twitter.post('statuses/update', the_tweet, function (
+        Twitter.post('statuses/update', the_tweet, function(
           error,
           tweet,
           response
@@ -149,7 +149,7 @@ const postTweet = post => {
     var the_tweet = {
       status: message,
     }
-    Twitter.post('statuses/update', the_tweet, function (
+    Twitter.post('statuses/update', the_tweet, function(
       error,
       tweet,
       response
@@ -160,7 +160,6 @@ const postTweet = post => {
     })
   }
 }
-
 
 const postMastodon = post => {
   let limit = 500
@@ -221,10 +220,12 @@ const postMastodon = post => {
   message = preamble + link + quote + text + additional
 
   if (post.img) {
-    Mastodon.post('media', { file: fs.createReadStream(path_name) }).then(resp => {
-      id = resp.data.id;
-      Mastodon.post('statuses', { status: message, media_ids: [id] })
-    })
+    Mastodon.post('media', { file: fs.createReadStream(path_name) }).then(
+      resp => {
+        id = resp.data.id
+        Mastodon.post('statuses', { status: message, media_ids: [id] })
+      }
+    )
   } else {
     var the_tweet = {
       status: message,
@@ -233,7 +234,6 @@ const postMastodon = post => {
   }
 }
 
-
 passport.use(
   new Strategy(
     {
@@ -241,7 +241,7 @@ passport.use(
       consumerSecret: secret.consumer_secret,
       callbackURL: '/auth/twitter/callback',
     },
-    function (token, tokenSecret, profile, cb) {
+    function(token, tokenSecret, profile, cb) {
       if (profile.username !== 'GrantCuster') {
         return cb(null, false)
       }
@@ -250,10 +250,10 @@ passport.use(
   )
 )
 
-passport.serializeUser(function (user, cb) {
+passport.serializeUser(function(user, cb) {
   cb(null, user)
 })
-passport.deserializeUser(function (obj, cb) {
+passport.deserializeUser(function(obj, cb) {
   cb(null, obj)
 })
 
