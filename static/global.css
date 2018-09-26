@@ -140,3 +140,7 @@ blockquote {
   outline: none;
   background: none;
 }
+
+button {
+  touch-action: manipulation;
+}
