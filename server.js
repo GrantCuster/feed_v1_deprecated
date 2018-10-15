@@ -324,6 +324,12 @@ app.prepare().then(() => {
     return res.json(posts)
   })
 
+  server.get('/api/stacks', (req, res) => {
+    const data = fs.readFileSync('./static/stacks.json', 'utf8')
+    const posts = JSON.parse(data)
+    return res.json(posts)
+  })
+
   server.get('/api/writing/:file_slug', (req, res) => {
     const filename = req.params.file_slug
     const file = fs.readFileSync(`./static/writing/${filename}`, 'utf8')
@@ -506,6 +512,44 @@ app.prepare().then(() => {
       '/writing_page',
       Object.assign({}, req.params, req.query)
     )
+  })
+
+  server.get('/stack/:title_slug', (req, res) => {
+    return app.render(
+      req,
+      res,
+      '/stack_page',
+      Object.assign({}, req.params, req.query)
+    )
+  })
+
+  server.get('/admin/stacker', ensure.ensureLoggedIn(), (req, res) => {
+    return app.render(
+      req,
+      res,
+      '/stacker',
+      Object.assign({}, { user: req.user }, req.query)
+    )
+  })
+
+  server.post('/api/private/stackit', ensure.ensureLoggedIn(), (req, res) => {
+    let data = fs.readFileSync('./static/stacks.json', 'utf8')
+    let stacks = JSON.parse(data)
+    for (let stack of stacks) {
+      if (stack.id === req.body.stack_id) {
+        if (stack.posts.includes(req.body.post_id)) {
+          let index = stack.posts.indexOf(req.body.post_id)
+          stack.posts.splice(index, 1)
+        } else {
+          stack.posts.push(req.body.post_id)
+        }
+      }
+    }
+    let new_stacks = JSON.stringify(stacks)
+    fs.writeFile('./static/stacks.json', new_stacks, err => {
+      if (err) throw err
+      return res.json({ stacks: new_stacks })
+    })
   })
 
   server.get('/post/:date_slug', (req, res) => {

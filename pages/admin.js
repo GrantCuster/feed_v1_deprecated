@@ -1,104 +1,113 @@
-import React from "react";
-import Nav from "../components/nav";
-import axios from "axios";
-import Head from "next/head";
+import React from 'react'
+import Nav from '../components/nav'
+import axios from 'axios'
+import Head from 'next/head'
 
 export default class extends React.Component {
   constructor() {
-    super();
+    super()
     this.state = {
-      category: "work",
+      category: 'work',
       local_file: false,
-      alt: "",
-      from: "",
-      download_url: "",
-      via: "",
-      tweet: true
-    };
+      alt: '',
+      from: '',
+      download_url: '',
+      via: '',
+      tweet: true,
+      stacks: null,
+    }
+  }
+
+  componentDidMount() {
+    fetch(`/api/stacks`)
+      .then(stacks_raw => stacks_raw.json())
+      .then(stacks => {
+        this.setState({ stacks: stacks })
+      })
   }
 
   handleCategoryClick(value) {
-    this.setState({ category: value });
+    this.setState({ category: value })
   }
 
   handleFileChange(e) {
-    const reader = new FileReader();
-    let file = e.target.files[0];
-    if (!file) file = false;
-    this.setState({ local_file: file });
+    const reader = new FileReader()
+    let file = e.target.files[0]
+    if (!file) file = false
+    this.setState({ local_file: file })
   }
 
   handleUrlChange(e) {
-    this.setState({ download_url: e.target.value });
+    this.setState({ download_url: e.target.value })
   }
 
   handleQuoteChange(e) {
-    this.setState({ quote: e.target.value });
+    this.setState({ quote: e.target.value })
   }
 
   handleAltChange(e) {
-    this.setState({ alt: e.target.value });
+    this.setState({ alt: e.target.value })
   }
 
   handleFromChange(e) {
-    this.setState({ from: e.target.value });
+    this.setState({ from: e.target.value })
   }
 
   handleViaChange(e) {
-    this.setState({ via: e.target.value });
+    this.setState({ via: e.target.value })
   }
 
   handleTweetChange(e) {
-    const target = e.target;
-    const value = target.type === "checkbox" ? target.checked : target.value;
+    const target = e.target
+    const value = target.type === 'checkbox' ? target.checked : target.value
     this.setState({
-      [target.name]: value
-    });
+      [target.name]: value,
+    })
   }
 
   checkText(string) {
     if (string) {
-      let checked = string.trim();
-      if (checked.length === 0) checked = false;
-      return checked;
+      let checked = string.trim()
+      if (checked.length === 0) checked = false
+      return checked
     } else {
-      return false;
+      return false
     }
   }
 
   handlePost(e) {
-    let formData = new FormData();
+    let formData = new FormData()
     const post_object = {
       type: this.state.category,
       quote: this.checkText(this.state.quote),
       text: this.checkText(this.state.alt),
       src: this.checkText(this.state.from),
       via: this.checkText(this.state.via),
-      tweet: this.state.tweet
-    };
+      tweet: this.state.tweet,
+    }
     Object.keys(post_object).forEach(key => {
       if (post_object[key] !== false) {
-        formData.append(key, post_object[key]);
+        formData.append(key, post_object[key])
       }
-    });
+    })
     if (this.state.local_file !== false) {
-      formData.append("image", this.state.local_file);
+      formData.append('image', this.state.local_file)
     } else {
-      formData.append("download_url", this.checkText(this.state.download_url));
+      formData.append('download_url', this.checkText(this.state.download_url))
     }
     axios
-      .post("/api/private/post", formData)
+      .post('/api/private/post', formData)
       .then(response => {
-        console.log(response);
+        console.log(response)
       })
       .catch(error => {
-        console.log(error);
-      });
-    e.preventDefault();
+        console.log(error)
+      })
+    e.preventDefault()
   }
 
   render() {
-    const { url } = this.props;
+    const { url } = this.props
     return (
       <div>
         <Head>
@@ -118,9 +127,9 @@ export default class extends React.Component {
                   <input
                     type="radio"
                     value="work"
-                    onChange={this.handleCategoryClick.bind(this, "work")}
-                    checked={this.state.category === "work"}
-                  />{" "}
+                    onChange={this.handleCategoryClick.bind(this, 'work')}
+                    checked={this.state.category === 'work'}
+                  />{' '}
                   Work
                 </label>
                 <label className="px1">
@@ -129,10 +138,10 @@ export default class extends React.Component {
                     value="inspiration"
                     onChange={this.handleCategoryClick.bind(
                       this,
-                      "inspiration"
+                      'inspiration'
                     )}
-                    checked={this.state.category === "inspiration"}
-                  />{" "}
+                    checked={this.state.category === 'inspiration'}
+                  />{' '}
                   Inspiration
                 </label>
               </div>
@@ -144,7 +153,7 @@ export default class extends React.Component {
                   <div>File</div>
                   <input
                     className="p1 col-12 h4"
-                    style={{ background: "#efefef" }}
+                    style={{ background: '#efefef' }}
                     type="file"
                     onChange={this.handleFileChange.bind(this)}
                   />
@@ -164,7 +173,7 @@ export default class extends React.Component {
               <div>
                 <textarea
                   className="col-12 h4 p1"
-                  style={{ height: "3.5rem" }}
+                  style={{ height: '3.5rem' }}
                   onChange={this.handleQuoteChange.bind(this)}
                 />
               </div>
@@ -174,7 +183,7 @@ export default class extends React.Component {
               <div>
                 <textarea
                   className="col-12 h4 p1"
-                  style={{ height: "3.5rem" }}
+                  style={{ height: '3.5rem' }}
                   onChange={this.handleAltChange.bind(this)}
                 />
               </div>
@@ -210,6 +219,24 @@ export default class extends React.Component {
                 Tweet
               </label>
             </div>
+            {this.state.stacks ? (
+              <div
+                style={{
+                  marginTop: '0.5rem',
+                  padding: '0.5rem',
+                  border: 'solid 1px black',
+                }}
+              >
+                <div>Add to stacks</div>
+                <div>
+                  {this.state.stacks.map(stack => (
+                    <div>
+                      <input type="checkbox" /> {stack.id}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ) : null}
             <div>
               <input
                 type="submit"
@@ -221,6 +248,6 @@ export default class extends React.Component {
           </div>
         </form>
       </div>
-    );
+    )
   }
 }
