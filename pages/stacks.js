@@ -23,7 +23,6 @@ export default class extends React.Component {
       .sort((a, b) => {
         let sa = last(a.posts.sort())
         let sb = last(b.posts.sort())
-        console.log(sa)
         if (sb > sa) {
           return -1
         } else if (sa > sb) {
