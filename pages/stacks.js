@@ -13,11 +13,27 @@ export default class extends React.Component {
     if (req) {
       baseUrl = makeBaseUrl(req)
     }
-    const stacks_raw = await fetch(`${baseUrl}/api/stacks`)
-    const stacks = await stacks_raw.json()
-    const posts_raw = await fetch(`${baseUrl}/api/feed_posts`)
-    const posts = await posts_raw.json()
-    const post_dates = posts.map(p => p.posted)
+    let stacks_raw = await fetch(`${baseUrl}/api/stacks`)
+    let stacks = await stacks_raw.json()
+    let posts_raw = await fetch(`${baseUrl}/api/feed_posts`)
+    let posts = await posts_raw.json()
+    let post_dates = posts.map(p => p.posted)
+
+    stacks = stacks
+      .sort((a, b) => {
+        let sa = last(a.posts.sort())
+        let sb = last(b.posts.sort())
+        console.log(sa)
+        if (sb > sa) {
+          return -1
+        } else if (sa > sb) {
+          return 1
+        } else {
+          return 0
+        }
+      })
+      .reverse()
+
     return { stacks, posts, post_dates }
   }
 
@@ -38,16 +54,16 @@ export default class extends React.Component {
             maxWidth: 740,
           }}
         >
-          Stacks are collections of posts based around certain projects or
-          themes.
+          Collections of posts based around certain projects or themes.
         </div>
         <div
           style={{
             display: 'grid',
             gridTemplateColumns: '1fr 1fr 1fr',
+            gridTemplateColumns: 'repeat(auto-fill, minmax(360px, 1fr))',
             padding: '1rem',
-            gridColumnGap: '1rem',
-            gridRowGap: '2rem',
+            gridColumnGap: '2rem',
+            gridRowGap: '3rem',
             paddingBottom: '4rem',
           }}
         >
@@ -69,7 +85,7 @@ export default class extends React.Component {
                         width: '100%',
                         display: 'block',
                         paddingTop: '56.25%',
-                        backgroundImage: `url(${last_post.img})`,
+                        backgroundImage: `url('${last_post.img}')`,
                         backgroundSize: 'contain',
                         backgroundPosition: 'center center',
                         backgroundRepeat: 'no-repeat',
