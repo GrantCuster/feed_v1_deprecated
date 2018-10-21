@@ -571,20 +571,20 @@ app.prepare().then(() => {
   })
 
   server.get('/temp', (req, res) => {
-    let data = fs.readFileSync('./static/stacks.json', 'utf8')
-    let post_data = JSON.parse(data)
-    for (let stack of post_data) {
-      for (let i = 0; i < stack.posts.length; i++) {
-        let post = stack.posts[i]
-        let date = new Date(post)
-        stack.posts[i] = date.valueOf()
-      }
-    }
-    let new_posts = JSON.stringify(post_data)
-    fs.writeFile('./static/stacks.json', new_posts, err => {
-      if (err) throw err
-      return res.json({ status: 'success' })
-    })
+    // let data = fs.readFileSync('./static/feed_posts.json', 'utf8')
+    // let post_data = JSON.parse(data)
+    // for (let post of post_data) {
+    //   // for (let i = 0; i < stack.posts.length; i++) {
+    //   //   let post = stack.posts[i]
+    //   let date = new Date(post.posted)
+    //   post.posted = date.valueOf()
+    //   // }
+    // }
+    // let new_posts = JSON.stringify(post_data)
+    // fs.writeFile('./static/feed_posts.json', new_posts, err => {
+    //   if (err) throw err
+    //   return res.json({ status: 'success' })
+    // })
   })
 
   server.get('*', (req, res) => {
