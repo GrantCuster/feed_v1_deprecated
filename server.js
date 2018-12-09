@@ -556,7 +556,7 @@ app.prepare().then(() => {
     return app.render(
       req,
       res,
-      '/center_post_page',
+      '/gl_post_page',
       Object.assign({}, req.params, req.query)
     )
   })

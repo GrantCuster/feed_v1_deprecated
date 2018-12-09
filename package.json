@@ -38,6 +38,7 @@
     "path-match": "^1.2.4",
     "react": "^15.6.2",
     "react-dom": "^15.6.2",
+    "react-infinite-scroller": "^1.2.2",
     "reason-react": "^0.5.3",
     "remarkable": "^1.7.1",
     "request": "^2.81.0",

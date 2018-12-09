@@ -42,6 +42,12 @@ export default class extends React.Component {
       <div>
         <Head>
           <title>Grant Custer → Stacks</title>
+          <link
+            rel="stylesheet"
+            type="text/css"
+            href="/static/basscss.min.css"
+          />
+          <link rel="stylesheet" type="text/css" href="/static/global.css" />
         </Head>
         <Nav url={url} />
         <div className="center mb3">

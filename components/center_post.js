@@ -2,7 +2,7 @@ import React from 'react'
 import Link from 'next/link'
 import { slugDate } from '../utils/utils-general.js'
 
-export default ({ post, layout }) => {
+export default ({ post, layout, style }) => {
   const date_slug = slugDate(post.posted)
   let video_check
   if (post.img) {

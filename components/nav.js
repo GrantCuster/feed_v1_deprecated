@@ -1,9 +1,14 @@
 import React from 'react'
 import Link from 'next/link'
+import Head from 'next/head'
 
 export default ({ url }) => {
   return (
     <div className="flex justify-between mb2">
+      <Head>
+        <link rel="stylesheet" type="text/css" href="/static/basscss.min.css" />
+        <link rel="stylesheet" type="text/css" href="/static/global.css" />
+      </Head>
       <div className="p1 bold">
         <Link prefetch href="/">
           <a className="no-underline p1 block">Grant Custer</a>
