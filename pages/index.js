@@ -7,10 +7,6 @@ import GridNav from '../components/GridNav'
 import { calcLayout } from '../components/calcLayout'
 import InfiniteScroll from 'react-infinite-scroller'
 
-function capitalize(string) {
-  return string.replace(/^\w/, c => c.toUpperCase())
-}
-
 class Feed extends React.Component {
   static async getInitialProps({ req, query, asPath }) {
     let baseUrl = ''
@@ -97,6 +93,12 @@ class Feed extends React.Component {
             name="description"
             content="A feed of things I'm working on and inspired by."
           />
+          <link
+            rel="stylesheet"
+            type="text/css"
+            href="https://rsms.me/inter/inter-ui.css"
+          />
+          <link rel="stylesheet" type="text/css" href="/static/grid.css" />
         </Head>
         <div>
           <GridNav url={url} grid={grid} />

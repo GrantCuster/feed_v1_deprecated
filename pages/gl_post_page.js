@@ -72,6 +72,12 @@ class Post extends React.Component {
             name="description"
             content="A feed of things I'm working on and inspired by."
           />
+          <link
+            rel="stylesheet"
+            type="text/css"
+            href="https://rsms.me/inter/inter-ui.css"
+          />
+          <link rel="stylesheet" type="text/css" href="/static/grid.css" />
         </Head>
         <div>
           <GridNav url={url} grid={grid} />

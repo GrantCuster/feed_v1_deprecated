@@ -25,13 +25,6 @@ export default ({ url, grid }) => {
   ]
   return (
     <div>
-      <link
-        rel="stylesheet"
-        type="text/css"
-        href="https://rsms.me/inter/inter-ui.css"
-      />
-      <link rel="stylesheet" type="text/css" href="/static/grid.css" />
-
       <div style={{ ...full_row_style }}>Grant Custer</div>
       <div style={{ ...full_row_style }}>
         <ul style={{ marginLeft: unit / 2 }}>
