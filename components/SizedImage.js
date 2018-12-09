@@ -33,11 +33,11 @@ class SizedImage extends React.Component {
           img_style.height = container_height
         }
       }
-
       container_style.height = container_height
       container_style.paddingTop = padding_top
     } else {
       img_style.maxWidth = feed_width
+      img_style.opacity = 0
     }
     return (
       <div style={{ ...container_style }}>

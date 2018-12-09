@@ -36,7 +36,9 @@ export default ({ url, grid }) => {
               {url && url.pathname === l[1] ? (
                 <span>{l[0]}</span>
               ) : (
-                <a href={l[1]}>{l[0]}</a>
+                <Link href={l[1]}>
+                  <a>{l[0]}</a>
+                </Link>
               )}
             </li>
           ))}
