@@ -4,10 +4,14 @@ import Nav from '../components/nav'
 import Head from 'next/head'
 import Link from 'next/link'
 import { makeBaseUrl, extractHostname } from '../utils/utils-general'
+import GridNav from '../components/GridNav'
+import Footer from '../components/Footer'
 import { format, startOfHour } from 'date-fns'
 import { last } from 'lodash'
+import SizedImage from '../components/SizedImage'
+import { calcLayout } from '../components/calcLayout'
 
-export default class extends React.Component {
+class Stacks extends React.Component {
   static async getInitialProps({ req, query }) {
     let baseUrl = ''
     if (req) {
@@ -37,39 +41,62 @@ export default class extends React.Component {
   }
 
   render() {
-    const { url, stacks, posts, post_dates } = this.props
+    const { url, stacks, posts, post_dates, grid } = this.props
+    let {
+      width,
+      height,
+      font_size,
+      line_height,
+      unit,
+      margin_top,
+      margin_bottom,
+      margin_left,
+      margin_right,
+      columns,
+      column_width,
+      column_gap,
+    } = grid
+
+    let max_columns_each = 2
+    let actual_columns_width = max_columns_each
+    if (columns < max_columns_each) {
+      actual_columns_width = columns
+    }
+
     return (
-      <div>
+      <div
+        style={{
+          fontSize: font_size,
+          lineHeight: line_height,
+          marginTop: unit / 2,
+          marginBottom: unit / 2,
+        }}
+      >
         <Head>
           <title>Grant Custer → Stacks</title>
-          <link
-            rel="stylesheet"
-            type="text/css"
-            href="/static/basscss.min.css"
-          />
-          <link rel="stylesheet" type="text/css" href="/static/global.css" />
         </Head>
-        <Nav url={url} />
-        <div className="center mb3">
-          <h1>Stacks</h1>
-        </div>
+        <GridNav url={url} grid={grid} />
         <div
-          className="image-max mb3 px2 mx-auto"
           style={{
-            maxWidth: 740,
+            fontSize: font_size,
+            marginTop: unit,
+            marginLeft: margin_left,
+            marginBottom: unit,
+            width: width - column_gap,
           }}
         >
-          Collections of posts based around certain projects or themes.
+          <div>Stacks</div>
+          <div style={{ textIndent: unit }}>
+            Collections of posts based around certain projects or themes.
+          </div>
         </div>
         <div
           style={{
             display: 'grid',
-            gridTemplateColumns: '1fr 1fr 1fr',
-            gridTemplateColumns: 'repeat(auto-fill, minmax(360px, 1fr))',
-            padding: '1rem',
-            gridColumnGap: '2rem',
-            gridRowGap: '3rem',
-            paddingBottom: '4rem',
+            padding: `0 ${unit / 2}px`,
+            gridTemplateColumns: `repeat(${columns}, 1fr)`,
+            gridColumnGap: column_gap,
+            gridRowGap: unit,
           }}
         >
           {stacks.map(stack => {
@@ -78,44 +105,61 @@ export default class extends React.Component {
             let index = post_dates.indexOf(last_date)
             let last_post = posts[index]
             return (
-              <div key={stack.name} style={{}}>
+              <div
+                key={stack.name}
+                style={{
+                  gridColumn: `span ${actual_columns_width}`,
+                }}
+              >
+                <div
+                  style={{
+                    height: (Math.floor(height / unit) / 3) * unit,
+                    marginBottom: unit / 2,
+                    marginTop: unit / 2,
+                  }}
+                >
+                  <Link
+                    href={`/stack_page?title_slug=${stack.id}`}
+                    as={`/stack/${stack.id}`}
+                  >
+                    <a style={{ display: 'block', lineHeight: 0 }}>
+                      <SizedImage
+                        src={last_post.img}
+                        max_width={
+                          actual_columns_width * column_width - column_gap
+                        }
+                        grid={grid}
+                        container_height={
+                          (Math.floor(height / unit) / 3) * unit
+                        }
+                        max_height={(Math.floor(height / unit) / 3) * unit}
+                      />
+                    </a>
+                  </Link>
+                </div>
+
                 <div style={{}}>
                   <Link
                     href={`/stack_page?title_slug=${stack.id}`}
                     as={`/stack/${stack.id}`}
                   >
-                    <a
-                      src={last_post.img}
-                      style={{
-                        width: '100%',
-                        display: 'block',
-                        paddingTop: '56.25%',
-                        backgroundImage: `url('${last_post.img}')`,
-                        backgroundSize: 'contain',
-                        backgroundPosition: 'center center',
-                        backgroundRepeat: 'no-repeat',
-                      }}
-                    />
-                  </Link>
-                </div>
-                <div>
-                  <Link
-                    href={`/stack_page?title_slug=${stack.id}`}
-                    as={`/stack/${stack.id}`}
-                  >
                     <a>
-                      <h3 style={{ margin: 0, marginTop: '1rem' }}>
-                        {stack.name}
-                      </h3>
+                      <h3>{stack.name}</h3>
                     </a>
                   </Link>
-                  <div>{stack.description}</div>
+                </div>
+
+                <div>
+                  <div style={{ textIndent: unit }}>{stack.description}</div>
                 </div>
               </div>
             )
           })}
         </div>
+        <Footer grid={grid} />
       </div>
     )
   }
 }
+
+export default calcLayout(Stacks)

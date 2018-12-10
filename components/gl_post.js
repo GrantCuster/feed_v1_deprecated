@@ -39,21 +39,31 @@ export default ({ post, grid, feed_width, post_page }) => {
         )}
       </div>
       <div style={{ margin: `${unit / 2}px 0` }}>
-        <SizedImage
-          src={post.img}
-          lh={unit}
-          feed_width={feed_width}
-          grid={grid}
-          max_height={post_page ? false : true}
-        />
+        {post_page ? (
+          <SizedImage src={post.img} grid={grid} max_width={feed_width} />
+        ) : (
+          <Link
+            href={`/gl_post_page?date_slug=${date_slug}`}
+            as={`/post/${date_slug}`}
+          >
+            <a style={{ display: 'block', lineHeight: 0 }}>
+              <SizedImage
+                src={post.img}
+                grid={grid}
+                max_width={feed_width}
+                max_height={(Math.floor(height / unit) - 6) * unit}
+              />
+            </a>
+          </Link>
+        )}
       </div>
       {post.text ? (
         <div>
-          <div style={{ paddingLeft: unit }}>{post.text}</div>
+          <div style={{ textIndent: unit }}>{post.text}</div>
         </div>
       ) : null}
       {post.src ? (
-        <div style={{ paddingLeft: unit, wordBreak: 'break-word' }}>
+        <div style={{ textIndent: unit, wordBreak: 'break-word' }}>
           <a href={post.src}>{post.src}</a>
           {post.via ? (
             <span>

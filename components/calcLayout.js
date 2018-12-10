@@ -1,3 +1,5 @@
+import Head from 'next/head'
+
 export function calcLayout(WrappedComponent) {
   return class extends React.Component {
     static getInitialProps(ctx) {
@@ -43,9 +45,11 @@ export function calcLayout(WrappedComponent) {
       let grid = {
         width: ww,
         height: wh,
+        font_family: 'Inter UI',
         font_size,
         line_height,
         unit,
+        indent: unit,
         margin_top: unit / 2,
         margin_bottom: unit / 2,
         margin_left: unit / 2,
@@ -55,9 +59,31 @@ export function calcLayout(WrappedComponent) {
         column_gap,
       }
 
-      return this.state.ww !== null ? (
-        <WrappedComponent grid={grid} {...this.props} />
-      ) : null
+      return (
+        <div>
+          <Head>
+            <link
+              rel="stylesheet"
+              type="text/css"
+              href="https://rsms.me/inter/inter-ui.css"
+            />
+            <link rel="stylesheet" type="text/css" href="/static/grid.css" />
+          </Head>
+
+          {this.state.ww !== null ? (
+            <WrappedComponent grid={grid} {...this.props} />
+          ) : (
+            <div
+              style={{
+                marginLeft: grid.margin_left,
+                marginTop: grid.margin_top,
+              }}
+            >
+              Grant Custer
+            </div>
+          )}
+        </div>
+      )
     }
   }
 }

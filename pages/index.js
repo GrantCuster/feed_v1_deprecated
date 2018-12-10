@@ -71,8 +71,6 @@ class Feed extends React.Component {
 
     let full_row_style = { marginLeft: margin_left, width: width - column_gap }
 
-    console.log(this.state)
-
     return (
       <div
         style={{
@@ -114,7 +112,10 @@ class Feed extends React.Component {
                 margin: `${vspacer}px ${0}px ${0}px ${0}px`,
               }}
             >
-              FEED
+              Feed
+            </div>
+            <div style={{ textIndent: unit, marginBottom: unit }}>
+              Work and Inspiration in progress
             </div>
             <ul>
               <InfiniteScroll

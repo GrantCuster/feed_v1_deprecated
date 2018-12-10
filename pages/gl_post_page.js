@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { slugDate } from '../utils/utils-general'
 import GridNav from '../components/GridNav'
 import GridPost from '../components/gl_post'
+import Footer from '../components/Footer'
 import Head from 'next/head'
 import { makeBaseUrl } from '../utils/utils-general'
 import { calcLayout } from '../components/calcLayout'
@@ -93,7 +94,7 @@ class Post extends React.Component {
                 margin: `${vspacer}px ${0}px ${0}px ${0}px`,
               }}
             >
-              POST
+              Post
             </div>
             <ul>
               <GridPost
@@ -110,10 +111,11 @@ class Post extends React.Component {
               }}
             >
               <Link href="/">
-                <a>Go to feed</a>
+                <a>Go to Feed</a>
               </Link>
             </div>
           </div>
+          <Footer grid={grid} />
         </div>
       </div>
     )
