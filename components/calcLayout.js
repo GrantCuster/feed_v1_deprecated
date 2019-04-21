@@ -73,13 +73,17 @@ export function calcLayout(WrappedComponent) {
           {this.state.ww !== null ? (
             <WrappedComponent grid={grid} {...this.props} />
           ) : (
-            <div
-              style={{
-                marginLeft: grid.margin_left,
-                marginTop: grid.margin_top,
-              }}
-            >
-              Grant Custer
+            <div>
+              <div
+                style={{
+                  marginLeft: grid.margin_left,
+                  marginTop: grid.margin_top,
+                }}
+              >
+                <div>Grant Custer</div>
+                <div>Design–Build</div>
+                <div>Measuring...</div>
+              </div>
             </div>
           )}
         </div>

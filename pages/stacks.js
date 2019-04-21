@@ -85,7 +85,7 @@ class Stacks extends React.Component {
             width: width - column_gap,
           }}
         >
-          <div>Stacks</div>
+          <div style={{ fontSize: font_size }}>Stacks</div>
           <div style={{ textIndent: unit }}>
             Collections of posts based around certain projects or themes.
           </div>

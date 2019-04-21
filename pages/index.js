@@ -1,11 +1,10 @@
 import React from 'react'
-import fetch from 'isomorphic-unfetch'
-import GridPost from '../components/gl_post'
 import Head from 'next/head'
+import fetch from 'isomorphic-unfetch'
 import { makeBaseUrl } from '../utils/utils-general'
+import { grid_constants, getColumns } from '../components/grid_contants'
 import GridNav from '../components/GridNav'
-import { calcLayout } from '../components/calcLayout'
-import InfiniteScroll from 'react-infinite-scroller'
+import Sizer from '../components/Sizer'
 
 class Feed extends React.Component {
   static async getInitialProps({ req, query, asPath }) {
@@ -15,134 +14,64 @@ class Feed extends React.Component {
     }
     const res = await fetch(`${baseUrl}/api/feed_posts`)
     const feed_posts = await res.json()
-    return { feed_posts }
+    return { feed_posts: feed_posts.slice(0, 300) }
   }
 
   constructor(props) {
     super(props)
     this.state = {
-      page: 0,
+      width: null,
+      height: null,
     }
+    this.setSize = this.setSize.bind(this)
   }
 
-  loadMore(page) {
-    this.setState({ page: page })
+  setSize(width, height) {
+    this.setState({
+      width,
+      height,
+    })
   }
 
   render() {
-    let { url, feed_posts, grid } = this.props
-    let {
-      width,
-      height,
-      font_size,
-      line_height,
-      unit,
-      margin_top,
-      margin_bottom,
-      margin_left,
-      margin_right,
-      columns,
-      column_width,
-      column_gap,
-    } = grid
+    let { url, feed_posts } = this.props
+    let { width, height } = this.state
 
-    // if (ww < 600 || wh < 600) {
-    //   font_size = 14
-    // }
+    let grid_always = grid_constants()
+    let grid_sized = { width, height, columns: null }
+    if (width !== null) grid_sized.columns = getColumns(width)
+    let grid = Object.assign({}, grid_always, grid_sized)
 
-    // let lines_fit = Math.floor(wh / lh)
-    // let vspacer = lh * 2
-    // if (lines_fit < 24 || ww < lines_fit * lh) {
-    //   vspacer = lh
-    // }
+    let { font_size, line_height, grem, indent, page_margin } = grid
 
-    let target_feed_width = 860
-    let actual_feed_columns = Math.min(
-      columns,
-      Math.round(target_feed_width / column_width)
-    )
-    let actual_feed_width = actual_feed_columns * column_width - column_gap
-
-    let feed_offset =
-      Math.ceil((columns - actual_feed_columns) / 2) * column_width +
-      margin_left
-
-    let vspacer = unit
-
-    let full_row_style = { marginLeft: margin_left, width: width - column_gap }
+    let grid_page_style = {
+      fontSize: font_size,
+      lineHeight: line_height,
+      margin: page_margin,
+    }
 
     return (
-      <div
-        style={{
-          fontSize: font_size,
-          lineHeight: line_height,
-          marginTop: unit / 2,
-          marginBottom: unit / 2,
-        }}
-      >
+      <div>
+        <Sizer setSize={this.setSize} />
         <Head>
           <title>Grant Custer → Feed</title>
-          <link
-            rel="alternate"
-            type="application/rss+xml"
-            href="http://feed.grantcuster.com/rss"
-          />
           <meta
             name="description"
             content="A feed of things I'm working on and inspired by."
           />
           <link
-            rel="stylesheet"
-            type="text/css"
-            href="https://rsms.me/inter/inter-ui.css"
+            rel="alternate"
+            type="application/rss+xml"
+            href="http://feed.grantcuster.com/rss"
           />
           <link rel="stylesheet" type="text/css" href="/static/grid.css" />
         </Head>
-        <div>
-          <GridNav url={url} grid={grid} />
-          <div
-            style={{
-              width: actual_feed_width,
-              marginLeft: feed_offset,
-            }}
-          >
-            <div
-              style={{
-                fontSize: font_size,
-                margin: `${vspacer}px ${0}px ${0}px ${0}px`,
-              }}
-            >
-              Feed
-            </div>
-            <div style={{ textIndent: unit, marginBottom: unit }}>
-              Work and Inspiration in progress
-            </div>
-            <ul>
-              <InfiniteScroll
-                pageStart={0}
-                loadMore={this.loadMore.bind(this)}
-                hasMore={true || false}
-                loader={
-                  <div className="loader" key={0}>
-                    Loading ...
-                  </div>
-                }
-              >
-                {feed_posts.slice(0, this.state.page * 20 + 20).map(post => (
-                  <GridPost
-                    key={post.posted}
-                    feed_width={actual_feed_width}
-                    post={post}
-                    grid={grid}
-                  />
-                ))}
-              </InfiniteScroll>
-            </ul>
-          </div>
+        <div style={{ ...grid_page_style }}>
+          <GridNav grid={grid} url={url} />
         </div>
       </div>
     )
   }
 }
 
-export default calcLayout(Feed)
+export default Feed

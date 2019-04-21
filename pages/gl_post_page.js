@@ -63,22 +63,7 @@ class Post extends React.Component {
         }}
       >
         <Head>
-          <title>Grant Custer → Feed</title>
-          <link
-            rel="alternate"
-            type="application/rss+xml"
-            href="http://feed.grantcuster.com/rss"
-          />
-          <meta
-            name="description"
-            content="A feed of things I'm working on and inspired by."
-          />
-          <link
-            rel="stylesheet"
-            type="text/css"
-            href="https://rsms.me/inter/inter-ui.css"
-          />
-          <link rel="stylesheet" type="text/css" href="/static/grid.css" />
+          <title>Grant Custer → Post</title>
         </Head>
         <div>
           <GridNav url={url} grid={grid} />
