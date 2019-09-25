@@ -113,7 +113,10 @@ class Feed extends React.Component {
                 margin: `${vspacer}px ${0}px ${0}px ${0}px`,
               }}
             >
-              FEED
+              <div>Feed</div>
+              <div style={{ textIndent: unit }}>
+                Work and inspiration in progress.
+              </div>
             </div>
             <ul>
               <InfiniteScroll
