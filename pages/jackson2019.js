@@ -4,8 +4,8 @@ import Head from 'next/head'
 let colors = [
   ['Gryffindor', '#c91018', '#ffc001'],
   ['Hufflepuff', '#272727', '#ffd63c'],
-  ['Ravenclaw', '#bf9364', '#005782'],
-  ['Slytherin', '#cecccf', '#26a147'],
+  ['Ravenclaw', '#bbb', '#3b3be0'],
+  ['Slytherin', '#cecccf', '#07855b'],
 ]
 
 class App extends Component {
@@ -201,7 +201,7 @@ class App extends Component {
           />
         </svg>
         <div style={{ textAlign: 'center', userSelect: 'none' }}>
-          from House {chosen[0]}
+          from {chosen[0]} House
         </div>
       </div>
     )
