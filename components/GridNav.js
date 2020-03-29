@@ -17,10 +17,10 @@ export default ({ url, grid }) => {
   let full_row_style = { marginLeft: margin_left, width: width - column_gap }
   let nav_links = [
     ['Feed', '/'],
-    ['Stacks', '/stacks'],
-    ['Info', '/info'],
-    ['Writing', '/writing'],
-    ['Misc', '/misc'],
+    ['Index', 'https://index.grantcuster.com'],
+    // ['Info', '/info'],
+    // ['Writing', '/writing'],
+    // ['Misc', '/misc'],
     ['Twitter', 'http://twitter.com/grantcuster'],
   ]
 
@@ -31,8 +31,8 @@ export default ({ url, grid }) => {
   return (
     <div>
       <div style={{ ...full_row_style }}>Grant Custer</div>
-      <div style={{ ...full_row_style }}>Design–Build</div>
-      <div style={{ ...full_row_style }}>
+      <div style={{ ...full_row_style, display: 'none' }}>Design–Build</div>
+      <div style={{ ...full_row_style, display: 'none' }}>
         <div
           style={{
             position: 'absolute',

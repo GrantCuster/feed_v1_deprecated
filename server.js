@@ -313,6 +313,7 @@ app.prepare().then(() => {
   })
 
   server.get('/api/feed_posts', (req, res) => {
+    res.header('Access-Control-Allow-Origin', '*')
     const data = fs.readFileSync('./static/feed_posts.json', 'utf8')
     const posts = JSON.parse(data)
     return res.json(posts)
