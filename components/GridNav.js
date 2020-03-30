@@ -17,7 +17,7 @@ export default ({ url, grid }) => {
   let full_row_style = { marginLeft: margin_left, width: width - column_gap }
   let nav_links = [
     ['Feed', '/'],
-    ['Index', 'https://index.grantcuster.com'],
+    ['Index', 'http://index.grantcuster.com'],
     // ['Info', '/info'],
     // ['Writing', '/writing'],
     // ['Misc', '/misc'],
