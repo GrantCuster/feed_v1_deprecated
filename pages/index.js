@@ -4,7 +4,6 @@ import GridPost from '../components/gl_post'
 import Head from 'next/head'
 import { makeBaseUrl } from '../utils/utils-general'
 import GridNav from '../components/GridNav'
-import { calcLayout } from '../components/calcLayout'
 import InfiniteScroll from 'react-infinite-scroller'
 import { grid_constants, getColumns } from '../components/grid_contants'
 
@@ -32,55 +31,8 @@ class Feed extends React.Component {
 
   render() {
     let { url, feed_posts, grid } = this.props
-    let {
-      width,
-      height,
-      font_size,
-      line_height,
-      unit,
-      margin_top,
-      margin_bottom,
-      margin_left,
-      margin_right,
-      columns,
-      column_width,
-      column_gap,
-    } = grid
-
-    // if (ww < 600 || wh < 600) {
-    //   font_size = 14
-    // }
-
-    // let lines_fit = Math.floor(wh / lh)
-    // let vspacer = lh * 2
-    // if (lines_fit < 24 || ww < lines_fit * lh) {
-    //   vspacer = lh
-    // }
-
-    let target_feed_width = 860
-    let actual_feed_columns = Math.min(
-      columns,
-      Math.round(target_feed_width / column_width)
-    )
-    let actual_feed_width = actual_feed_columns * column_width - column_gap
-
-    let feed_offset =
-      Math.ceil((columns - actual_feed_columns) / 2) * column_width +
-      margin_left
-
-    let vspacer = unit
-
-    let full_row_style = { marginLeft: margin_left, width: width - column_gap }
-
     return (
-      <div
-        style={{
-          fontSize: font_size,
-          lineHeight: line_height,
-          marginTop: unit / 2,
-          marginBottom: unit / 2,
-        }}
-      >
+      <div>
         <Head>
           <title>Grant Custer → Feed</title>
           <link
@@ -92,33 +44,34 @@ class Feed extends React.Component {
             name="description"
             content="A feed of things I'm working on and inspired by."
           />
-          <link
-            rel="stylesheet"
-            type="text/css"
-            href="https://rsms.me/inter/inter-ui.css"
-          />
-          <link rel="stylesheet" type="text/css" href="/static/grid.css" />
         </Head>
-        <div>
-          <GridNav grid={grid} url={url} />
-          <div
-            style={{
-              width: actual_feed_width,
-              marginLeft: feed_offset,
-            }}
-          >
-            <div
-              style={{
-                fontSize: font_size,
-                margin: `${vspacer}px ${0}px ${0}px ${0}px`,
-              }}
-            >
-              <div>Feed</div>
-              <div style={{ textIndent: unit }}>
+        <div
+          style={{
+            maxWidth: 840,
+            margin: '0 auto',
+            paddingLeft: '2ch',
+            paddingRight: '2ch',
+          }}
+        >
+          <GridNav url={url} />
+          <div style={{}}>
+            <div style={{ marginBottom: '0.75rem' }}>
+              <h1
+                style={{
+                  fontSize: '1rem',
+                  margin: 0,
+                  padding: 0,
+                  lineHeight: 1.5,
+                  fontWeight: 'normal',
+                }}
+              >
+                Feed
+              </h1>
+              <div style={{ textIndent: '2ch' }}>
                 Work and inspiration in progress.
               </div>
             </div>
-            <ul>
+            <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
               <InfiniteScroll
                 pageStart={0}
                 loadMore={this.loadMore.bind(this)}
@@ -130,12 +83,7 @@ class Feed extends React.Component {
                 }
               >
                 {feed_posts.slice(0, this.state.page * 20 + 20).map(post => (
-                  <GridPost
-                    key={post.posted}
-                    feed_width={actual_feed_width}
-                    post={post}
-                    grid={grid}
-                  />
+                  <GridPost key={post.posted} post={post} />
                 ))}
               </InfiniteScroll>
             </ul>
@@ -146,4 +94,4 @@ class Feed extends React.Component {
   }
 }
 
-export default calcLayout(Feed)
+export default Feed

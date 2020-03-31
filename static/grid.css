@@ -1,8 +1,7 @@
 @import url('https://rsms.me/inter/inter-ui.css');
 html {
   font-family: 'Inter UI', sans-serif;
-}
-@supports (font-variation-settings: normal) {
+} @supports (font-variation-settings: normal) {
   html {
     font-family: 'Inter UI var alt', sans-serif;
   }

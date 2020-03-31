@@ -7,6 +7,7 @@ export default class MyDocument extends Document {
       <html lang="en">
         <Head>
           <meta name="viewport" content="width=device-width" />
+          <link rel="stylesheet" type="text/css" href="/static/reset.css" />
         </Head>
         <body>
           <Main />

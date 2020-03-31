@@ -7,25 +7,11 @@ function capitalize(string) {
   return string.replace(/^\w/, c => c.toUpperCase())
 }
 
-export default ({ post, grid, feed_width, post_page }) => {
-  let {
-    width,
-    height,
-    font_size,
-    line_height,
-    unit,
-    margin_top,
-    margin_bottom,
-    margin_left,
-    margin_right,
-    columns,
-    column_width,
-    column_gap,
-  } = grid
+export default ({ post, post_page }) => {
   let date_slug = slugDate(post.posted)
   return (
-    <li style={{ marginBottom: unit }}>
-      <div>
+    <li style={{ marginBottom: '1.5rem' }}>
+      <div style={{ marginBottom: '0.5rem' }}>
         {capitalize(post.type)} ↓{' '}
         {post_page ? (
           <span>{new Date(post.posted).toLocaleDateString()}</span>
@@ -38,32 +24,29 @@ export default ({ post, grid, feed_width, post_page }) => {
           </Link>
         )}
       </div>
-      <div style={{ margin: `${unit / 2}px 0` }}>
+      <div
+        style={{
+          marginBottom: '0.5rem',
+          marginLeft: post_page ? '-2ch' : 0,
+          marginRight: post_page ? '-2ch' : 0,
+        }}
+      >
         {post_page ? (
-          <SizedImage src={post.img} grid={grid} max_width={feed_width} />
+          <SizedImage src={post.img} />
         ) : (
           <Link
             href={`/gl_post_page?date_slug=${date_slug}`}
             as={`/post/${date_slug}`}
           >
-            <a style={{ display: 'block', lineHeight: 0 }}>
-              <SizedImage
-                src={post.img}
-                grid={grid}
-                max_width={feed_width}
-                max_height={(Math.floor(height / unit) - 6) * unit}
-              />
+            <a style={{ display: 'block' }}>
+              <SizedImage src={post.img} />
             </a>
           </Link>
         )}
       </div>
-      {post.text ? (
-        <div>
-          <div style={{ textIndent: unit }}>{post.text}</div>
-        </div>
-      ) : null}
+      {post.text ? <div style={{ textIndent: '2ch' }}>{post.text}</div> : null}
       {post.src ? (
-        <div style={{ textIndent: unit, wordBreak: 'break-word' }}>
+        <div style={{ textIndent: '2ch', wordBreak: 'break-word' }}>
           <a href={post.src}>{post.src}</a>
           {post.via ? (
             <span>
