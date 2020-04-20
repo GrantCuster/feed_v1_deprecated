@@ -28,7 +28,7 @@ class Post extends React.Component {
         <Head>
           <title>Grant Custer → Post</title>
         </Head>
-        <div style={{ paddingLeft: '2ch', paddingRight: '2ch' }}>
+        <div style={{}}>
           <GridNav url={url} />
           <div style={{}}>
             <div style={{}}>Post</div>

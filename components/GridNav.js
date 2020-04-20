@@ -14,7 +14,7 @@ export default ({ url, grid }) => {
 
   return (
     <div>
-      <div style={{ marginTop: '0.75rem' }}>Grant Custer</div>
+      <div style={{}}>Grant Custer</div>
       <ul
         style={{
           listStyle: 'none',
@@ -23,7 +23,7 @@ export default ({ url, grid }) => {
           display: 'flex',
           flexWrap: 'wrap',
           paddingLeft: '2ch',
-          marginBottom: '0.75rem',
+          marginBottom: 24,
         }}
       >
         {nav_links.map(l => (

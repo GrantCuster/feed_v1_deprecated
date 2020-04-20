@@ -9,10 +9,11 @@ function capitalize(string) {
 
 export default ({ post, post_page }) => {
   let date_slug = slugDate(post.posted)
+  console.log(post)
   return (
-    <li style={{ marginBottom: '1.5rem' }}>
-      <div style={{ marginBottom: '0.5rem' }}>
-        {capitalize(post.type)} ↓{' '}
+    <li className={'post-' + post.type} style={{ marginBottom: 48 }}>
+      <div style={{ marginBottom: 8 }}>
+        <span className="type">{capitalize(post.type)}</span> ↓{' '}
         {post_page ? (
           <span>{new Date(post.posted).toLocaleDateString()}</span>
         ) : (
@@ -20,15 +21,15 @@ export default ({ post, post_page }) => {
             href={`/gl_post_page?date_slug=${date_slug}`}
             as={`/post/${date_slug}`}
           >
-            <a>{new Date(post.posted).toLocaleDateString()}</a>
+            <a style={{ color: 'inherit' }}>
+              {new Date(post.posted).toLocaleDateString()}
+            </a>
           </Link>
         )}
       </div>
       <div
         style={{
           marginBottom: '0.5rem',
-          marginLeft: post_page ? '-2ch' : 0,
-          marginRight: post_page ? '-2ch' : 0,
         }}
       >
         {post_page ? (
