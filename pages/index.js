@@ -61,9 +61,7 @@ class Feed extends React.Component {
                 Feed
               </h1>
               <div style={{ textIndent: '2ch' }}>
-                <span className="work-color">Work</span> and{' '}
-                <span className="inspiration-color">Inspiration</span> in
-                progress.
+                Work and Inspiration in progress.
               </div>
             </div>
             <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
