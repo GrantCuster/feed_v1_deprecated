@@ -25,10 +25,10 @@ body {
     'Lucida Console', 'Lucida Sans Typewriter', 'DejaVu Sans Mono',
     'Bitstream Vera Sans Mono', 'Liberation Mono', 'Nimbus Mono L', Monaco,
     'Courier New', Courier, monospace;
-  font-size: 16px;
-  line-height: 24px;
-  background: var(--bg);
-  color: var(--gray);
+  font-size: 13px;
+  line-height: 16px;
+  background: var(--fg);
+  color: var(--bg);
   padding-left: 4px;
   padding-right: 4px;
   user-select: none;
@@ -42,9 +42,15 @@ a {
 }
 .post-work .type,
 .work-color {
-  color: var(--aqua);
+  /* background: var(--bg); */
+  /* color: var(--fg); */
+  /* padding-left: 0.5ch; */
+  /* padding-right: 0.5ch; */
 }
 .post-inspiration .type,
 .inspiration-color {
-  color: var(--yellow);
+  /* background: var(--bg); */
+  /* color: var(--fg); */
+  /* padding-left: 0.5ch; */
+  /* padding-right: 0.5ch; */
 }
