@@ -9,12 +9,11 @@ function capitalize(string) {
 
 export default ({ post, post_page }) => {
   let date_slug = slugDate(post.posted)
-  console.log(post)
   return (
-    <li className={'post-' + post.type} style={{ marginBottom: 32 }}>
-      <div style={{ marginBottom: 8 }}>
+    <li className={'post-' + post.type} style={{ marginBottom: 16 }}>
+      <div style={{}}>
         <span className="type">{capitalize(post.type)}</span> ↓{' '}
-        {post_page ? (
+        {post_page || true ? (
           <span>{new Date(post.posted).toLocaleDateString()}</span>
         ) : (
           <Link
@@ -27,11 +26,7 @@ export default ({ post, post_page }) => {
           </Link>
         )}
       </div>
-      <div
-        style={{
-          marginBottom: '0.5rem',
-        }}
-      >
+      <div style={{}}>
         {post_page ? (
           <SizedImage src={post.img} />
         ) : (
@@ -45,9 +40,17 @@ export default ({ post, post_page }) => {
           </Link>
         )}
       </div>
-      {post.text ? <div style={{ textIndent: '2ch' }}>{post.text}</div> : null}
+      {post.text ? (
+        <div style={{ textIndent: '2ch', maxWidth: '80ch' }}>{post.text}</div>
+      ) : null}
       {post.src ? (
-        <div style={{ textIndent: '2ch', wordBreak: 'break-word' }}>
+        <div
+          style={{
+            textIndent: '2ch',
+            wordBreak: 'break-word',
+            maxWidth: '80ch',
+          }}
+        >
           <a href={post.src}>{post.src}</a>
           {post.via ? (
             <span>

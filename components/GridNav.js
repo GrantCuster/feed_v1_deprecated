@@ -23,7 +23,7 @@ export default ({ url, grid }) => {
           display: 'flex',
           flexWrap: 'wrap',
           paddingLeft: '2ch',
-          marginBottom: 24,
+          marginBottom: 16,
         }}
       >
         {nav_links.map(l => (
