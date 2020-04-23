@@ -48,7 +48,7 @@ class Feed extends React.Component {
         <div style={{ maxWidth: 840, margin: '0 auto' }}>
           <GridNav url={url} />
           <div style={{}}>
-            <div style={{ marginBottom: 24 }}>
+            <div style={{ marginBottom: 16 }}>
               <h1
                 style={{
                   fontSize: '1rem',

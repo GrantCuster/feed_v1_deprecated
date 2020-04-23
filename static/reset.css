@@ -5,17 +5,18 @@
   font-weight: 400;
   font-style: normal;
 }
+/* light gruvbox */
 :root {
-  --bg: #282828;
-  --fg: #ebdbb2;
-  --red: #cc241d;
-  --green: #98971a;
-  --yellow: #d79921;
-  --blue: #458588;
-  --purple: #b16286;
-  --aqua: #689d68;
-  --gray: #a89984;
-  --black: #1d2021;
+  --bg: #fbf1c7;
+  --fg: #3c3836;
+  --red: #8d0006;
+  --green: #79740e;
+  --yellow: #b57614;
+  --blue: #076678;
+  --purple: #8f3f71;
+  --aqua: #426b58;
+  --gray: #928374;
+  --black: #282828;
 }
 html,
 body {
@@ -27,12 +28,12 @@ body {
     'Courier New', Courier, monospace;
   font-size: 13px;
   line-height: 16px;
-  background: var(--fg);
-  color: var(--bg);
+  background: #fbf1c7;
+  color: #3c3836;
   padding-left: 4px;
   padding-right: 4px;
   user-select: none;
-  padding-bottom: 24px;
+  padding-bottom: 16px;
 }
 * {
   box-sizing: border-box;
@@ -43,14 +44,14 @@ a {
 .post-work .type,
 .work-color {
   /* background: var(--bg); */
-  /* color: var(--fg); */
+  /* color: var(--purple); */
   /* padding-left: 0.5ch; */
   /* padding-right: 0.5ch; */
 }
 .post-inspiration .type,
 .inspiration-color {
   /* background: var(--bg); */
-  /* color: var(--fg); */
+  /* color: var(--green); */
   /* padding-left: 0.5ch; */
   /* padding-right: 0.5ch; */
 }

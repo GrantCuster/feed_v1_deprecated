@@ -11,7 +11,7 @@ export default ({ post, post_page }) => {
   let date_slug = slugDate(post.posted)
   console.log(post)
   return (
-    <li className={'post-' + post.type} style={{ marginBottom: 48 }}>
+    <li className={'post-' + post.type} style={{ marginBottom: 32 }}>
       <div style={{ marginBottom: 8 }}>
         <span className="type">{capitalize(post.type)}</span> ↓{' '}
         {post_page ? (
